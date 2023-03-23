@@ -25,11 +25,12 @@ if ( isset($_POST["title"] ) ){
 			`amount` = '".$_POST["amount"]."',
 			`OgDescription` = '".$_POST["OgDescription"]."',
 			`currency` = '".$_POST["currency"]."',
+			`language` = '".$_POST["language"]."',
+			`version` = '".$_POST["version"]."',
 			`google` = '".urlencode($_POST["google"])."',
 			`pixil` = '".urlencode($_POST["pixil"])."',
 			`website` = '".$_POST["website"]."',";
-	if( is_uploaded_file($_FILES['bgImage']['tmp_name']) )
-	{
+	if( is_uploaded_file($_FILES['bgImage']['tmp_name']) ){
 		$directory = "../logos/";
 		$originalfile = $directory . date("d-m-y") . time() . rand(111111,999999) . "." . getFileExtension($_FILES["bgImage"]["name"]);
 		move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
@@ -67,6 +68,8 @@ $startDate = $row["startDate"];
 $refference = $row["refference"];
 $amount = $row["amount"];
 $defaultCurr = $row["currency"];
+$language = $row["language"];
+$version = $row["version"];
 $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
 $google = urldecode($row["google"]);
@@ -123,20 +126,47 @@ if( $currList = getCurr() ){
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
 							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Title</h6>
+								<h6 class="panel-title txt-dark"><?php echo direction("Version","النسخة") ?></h6>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<div class="text">
-									<input class="form-control" type="text" name="title" placeholder="Create-Store" value="<?php echo $settingsTitle ?>">
+									<input class="form-control" type="text" name="version" placeholder="Create-Store" value="<?php echo $version ?>">
 								</div>
 							</div>
 						</div>
 					</div>
 					</div>
 					
+					<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="text">
+									<select class="form-control" type="text" name="language" >
+									    <?php
+										$languageValue = [0,1];
+										$languages = [direction("English","الإنجليزية"),direction("Arabic","العربية")];
+										for( $i = 0 ; $i < sizeof($languageValue); $i++ ){
+											$selected = $language == $languageValue[$i] ? "selected" : "";
+											echo "<option value='{$languageValue[$i]}' {$selected}>{$languages[$i]}</option>";
+										}
+										?>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+
 					<div class="col-md-4">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
@@ -150,15 +180,32 @@ if( $currList = getCurr() ){
 								<div class="text">
 									<select class="form-control" type="text" name="theme" >
 									    <?php
-									    if ( $theme == 1 ){
-									         $selected = "selected";
-									    }else{
-									         $selected = "";
-									    }
-									    ?>
-									    <option value="0">With Category</option>
-									    <option value="1" <?php echo $selected ?>>Without Category</option> 
+										$themeValue = [0,1];
+										$themes = [direction("Categories","أقسام"),direction("Products","منتجات")];
+										for( $i = 0 ; $i < sizeof($themeValue); $i++ ){
+											$selected = $theme == $themeValue[$i] ? "selected" : "";
+											echo "<option value='{$themeValue[$i]}' {$selected}>{$themes[$i]}</option>";
+										}
+										?>
 									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+
+					<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark">Title</h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="text">
+									<input class="form-control" type="text" name="title" placeholder="Create-Store" value="<?php echo $settingsTitle ?>">
 								</div>
 							</div>
 						</div>
