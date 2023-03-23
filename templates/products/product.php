@@ -312,7 +312,7 @@ if ( $theme == 1 ){
 			</div>
 			<div class="col-12 mt-3 share-btn-box" >
 			<?php
-			@$actual_link = "https://{$_SERVER[HTTP_HOST]}{$_SERVER[REQUEST_URI]}";
+			$actual_link = "https://{$_SERVER["HTTP_HOST"]}{$_SERVER["REQUEST_URI"]}";
 			$testThisProduct = direction("Try this awesome product...","جرب هذا المنتج الرائع... ");
 			?>
 				<a href="https://pinterest.com/pin/create/button/?url=h<?php echo $actual_link ?>&media=&description=<?php echo $testThisProduct ?>" target="_blank" >
@@ -327,7 +327,7 @@ if ( $theme == 1 ){
 			   <a href="https://www.instagram.com/direct/new/" target="_blank" >
 			   <div class="d-inline-block share-btn-cust"> <img src="img/IconAwesome-instagram.svg"> &nbsp; SHARE</div>
 			   </a>
-			   <a href="https://wa.me/?text=<?php echo $actual_link ?>" target="_blank" >
+			   <a href="https://wa.me/?text=<?php echo $actual_link . " " . $testThisProduct ?>" target="_blank" >
 			   <div class="d-inline-block share-btn-cust"> <img src="img/IconIonic-logo-whatsapp.svg"> &nbsp; SHARE</div>
 			   </a>
 			</div>

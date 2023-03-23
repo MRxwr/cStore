@@ -21,9 +21,8 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
             if ( isset($_GET["error"]) AND $_GET["error"] == 1 )
             {
                 ?>
-            <p style="font-size:18px; color:red">
-            <?php echo $wrongOrderNumberPleaseCheckAgain ?></p>
-            <?php
+				<p style="font-size:18px; color:red"><?php echo $wrongOrderNumberPleaseCheckAgain ?></p>
+				<?php
             }
             ?>
                 <div class="search-box d-flex align-items-center">
