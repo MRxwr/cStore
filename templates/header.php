@@ -25,7 +25,7 @@ if( isset($_GET["curr"]) && !empty($_GET["curr"]) ){
 }
 
 $fontLink = direction('<link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300&display=swap" rel="stylesheet">','<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">');
-$fontFamily = direction("font-family: 'Signika Negative', sans-serif;","font-family: 'Cairo', sans-serif;");
+$fontFamily = direction("'Signika Negative', sans-serif;","'Cairo', sans-serif;");
 $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300&display=swap');","@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');");
 ?>
 <!DOCTYPE html>
@@ -85,7 +85,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 <style>
 	<?php echo $fontImport ?>
     body {
-		<?php echo $fontFamily ?>
+		font-family: <?php echo $fontFamily ?>;
 		padding:0 !important;
     }
     .join-btn {
@@ -238,49 +238,29 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 							</div>
 						  </li>
 						  <li>
-							<a href="#" ><?php echo $contactText ?>
-							</a>
+							<a href="#" ><?php echo direction("Contact us","تواصل معنا") ?></a>
 						  </li>
+						  <li>
+							<ul class="social-icons pl-0 mb-0 pr-0" style="margin-top: 10px;text-align: center;">
 						  <?php
-							$sql = "SELECT * FROM `s_media`";
-							$result = $dbconnect->query($sql);
-							$row = $result->fetch_assoc();
-							$whatsapp = $row["whatsapp"];
-							$snapchat = $row["snapchat"];
-							$instagram = $row["instagram"];
-							$location = $row["location"];
-							$email = $row["email"];
-							?>
-							<li>
-								<ul class="social-icons pl-0 mb-0 pr-0" style="margin-top: 10px;text-align: center;">
-								<?php
-								if( !empty($instagram) AND $instagram != "#" ){
-								?>
-								<li style="padding: 10px;">
-									<a style="font-size: 20px;height: 36px;width: 36px;" href="https://www.instagram.com/<?php echo $instagram ?>" aria-label="instagram">
-										<span class="fa fa-instagram" style="height: 15px; background: #512375;"></span>
-									</a>
-								</li>
-								<?php
+							if( $socialMedia = selectDB("s_media","`id` = '1'") ){
+								$smIndex = ["whatsapp","snapchat","instagram","location","email"];
+								$smIcon = ["fa fa-whatsapp","fa fa-snapchat","fa fa-instagram","fa fa-globe","fa fa-envelope"];
+								$smURL = ["https://wa.me/","https://www.snapchat.com/add/","https://www.instagram.com/",$socialMedia[0]["location"],"mailto:"];
+								for( $i = 0; $i < sizeof($smIndex); $i++ ){
+									if( !empty($socialMedia[0][$smIndex[$i]]) && $socialMedia[0][$smIndex[$i]] != "#" ){
+										echo "
+										<li style='padding: 10px;'>
+											<a style='font-size: 20px;height: 36px;width: 36px;' href='{$smURL[$i]}{$socialMedia[0][$smIndex[$i]]}' aria-label='{$smIndex[$i]}'>
+												<span class='{$smIcon[$i]}' style='height: 15px; background: #512375;'></span>
+											</a>
+										</li>";
+									}
 								}
-								if( !empty($whatsapp) AND $whatsapp != "#" ){
-								?>
-								<li style="padding: 10px;">
-									<a style="font-size: 20px;height: 36px;width: 36px;" href="https://wa.me/<?php echo $whatsapp ?>" aria-label="whatsapp">
-										<span class="fa fa-whatsapp" style="height: 15px; background: #512375;"></span>
-									</a>
-								</li>
-								<?php }
-								if( !empty($email) AND $email != "#" ){
-								?>
-								<li style="padding: 10px;">
-									<a style="font-size: 20px;height: 36px;width: 36px;" href="mailto:<?php echo $email ?>" aria-label="email">
-										<span class="fa fa-envelope" style="height: 15px; background: #512375;"></span>
-									</a>
-								</li>
-								<?php } ?>
-								</ul>
-							</li>
+							}
+							?>
+							</ul>
+						  </li>
 							<li>
 								<p class="menu-foot-link">
 								Powered by <a href="http://www.createkuwait.com" target="_blank">Createkuwait.com</a>
