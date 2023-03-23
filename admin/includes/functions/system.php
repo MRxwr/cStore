@@ -129,4 +129,11 @@ function uploadImage($imageLocation){
 		return "";
 	}
 }
+
+function showLogo(){
+	if( $showLogo = selectDB("settings","`id`= '1' ") ){
+		$output = $showLogo[0]["showLogo"] == '0' ? "" : "display:none";
+	}
+	return $output;
+}
 ?>

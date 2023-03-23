@@ -27,6 +27,7 @@ if ( isset($_POST["title"] ) ){
 			`currency` = '".$_POST["currency"]."',
 			`language` = '".$_POST["language"]."',
 			`version` = '".$_POST["version"]."',
+			`showLogo` = '".$_POST["showLogo"]."',
 			`google` = '".urlencode($_POST["google"])."',
 			`pixil` = '".urlencode($_POST["pixil"])."',
 			`website` = '".$_POST["website"]."',";
@@ -70,6 +71,7 @@ $amount = $row["amount"];
 $defaultCurr = $row["currency"];
 $language = $row["language"];
 $version = $row["version"];
+$showLogo = $row["showLogo"];
 $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
 $google = urldecode($row["google"]);
@@ -134,6 +136,33 @@ if( $currList = getCurr() ){
 							<div class="panel-body">
 								<div class="text">
 									<input class="form-control" type="text" name="version" placeholder="Create-Store" value="<?php echo $version ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					
+					<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Show Logo","أظهر اللوجو") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<div class="text">
+									<select class="form-control" type="text" name="showLogo" >
+									    <?php
+										$showLogoValue = [0,1];
+										$showLogoText = [direction("Show","أظهر"),direction("Hide","أخفي")];
+										for( $i = 0 ; $i < sizeof($showLogoValue); $i++ ){
+											$selected = $showLogo == $showLogoValue[$i] ? "selected" : "";
+											echo "<option value='{$showLogoValue[$i]}' {$selected}>{$showLogoText[$i]}</option>";
+										}
+										?>
+									</select>
 								</div>
 							</div>
 						</div>

@@ -1,13 +1,16 @@
 <?php
 if( isset($_GET["id"]) && !empty($_GET["id"]) ){
-	$category = selectDB("categories","`id` = '{$_GET["id"]}'");
-	$settingsImage = $category[0]["header"];
+	if( $category = selectDB("categories","`id` = '{$_GET["id"]}'") ){
+		if( !empty($category[0]["header"]) ){
+			$settingsImage = $category[0]["header"];
+		}
+	}
 }
 ?>
 <div class="main-slider" style="background-image: url(&quot;logos/<?php echo $settingsImage ?>&quot;);margin-top:50px">
     <div class="slider-text-div">
         <div class="row d-flex justify-content-center text-center" style="margin-left:0; margin-right:0;">
-            <div class="col-12" style="display:none">
+            <div class="col-12" style="<?php echo showLogo() ?>">
                 <img src="logos/<?php echo $settingslogo ?>" class="img-fluid slider-logo" style="border-radius: 10.25rem!important;">
                 <h1></h1>
                 <p style="font-size:18px">
@@ -34,72 +37,22 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
                 </div>
             </div>
             <div class="col-12">
-            <?php
-            $sql = "SELECT * FROM `s_media`";
-            $result = $dbconnect->query($sql);
-            $row = $result->fetch_assoc();
-            $whatsapp = $row["whatsapp"];
-            $snapchat = $row["snapchat"];
-            $instagram = $row["instagram"];
-            $location = $row["location"];
-            $tiktok = $row["tiktok"];
-            $email = $row["email"];
-            ?>
                 <ul class="social-icons pl-0 mb-0 pr-0" style="margin-top: 10rem!important;">
 					<?php
-					if( !empty($instagram) AND $instagram != "#" ){
-					?>
-                    <li>
-						<a href="https://www.instagram.com/<?php echo $instagram ?>" aria-label="Instagram">
-							<span class="fa fa-instagram"></span>
-						</a>
-					</li>
-					<?php
-					}
-					if( !empty($whatsapp) AND $whatsapp != "#" ){
-					?>
-                    <li>
-						<a href="https://wa.me/<?php echo $whatsapp ?>" aria-label="Whatsapp">
-							<span class="fa fa-whatsapp"></span>
-						</a>
-					</li>
-					<?php
-					}
-					if( !empty($snapchat) AND $snapchat != "#" ){
-					?>
-                    <li>
-						<a href="https://www.snapchat.com/add/<?php echo $snapchat ?>" aria-label="Snapchat">
-							<span class="fa fa-snapchat"></span>
-						</a>
-					</li>
-					<?php
-					}
-					if( !empty($tiktok) AND $tiktok != "#" ){
-					?>
-                    <li>
-						<a href="https://www.tiktok.com/@<?php echo $tiktok ?>" aria-label="TikTok">
-							<span class="fab fa-tiktok"></span>
-						</a>
-					</li>
-					<?php
-					}
-					if( !empty($location) AND $location != "#" ){
-					?>
-					<li>
-						<a href="<?php echo $location ?>" aria-label="Location">
-							<span class="fa fa-map-marker"></span>
-						</a>
-					</li>
-					<?php
-					}
-					if( !empty($email) AND $email != "#" ){
-					?>
-					<li>
-						<a href="mailto:<?php echo $email ?>" aria-label="Email">
-							<span class="fa fa-envelope"></span>
-						</a>
-					</li>
-					<?php
+					if( $socialMedia = selectDB("s_media","`id` = '1'") ){
+						$smIndex = ["whatsapp","snapchat","TikTok","instagram","location","email"];
+						$smIcon = ["fa fa-whatsapp","fa fa-snapchat","fa fa-tiktok","fa fa-instagram","fa fa-globe","fa fa-envelope"];
+						$smURL = ["https://wa.me/","https://www.snapchat.com/add/","https://www.tiktok.com/@","https://www.instagram.com/",$socialMedia[0]["location"],"mailto:"];
+						for( $i = 0; $i < sizeof($smIndex); $i++ ){
+							if( !empty($socialMedia[0][$smIndex[$i]]) && $socialMedia[0][$smIndex[$i]] != "#" ){
+								echo "
+								<li>
+									<a href='{$smURL[$i]}{$socialMedia[0][$smIndex[$i]]}' aria-label='{$smIndex[$i]}'>
+										<span class='{$smIcon[$i]}'></span>
+									</a>
+								</li>";
+							}
+						}
 					}
 					?>
                 </ul>
