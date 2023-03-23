@@ -190,7 +190,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 					<span></span>
 					<ul id="menu">
 						<li>
-							<img src='logos/<?php echo $settingslogo ?>'); style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
+							<img src='logos/<?php echo $settingslogo ?>' style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
 						</li>
 						<li>
 							<a href="index.php" class="active">
