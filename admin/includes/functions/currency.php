@@ -56,7 +56,6 @@ function currView(){
 function selectedCurr(){
 	GLOBAL $_COOKIE;
 	if( !isset($_COOKIE["cStoreCurr"]) && $default = selectDB("settings","`id` = '1'") ){
-		setcookie("cStoreCurr", $default[0]["currency"], (86400*30) + time(), "/" );
 		return $default[0]["currency"];
 	}else{
 		return $_COOKIE["cStoreCurr"];
