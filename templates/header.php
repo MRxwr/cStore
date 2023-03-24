@@ -45,15 +45,15 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
     <meta name="keywords" content="<?php echo $settingsOgDescription ?>">
     <link rel="shortcut icon" href="logos/<?php echo $settingslogo ?>" type="image/x-icon">
     <link rel="apple-touch-icon" href="logos/<?php echo $settingslogo ?>">
-    <link href="css/bootstrap.min.css?x=1" rel="stylesheet">
-    <link href="css/owl.carousel.min.css?p=2" rel="stylesheet">
-    <link href="css/bootstrap-select.min.css?x=1" rel="stylesheet">
-    <link href="css/flag-icon.min.css?x=1" rel="stylesheet">
-    <link href="css/jquery-ui.css?x=1" rel="stylesheet">
-    <link href="css/custome.css?g=30" rel="stylesheet">
-    <link href="css/responsive.css?g=26" rel="stylesheet">
-    <link href="css/font-awesome.css?x=1" rel="stylesheet">
-    <link href="css/animate.min.css?x=1" rel="stylesheet">
+    <link href="css/bootstrap.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/owl.carousel.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/bootstrap-select.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/flag-icon.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/jquery-ui.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/custome.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/responsive.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/font-awesome.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
+    <link href="css/animate.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
 	<link href="css/jquery.fancybox.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<?php echo $fontLink ?>

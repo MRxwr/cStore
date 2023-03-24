@@ -10,6 +10,13 @@ function direction($valEn,$valAr){
 	return $response;
 }
 
+// select a randon letter \\
+function randLetter() {
+    $alphabet = 'abcdefghijklmnopqrstuvwxyz';
+	$letter = $alphabet[rand(0, 25)];
+	return $letter;
+}
+
 // get sgin for url \\
 function getSign(){
 	GLOBAL $_SERVER;
