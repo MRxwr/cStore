@@ -123,406 +123,490 @@ if( $currList = getCurr() ){
 					<!-- Row -->
 					<form method="post" action="" enctype="multipart/form-data">
 					<div class="row w-100">
-					
-					<div class="col-md-4">
+					<div class="col-md-12">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
 							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo direction("Version","النسخة") ?></h6>
+								<h6 class="panel-title txt-dark"><?php echo direction("System","النظام") ?></h6>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="version" placeholder="Create-Store" value="<?php echo $version ?>">
+						<div class="panel-body">
+
+						<!-- system Title -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Title</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="title" placeholder="Create-Store" value="<?php echo $settingsTitle ?>">
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo direction("Show Logo","أظهر اللوجو") ?></h6>
-							</div>
-							<div class="clearfix"></div>
 						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<select class="form-control" type="text" name="showLogo" >
-									    <?php
-										$showLogoValue = [0,1];
-										$showLogoText = [direction("Show","أظهر"),direction("Hide","أخفي")];
-										for( $i = 0 ; $i < sizeof($showLogoValue); $i++ ){
-											$selected = $showLogo == $showLogoValue[$i] ? "selected" : "";
-											echo "<option value='{$showLogoValue[$i]}' {$selected}>{$showLogoText[$i]}</option>";
+
+						<!-- website description -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">OG: Description</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="OgDescription" placeholder="we provide everthing" value="<?php echo $settingsOgDescription ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- system version -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Version","النسخة") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="version" placeholder="Create-Store" value="<?php echo $version ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- default Language -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<select class="form-control" type="text" name="language" >
+											<?php
+											$languageValue = [0,1];
+											$languages = [direction("English","الإنجليزية"),direction("Arabic","العربية")];
+											for( $i = 0 ; $i < sizeof($languageValue); $i++ ){
+												$selected = $language == $languageValue[$i] ? "selected" : "";
+												echo "<option value='{$languageValue[$i]}' {$selected}>{$languages[$i]}</option>";
+											}
+											?>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- system cookie -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Cookie</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="cookie" placeholder="Create-KW" value="<?php echo $cookieSession ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- default currency -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Default Currency","العملة الأساسية"); ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+									<select class="form-control" name="currency">
+										<?php 
+										if( $currency = selectDB("currency","`status` = '0' AND `hidden` = '1'") ){
+											foreach( $currency as $key ){
+												$selected = ($key["short"] == $defaultCurr ? "selected" : "");
+												echo "<option {$selected} value='{$key["short"]}'>{$key["short"]}</option>";
+											}
 										}
 										?>
+										
 									</select>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
-							</div>
-							<div class="clearfix"></div>
 						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<select class="form-control" type="text" name="language" >
-									    <?php
-										$languageValue = [0,1];
-										$languages = [direction("English","الإنجليزية"),direction("Arabic","العربية")];
-										for( $i = 0 ; $i < sizeof($languageValue); $i++ ){
-											$selected = $language == $languageValue[$i] ? "selected" : "";
-											echo "<option value='{$languageValue[$i]}' {$selected}>{$languages[$i]}</option>";
-										}
-										?>
-									</select>
+
+						<!-- system main email -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Email</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="email" placeholder="info@create-kw.com" value="<?php echo $settingsEmail ?>">
+									</div>
 								</div>
 							</div>
+						</div>
+						</div>
+
+						<!-- system delivey sentence English-->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Delivery Period English</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="dTime" placeholder="Within 5 days" value="<?php echo $settingsDTime ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- system delivery sentence arabic -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Period Arabic</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="dTimeArabic" placeholder="سيتم توصيل طلبكم خلال 5 ايام" value="<?php echo $settingsDTimeArabic ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						</div>
 						</div>
 					</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-12">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
 							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Theme</h6>
+								<h6 class="panel-title txt-dark"><?php echo direction("Payment","الدفع") ?></h6>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<select class="form-control" type="text" name="theme" >
-									    <?php
-										$themeValue = [0,1];
-										$themes = [direction("Categories","أقسام"),direction("Products","منتجات")];
-										for( $i = 0 ; $i < sizeof($themeValue); $i++ ){
-											$selected = $theme == $themeValue[$i] ? "selected" : "";
-											echo "<option value='{$themeValue[$i]}' {$selected}>{$themes[$i]}</option>";
+						<div class="panel-body">
+
+						<!-- payapi token -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">PayAPI Token</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="PaymentAPIKey" placeholder="CKW-1619717358-2147" value="<?php echo $PaymentAPIKey ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						
+						<!-- Create Pay Reffrence -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">CreatePay Refference</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="refference" placeholder="ref0035" value="<?php echo $refference ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- system url -->
+						<div class="col-md-4">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Website URL ( no slash at the end )</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="text" name="website" placeholder="https://createkwservers.com/store" value="<?php echo $settingsWebsite ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- system package -->
+						<div class="col-md-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Select Package</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+									<div class="col-md-4">
+									<select class="form-control" name="package" >
+										<?php
+										$packageValue = [0,1,2];
+										$packageName = [direction("Free","مجاني"),direction("Monthly","شهرية"),direction("Annually","سنوية")];
+										for( $i = 0; $i < sizeof($packageValue); $i++ ){
+											$selected = $package == $packageValue[$i] ? "selected" : "";
+											echo "<option value='$packageValue[$i]' {$selected}>{$packageName[$i]}</option>";
 										}
 										?>
 									</select>
+									</div>
+									<div class="col-md-4">
+										<input class="form-control" type="date" name="startDate" value="<?php echo substr($startDate,0,10) ?>">
+									</div>
+									<div class="col-md-4">
+										<input class="form-control" type="float" name="amount" placeholder="25.0" value="<?php echo $amount ?>">
+									</div>
+									</div>
 								</div>
 							</div>
+						</div>
+						</div>
+
+						</div>
 						</div>
 					</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-12">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
 							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Title</h6>
+								<h6 class="panel-title txt-dark"><?php echo direction("Analytics","الإحصائيات") ?></h6>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="title" placeholder="Create-Store" value="<?php echo $settingsTitle ?>">
+						<div class="panel-body">
+
+						<!-- facebook pixil code -->
+						<div class="col-md-6">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Facebook Pixil</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<textarea class="form-control" rows="10" name="pixil" ><?php echo $pixil ?></textarea>
+									</div>
 								</div>
 							</div>
+						</div>
+						</div>
+						
+						<!-- google analytic code -->
+						<div class="col-md-6">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Google Analytics</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<textarea class="form-control" rows="10" name="google" ><?php echo $google ?></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						</div>
+						</div>
+					</div>
+					</div>
+
+					<div class="col-md-12">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Theme","التصميم") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+
+						<!-- uplaod system background image -->
+						<div class="col-md-6">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Upload Background image","ارفق خلفية") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text txt-center">
+										<input class="form-control" type="file" name="bgImage" ></br>
+										<img src="../logos/<?php echo $settingsImage ?>" style="height:250px">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- uplaod system logo -->
+						<div class="col-md-6">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Upload Logo","أرفق الشعار") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<input class="form-control" type="file" name="logo" ></br>
+										<img src="../logos/<?php echo $settingslogo ?>" style="height:250px">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- select theme -->
+						<div class="col-md-3">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Theme","التصميم") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<select class="form-control" type="text" name="theme" >
+											<?php
+											$themeValue = [0,1];
+											$themes = [direction("Categories","أقسام"),direction("Products","منتجات")];
+											for( $i = 0 ; $i < sizeof($themeValue); $i++ ){
+												$selected = $theme == $themeValue[$i] ? "selected" : "";
+												echo "<option value='{$themeValue[$i]}' {$selected}>{$themes[$i]}</option>";
+											}
+											?>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						<!-- show or hide logo -->
+						<div class="col-md-3">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark"><?php echo direction("Show Logo","أظهر اللوجو") ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="text">
+										<select class="form-control" type="text" name="showLogo" >
+											<?php
+											$showLogoValue = [0,1];
+											$showLogoText = [direction("Show","أظهر"),direction("Hide","أخفي")];
+											for( $i = 0 ; $i < sizeof($showLogoValue); $i++ ){
+												$selected = $showLogo == $showLogoValue[$i] ? "selected" : "";
+												echo "<option value='{$showLogoValue[$i]}' {$selected}>{$showLogoText[$i]}</option>";
+											}
+											?>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+
+						</div>
 						</div>
 					</div>
 					</div>
 					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Cookie</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="cookie" placeholder="Create-KW" value="<?php echo $cookieSession ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
 					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Payment API Key</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="PaymentAPIKey" placeholder="CKW-1619717358-2147" value="<?php echo $PaymentAPIKey ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
 					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">CreatePay Refference</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="refference" placeholder="ref0035" value="<?php echo $refference ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
 					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Website URL ( no slash at the end )</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="website" placeholder="https://createkwservers.com/store" value="<?php echo $settingsWebsite ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">OG: Description</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="OgDescription" placeholder="we provide everthing" value="<?php echo $settingsOgDescription ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Email</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="email" placeholder="info@create-kw.com" value="<?php echo $settingsEmail ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Period English</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="dTime" placeholder="Within 5 days" value="<?php echo $settingsDTime ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Select Package</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-								<select class="form-control" name="package" >
-									<?php
-									if ( $package == 0 ){
-										 $selected = "selected";
-										 $selected1 = "";
-										 $selected2 = "";
-									}elseif ( $package == 1 ){
-										 $selected = "";
-										 $selected1 = "selected";
-										 $selected2 = "";
-									}else{
-										 $selected = "";
-										 $selected1 = "";
-										 $selected2 = "selected";
-									}
-									?>
-									<option value="0" <?php echo $selected ?> >Free</option>
-									<option value="1" <?php echo $selected1 ?> >Monthly</option>
-									<option value="2" <?php echo $selected2 ?>>Annually</option> 
-								</select><br>
-									<input class="form-control" type="date" name="startDate" value="<?php echo substr($startDate,0,10) ?>"><br>
-									<input class="form-control" type="float" name="amount" placeholder="25.0" value="<?php echo $amount ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Period Arabic</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="text" name="dTimeArabic" placeholder="سيتم توصيل طلبكم خلال 5 ايام" value="<?php echo $settingsDTimeArabic ?>">
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo direction("Default Currency","العملة الأساسية"); ?></h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-								<select class="form-control" name="currency">
-									<?php 
-									if( $currency = selectDB("currency","`status` = '0' AND `hidden` = '1'") ){
-										foreach( $currency as $key ){
-											$selected = ($key["short"] == $defaultCurr ? "selected" : "");
-											echo "<option {$selected} value='{$key["short"]}'>{$key["short"]}</option>";
-										}
-									}
-									?>
-									
-								</select>
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Backgorund Image</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="file" name="bgImage" >
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-4">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Logo</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<input class="form-control" type="file" name="logo" >
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-6">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Facebook Pixil</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<textarea class="form-control" rows="10" name="pixil" ><?php echo $pixil ?></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					
-					<div class="col-md-6">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark">Google Analytics</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<div class="text">
-									<textarea class="form-control" rows="10" name="google" ><?php echo $google ?></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
 					
 					<div class="col-md-12">
 					<div class="panel panel-default card-view">
