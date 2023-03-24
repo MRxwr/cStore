@@ -20,18 +20,22 @@ $settingsWebsite = $row["website"];
 $PaymentAPIKey = $row["PaymentAPIKey"];
 $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
+$settingsLang = $row["language"] == "0" ? "ENG" : "AR";
 
-if ( isset($_GET["lang"]) )
-{
-	if ( $_GET["lang"] == "ENG" ){
-		setcookie("CREATEkwLANG","ENG",(86400*30) + time(), "/");
-		header("Refresh:0 , url=" . str_replace("?lang=ENG", "" ,str_replace("&lang=ENG", "", $_SERVER['REQUEST_URI'])) );
+if ( isset($_GET["lang"]) ){
+	$arrayLangs = ["ENG","AR"];
+	if ( in_array($_GET["lang"], $arrayLangs) ){
+		setcookie("CREATEkwLANG","{$_GET["lang"]}",(86400*30) + time(), "/");
+		header("Refresh:0 , url=" . str_replace("?lang={$_GET["lang"]}", "" ,str_replace("&lang={$_GET["lang"]}", "", $_SERVER['REQUEST_URI'])) );
 	}else{
-		setcookie("CREATEkwLANG","AR",(86400*30) + time(), "/");
-		header("Refresh:0 , url=" . str_replace("?lang=AR", "" ,str_replace("&lang=AR", "", $_SERVER['REQUEST_URI'])) );
+		setcookie("CREATEkwLANG","{$settingsLang}",(86400*30) + time(), "/");
+		header("Refresh:0 , url=" . str_replace("?lang={$settingsLang}", "" ,str_replace("&lang={$settingsLang}", "", $_SERVER['REQUEST_URI'])) );
 	}
+}elseif( !isset($_COOKIE["CREATEkwLANG"]) ){
+	$_COOKIE["CREATEkwLANG"] = $settingsLang;
 }
-if ( !isset($_COOKIE["CREATEkwLANG"]) OR $_COOKIE["CREATEkwLANG"] == "AR" ){
+
+if (  $_COOKIE["CREATEkwLANG"] == "AR" ){
 	$selectSubProduct = "إختر المنتج الفرعي";
 	$empTypeText = "نوع الموظف";
 	$postalCodeText = "الرمز البريدي";

@@ -604,10 +604,6 @@ if( $currList = getCurr() ){
 					</div>
 					</div>
 					
-					
-					
-					
-					
 					<div class="col-md-12">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
