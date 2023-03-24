@@ -6,9 +6,6 @@
 	bottom: 10px;
     position: absolute;
 }
-ul.social-icons {
-    
-}
 
 @media only screen and (max-width: 1025px) {
 	  .marginingTheSearchBar{
@@ -84,6 +81,17 @@ ul.social-icons {
     text-shadow: 0 0 10px #fff, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000, 0 0 30px #000, 0 0 35px #000, 0 0 40px #000;
   }
 }
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000, 0 0 30px #000, 0 0 35px #000;
+  }
+  
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000, 0 0 30px #000, 0 0 35px #000, 0 0 40px #000;
+  }
+}
+
 
 .preorder{
     font-family: 'Tajawal';
