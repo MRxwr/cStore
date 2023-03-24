@@ -59,7 +59,7 @@ if( $products = selectDB("products","`hidden` = '0' AND `bestSeller` = '1' ORDER
 			<span class="product-price"><?php echo $price;?>KD</span>
 			</div>
 			<a href="product.php?id=<?php echo $products[$i]["id"] ?>">
-			<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn" style="">
+			<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn">
 			<span class="fa fa-shopping-basket mr-2 ml-2"></span>
 			<?php
 				if ( $subProduct[0]["quantity"] > 0 ){
