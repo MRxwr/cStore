@@ -99,7 +99,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 
 <div class="v-body">
 
-<div class="header fixme d-md-block d-sm-none d-none" style="background-color: #512375;border: 1px solid #00000014;">
+<div class="header fixme d-md-block d-sm-none d-none" style="background-color: #512375;border: 1px solid #51237514;">
     <div class="container-fluid">
         <div class="row d-flex align-items-center">
             <div class="col-md-2 mt-3 mb-3" style="white-space:nowrap">

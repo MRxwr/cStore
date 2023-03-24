@@ -161,7 +161,7 @@ if( isset($userID) ){
 	<textarea style="display:none" name="info"><?php echo json_encode($info,JSON_UNESCAPED_UNICODE) ?></textarea>
 	<textarea style="display:none" name="giftCard"><?php echo json_encode($_POST["giftCard"],JSON_UNESCAPED_UNICODE) ?></textarea>
 	<textarea style="display:none" name="address"><?php echo json_encode($_POST["address"],JSON_UNESCAPED_UNICODE) ?></textarea>
-	<input type="submit" name="submit" class="btn btn-large" style="width:100%; color: #fbbe9f; background-color:#512375;" value="<?php echo $proceedToPaymentText ?>">
+	<input type="submit" name="submit" class="btn btn-large" style="width:100%;background-color:#512375; color:#fbbe9f" value="<?php echo $proceedToPaymentText ?>">
 </form>
 </div>
 
