@@ -130,6 +130,18 @@ if( isset($userID) ){
 
 <span style="color:red"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
 
+<?php
+if( $express = selectDB("settings","`id` = '1'") ){
+	$express = json_decode(stripslashes($express[0]["expressDelivery"]),true);
+	if( $express["status"] == 1 ){
+		$expressOption = direction("Experss Delivery","توصيل سريع");
+		$expressPeriod = direction($express["English"],$express["arabic"]);
+		$expressPrice = numTo3Float(priceCurr($express["expressDeliveryCharge"])) . selectedCurr();
+		echo "<div class='mt-3'><input name='express' type='checkbox' class=''> <span>{$expressOption} {$expressPeriod} - {$expressPrice}</span></div>";
+	}
+}
+?>
+
 <div class="calc-text-box d-flex justify-content-between">
 <span class="bold voucherMsgS" style="color:red;font-size:18px"><b class="voucherMsg"></b></span>
 </div>
@@ -144,7 +156,6 @@ if( isset($userID) ){
                 </div>
             </div>
             <input type="submit" class="ButtonStyle btn-text sendVoucher" value="<?php echo $sendText ?>" >
-            
             </button>
         </div>
     </div>
@@ -167,6 +178,13 @@ if( isset($userID) ){
 
 <Script>
 $(function(){
+	$("input[name=express]").change(function(){
+		if ($(this).is(":checked")) {
+			alert("Checkbox is checked");
+		} else {
+			alert("Checkbox is unchecked");
+		}
+	})
 	$('.sendVoucher').click(function(e){
 		e.preventDefault();
 		var voucher = $('#voucherInput').val()
