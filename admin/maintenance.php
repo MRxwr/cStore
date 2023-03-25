@@ -4,132 +4,63 @@
 require ("template/header.php");
 
 if ( isset($_POST["switch"]) ){
-	$sql = "UPDATE `maintenance` 
-			SET 
-			`status` = '".$_POST["switch"]."'
-			WHERE `id` LIKE '1'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("maintenance",array('status' => $_POST["switch"]),"`id` = '1'");
+}
+if ( isset($_POST["expressDelivery"]) ){
+	updateDB("settings",array('expressDelivery' => json_encode(array("status" => $_POST["expressDelivery"], "expressDeliveryCharge" => $_POST["expressDeliveryCharge"], "arabic" => $_POST["arabic"], "English" => $_POST["english"]),JSON_UNESCAPED_UNICODE)),"`id` = '1'");
+}
+if ( isset($_POST["dTime"]) ){
+	updateDB("settings",array('dTime' => $_POST["dTime"], "dTimeArabic" => $_POST["dTimeArabic"]),"`id` = '1'");
 }
 if ( isset($_POST["switchEmail"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`emailOpt` = '".$_POST["switchEmail"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('emailOpt' => $_POST["switchEmail"]),"`id` = '3'");
 }
 if ( isset($_POST["switchGift"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`giftCard` = '".$_POST["switchGift"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('giftCard' => $_POST["switchGift"]),"`id` = '3'");
 }
 if ( isset($_POST["switchCash"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`cash` = '".$_POST["switchCash"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('cash' => $_POST["switchCash"]),"`id` = '3'");
 }
 if ( isset($_POST["switchStore"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`inStore` = '".$_POST["switchStore"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('inStore' => $_POST["switchStore"]),"`id` = '3'");
 }
 if ( isset($_POST["switchVisa"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`visa` = '".$_POST["switchVisa"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('visa' => $_POST["switchVisa"]),"`id` = '3'");
 }
 if ( isset($_POST["switchKent"]) ){
-	$sql = "UPDATE `s_media` 
-			SET 
-			`knet` = '".$_POST["switchKent"]."'
-			WHERE `id` LIKE '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('knet' => $_POST["switchKent"]),"`id` = '3'");
 }
 if ( isset($_POST["minPrice"]) ){
-	$sql = "UPDATE `s_media`
-			SET 
-			`minPrice` = '".$_POST["minPrice"]."'
-			WHERE `id` LIKE '2'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('minPrice' => $_POST["minPrice"]),"`id` = '2'");
 }
 if ( isset($_POST["currency"]) ){
-	$sql = "UPDATE `s_media`
-			SET 
-			`currency` = '".$_POST["currency"]."'
-			WHERE `id` = '3'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('currency' => $_POST["currency"]),"`id` = '3'");
 }
 if ( isset($_POST["internationalDelivery"]) ){
-	$sql = "UPDATE `s_media`
-			SET 
-			`internationalDelivery` = '".$_POST["internationalDelivery"]."',
-			`internationalDelivery1` = '".$_POST["internationalDelivery1"]."',
-			`internationalDelivery2` = '".$_POST["internationalDelivery2"]."',
-			`internationalDelivery3` = '".$_POST["internationalDelivery3"]."'
-			WHERE `id` LIKE '2'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array(
+		'internationalDelivery' => $_POST["internationalDelivery"],
+		'internationalDelivery1' => $_POST["internationalDelivery1"],
+		'internationalDelivery2' => $_POST["internationalDelivery2"],
+		'internationalDelivery3' => $_POST["internationalDelivery3"]),
+		"`id` = '2'");
 }
-
-
 if ( isset($_POST["userDiscount"]) ){
-	$sql = "UPDATE `s_media`
-			SET 
-			`userDiscount` = '".$_POST["userDiscount"]."'
-			WHERE `id` LIKE '4'
-			";
-	$result = $dbconnect->query($sql);
+	updateDB("s_media",array('userDiscount' => $_POST["userDiscount"]),"`id` = '4'");
 }
 
-$sql = "SELECT * 
-		FROM `maintenance`
-		WHERE 
-		`id` LIKE '1'
-		";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-$mainSwitch = $row["status"];
+$options = selectDB("s_media","`id` != '0'");
+$visaSwitch = $options[2]["visa"];
+$storeSwitch = $options[2]["inStore"];
+$cashSwitch = $options[2]["cash"];
+$switchKent = $options[2]["knet"];
+$emailOpt = $options[2]["emailOpt"];
+$giftCard = $options[2]["giftCard"];
+$currency = $options[2]["currency"];
+$userDiscount = $options[3]["userDiscount"];
 
-$sql = "SELECT * 
-		FROM `s_media`
-		WHERE 
-		`id` LIKE '3'
-		";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-$visaSwitch = $row["visa"];
-$storeSwitch = $row["inStore"];
-$cashSwitch = $row["cash"];
-$switchKent = $row["knet"];
-$emailOpt = $row["emailOpt"];
-$giftCard = $row["giftCard"];
-$currency = $row["currency"];
-
-$sql = "SELECT userDiscount 
-		FROM `s_media`
-		WHERE 
-		`id` LIKE '4'
-		";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-$userDiscount = $row["userDiscount"];
-
+$maintenance = selectDB("maintenance","`id` = '1'"); 
+$mainSwitch = $maintenance[0]["status"];
+$settings = selectDB("settings","`id` = '1'"); 
 ?>
 <body>
 	<!-- Preloader -->
@@ -151,8 +82,6 @@ $userDiscount = $row["userDiscount"];
 		</div>
 		<!-- /Right Sidebar Menu -->
 		
-		
-		
 		<!-- Right Sidebar Backdrop -->
 		<div class="right-sidebar-backdrop"></div>
 		<!-- /Right Sidebar Backdrop -->
@@ -162,6 +91,7 @@ $userDiscount = $row["userDiscount"];
             <div class="container-fluid ">
 				<!-- Row -->
 				<div class="row" style="padding:16px">
+
 				<div class="col-md-4">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
@@ -266,6 +196,7 @@ $userDiscount = $row["userDiscount"];
 									<input type="hidden"  class="form-control" name="internationalDelivery3"  value="<?php echo $row["internationalDelivery3"] ?>">
 									<tr>
 									<td colspan="2" class="pt-5">
+										<br>
 										<input type="submit"  class="form-control btn btn-default" value="submit">
 									</td>
 									</tr>
@@ -277,8 +208,70 @@ $userDiscount = $row["userDiscount"];
 						</div>
 					</div>
 				</div>
+
+				<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Express Delivery","التوصيل السريع") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<form method="POST" action="">
+									<div class="row">
+										<div class="col-md-6">
+											<select name="expressDelivery" class="form-control">
+												<?php
+												$expressDeliverySettings = json_decode(stripslashes($settings[0]["expressDelivery"]),true);
+												$expressDelivery = [0,1];
+												$expressDeliveryTitle = [direction("No","لا"),direction("Yes","نعم")];
+												for( $i = 0; $i < sizeof($expressDelivery); $i++ ){
+													$selected = $expressDeliverySettings["status"] == $expressDelivery[$i] ? "selected" : "";
+													echo "<option value='$expressDelivery[$i]' {$selected}>{$expressDeliveryTitle[$i]}</option>";
+												}
+												?>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<input name="expressDeliveryCharge" type="float" pattern="^[0-9]+(\.[0-9]+)?$" class="form-control" value="<?php echo $expressDeliverySettings["expressDeliveryCharge"] ?>" placeholder="2.5">
+										</div>
+										<div class="col-md-6">
+											<input name="arabic" type="text" class="form-control mt-5" value="<?php echo $expressDeliverySettings["arabic"] ?>" placeholder="خلال 2 ساعة">
+										</div>
+										<div class="col-md-6">
+											<input name="english" type="text" class="form-control mt-5" value="<?php echo $expressDeliverySettings["English"] ?>" placeholder="ًWithin 2 hours">
+										</div>
+									</div>
+								<input type="submit" class="form-control btn btn-default"  value="submit">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Normal Delivery Period","مدة التوصيل العادية") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<form method="POST" action="">
+									<input type="text" name="dTime" class="form-control" value="<?php echo $settings[0]["dTime"] ?>">
+									<input type="text" name="dTimeArabic" class="form-control mt-5" value="<?php echo $settings[0]["dTimeArabic"] ?>">
+									<input type="submit" class="form-control btn btn-default"  value="submit">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 				
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
 							<div class="pull-left">
