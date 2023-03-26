@@ -59,22 +59,22 @@ if ( isset($_GET['idon']) ){
 	</thead>
 	<tbody>
 	<?php
-	if( $countries = selectDB("cities","`CountryCode` != 'KW' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
+	if( $countries = selectDB("cities","`id` != '0' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
 		for( $i = 0; $i < sizeof($countries); $i++){
 			if ( $countries[$i]["status"] == '0' ){
 				$link = "?idon={$countries[$i]["CountryCode"]}";
 				$button = "btn-success";
-				$title = "On";
+				$title = direction("On","تفعيل");
 			}else{
 				$link = "?idoff={$countries[$i]["CountryCode"]}";
 				$button = "btn-danger";
-				$title = "Off";
+				$title = direction("Off","إيقاف");
 			}
 			?>
 			<tr>
 			<td class="txt-dark"><?php echo str_pad($i,3,"0",STR_PAD_LEFT) ?></td>
 			<td><?php echo $countries[$i]["CountryName"]; ?></td>
-			<td><?php if ( $countries[$i]["status"] == '1' ){ echo "On";}else{ echo "Off";} ?></td>
+			<td><?php if ( $countries[$i]["status"] == '1' ){ echo direction("On","تفعيل");}else{ echo direction("Off","إيقاف");} ?></td>
 			<td><a href="<?php echo $link; ?>" class="btn <?php echo $button; ?> rounded"><?php echo $title; ?></a>
 			</td>
 			</tr>

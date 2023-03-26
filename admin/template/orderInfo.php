@@ -1,4 +1,7 @@
 <?php
+	if( $settings = selectDB("settings","`id` = '1'") ){
+		$defaultCurr = $settings[0]["currency"];
+	}
 	if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) && $order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'") ){
 		$items = json_decode($order[0]["items"],true);
 		$voucher = json_decode($order[0]["voucher"],true);
@@ -11,6 +14,7 @@
 		$creditTax = $order[0]["creditTax"];
 		$paymentMethod = $order[0]["paymentMethod"];
 		$price = $order[0]["price"]+$address["shipping"];
+		$deliveryText = $address["express"] == 0 ? direction("Delivery","التوصيل") : direction("Express Delivery","التوصيل السريع");
 		if( $paymentMethod == 1 ){
 			$method = "KNET";
 		}elseif( $paymentMethod == 2 ){
@@ -23,7 +27,7 @@
 		if( $voucher["discountType"] == 1 ){
 			$discountAmount = $voucher["discount"] . "%";
 		}elseif( $voucher["discountType"] == 2 ){
-			$discountAmount = $voucher["discount"] . "KD";
+			$discountAmount = $voucher["discount"] . $defaultCurr;
 		}else{
 			$discountAmount = "";
 		}
@@ -58,7 +62,7 @@ td{
 	</tr>
 	<tr>
 		<td style="text-align: center" class="txt-dark">
-			Order #<?php echo $orderId; ?>
+		<?php echo direction("Order","طلب") ?> #<?php echo $orderId; ?>
 		</td>
 	</tr>
 </table>
@@ -67,7 +71,7 @@ td{
 <tr>
 
 <td class="txt-dark" style="width:50%">
-<span class="txt-dark head-font inline-block capitalize-font mb-5">Address:</span>
+<span class="txt-dark head-font inline-block capitalize-font mb-5"><?php echo direction("Address","العنوان") ?>:</span>
 <address class="mb-15" class="txt-dark">
 <?php
 if ( $address["place"] != "3" ){
@@ -91,12 +95,13 @@ if ( $address["place"] != "3" ){
 </td>
 <td style="text-align: right;">
 <address>
-<span class="txt-dark head-font capitalize-font mb-5">Date: <?php echo $date ?></span><br>
-<span class="address-head mb-5">Phone: <?php echo $info["phone"] ?></span><br>
-<span class="address-head mb-5">Name: <?php echo $info["name"] ?></span>
+<span class="txt-dark head-font capitalize-font mb-5"><?php echo direction("Date","التاريخ") ?>: <?php echo $date ?></span><br>
+<span class="address-head mb-5"><?php echo direction("Phone","الهاتف") ?>: <?php echo $info["phone"] ?></span><br>
+<span class="address-head mb-5"><?php echo direction("Name","الإسم") ?>: <?php echo $info["name"] ?></span>
 <?php
 if( !empty($info["civilId"])){
-	echo "<br><span class='address-head mb-5'>Civil id:{$info["civilid"]}</span>";
+	$civilText = direction("Civil id","الرقم المدني");
+	echo "<br><span class='address-head mb-5'>{$civilText} id:{$info["civilid"]}</span>";
 }
 ?>
 </address>
@@ -106,7 +111,7 @@ if( !empty($info["civilId"])){
 if ( $emailOpt == 1 ){
 	?>
 	<tr>
-		<td colspan="2" style="width: 100%;text-align: right;"class="txt-dark"><span class="address-head mb-5">Email: <?php echo $info["email"] ?></span></td>
+		<td colspan="2" style="width: 100%;text-align: right;"class="txt-dark"><span class="address-head mb-5"><?php echo direction("Email","البريد الإلكتروني") ?>: <?php echo $info["email"] ?></span></td>
 	</tr>
 <?php
 }
@@ -117,8 +122,8 @@ if ( $emailOpt == 1 ){
 <div class="table-responsive">
 <table class="table table-hover" style="width:100%">
 <tr>
-<td style="text-align: left;" class="txt-dark">Item</td>
-<td style="text-align: left;" class="txt-dark">Price</td>
+<td style="text-align: left;" class="txt-dark"><?php echo direction("Items","المنتجات") ?></td>
+<td style="text-align: left;" class="txt-dark"><?php echo direction("Price","السعر") ?></td>
 </tr>
 <tbody>
 <?php 
@@ -170,44 +175,47 @@ for ($i =0; $i < sizeof($items); $i++){
 	if ( !empty($items[$i]["note"]) ){
 		$output .= "[{$items[$i]["note"]}]</span>";
 	}
-	$output .= "</td><td><span class='Price txt-dark'>" . numTo3Float($sale)."KD </span></div></td></tr>";
+	$output .= "</td><td><span class='Price txt-dark'>" . numTo3Float($sale). $defaultCurr ." </span></div></td></tr>";
 	echo $output;
 	$subTotal[] = numTo3Float($sale);
 }
 	/*
 	<td style="margin-top:10px" colspan="2"><br></td>
 	*/
-	echo "<tr class='txt-dark'><td>".direction("Sub Total","المجموع الفرعي")."</td><td>".numTo3Float(array_sum($subTotal))."KD</td></tr>";
+	echo "<tr class='txt-dark'><td>".direction("Sub Total","المجموع الفرعي")."</td><td>".numTo3Float(array_sum($subTotal)).$defaultCurr."</td></tr>";
 	
 	if ( isset($extraPrice) ){
-		echo "<tr class='txt-dark'><td>".direction("Add-ons","الإضافات")."</td><td>".numTo3Float(array_sum($extraPrice1)) ."KD</td></tr>";
+		echo "<tr class='txt-dark'><td>".direction("Add-ons","الإضافات")."</td><td>".numTo3Float(array_sum($extraPrice1)) . $defaultCurr ."</td></tr>";
 	}
 	
 	if ( $voucher["discount"] != '0' ){
-		echo "<tr class='txt-dark'><td>Discount</td><td>{$discountAmount}</td></tr>";
+		$discountText = direction("Discount","الخصم");
+		echo "<tr class='txt-dark'><td>{$discountText}</td><td>{$discountAmount}</td></tr>";
 	}
 	
 	if ( $creditTax != 0 ){
-		echo "<tr class='txt-dark'><td>Visa/Master Tax</td><td>{$creditTax} ?>KD</td></tr>";
+		$VisaText = direction("Visa/Master Tax","ضرائب الفيزا");
+		echo "<tr class='txt-dark'><td>{$VisaText}</td><td>{$creditTax}{$defaultCurr}</td></tr>";
 	}
 	
 	if ( isset($voucher["voucher"]) AND !empty($voucher["voucher"]) ){
-		echo "<tr class='txt-dark'><td>Voucher</td><td>{$voucher["voucher"]}</td></tr>";
+		$voucherText = direction("Voucher","كود الخصم");
+		echo "<tr class='txt-dark'><td>{$voucherText}</td><td>{$voucher["voucher"]}</td></tr>";
 	}
 	?>
 	<tr class="txt-dark">
-		<td>Delivery</td>
-		<td><?php echo numTo3Float($address["shipping"]); ?>KD</td>
+		<td><?php echo $deliveryText ?></td>
+		<td><?php echo numTo3Float($address["shipping"]) . $defaultCurr; ?></td>
 	</tr>
 
 	<tr class="txt-dark">
-		<td>Payment method:</td>
+		<td><?php echo direction("Payment Method","وسيلة الدفع") ?></td>
 		<td><?php echo $method ?></td>
 	</tr>
 	
 	<tr class="txt-dark">
-		<td>Total:</td>
-		<td><?php echo numTo3Float($price+array_sum($extraPrice1)) ?>KD</td>
+		<td><?php echo direction("Total","المجموع") ?>:</td>
+		<td><?php echo numTo3Float($price+array_sum($extraPrice1)) . $defaultCurr; ?></td>
 	</tr>
 	
 </tbody>
@@ -216,7 +224,7 @@ for ($i =0; $i < sizeof($items); $i++){
 <div class="row">
 <div class="col-xs-12">
 <address>
-<span class="txt-dark head-font capitalize-font mb-5">Special Instructions:</span>
+<span class="txt-dark head-font capitalize-font mb-5"><?php echo direction("Special Instructions","ملاحظات") ?>:</span>
 <br>
 <?php 
 echo $address["notes"];
@@ -231,10 +239,10 @@ if(!empty($giftCard["to"])){
 <div class="row">
 <div class="col-xs-12">
 <address>
-<span class="txt-dark head-font capitalize-font mb-5">Gift Card:</span>
+<span class="txt-dark head-font capitalize-font mb-5"><?php echo direction("Gift Card","كرت الهدية") ?>:</span>
 <br>
 <?php
-	echo "From: {$giftCard["from"]}<br>To: {$giftCard["to"]}<br>Message: {$giftCard["message"]}";
+	echo direction("From","من") . ": {$giftCard["from"]}<br>". direction("To","إلى") . ": {$giftCard["to"]}<br>". direction("Message","الرسالة") . ": {$giftCard["message"]}";
 }
 ?>
 <br>

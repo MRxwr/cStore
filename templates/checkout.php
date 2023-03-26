@@ -46,7 +46,7 @@ if ( isset($_GET["error"]) ){
 ?>
 <div class="checkout-informationbox">
 <div style="color:red; font-size:18px; text-align:center">
-<img src="https://i.imgur.com/h8aeHER.png" style="width:50px;heightL50px">
+<img src="https://i.imgur.com/h8aeHER.png" style="width:50px;height:50px">
 <br>
 <br>
 <?php echo $paymentFailureMsgText ?>

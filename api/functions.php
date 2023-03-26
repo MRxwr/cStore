@@ -68,7 +68,7 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 		$subPriceNew = (float)substr(getCartPrice(),0,6);
 		$totals2 = ((100-$userDiscountP)/100)*$subPriceNew;
 		$totals2 = priceCurr($totals2) + priceCurr($shoppingCharges) + priceCurr($visaCard) + (float)substr(getExtarsTotal(),0,6);
-		$msg = direction("Wrong Voucher","رمز خصم خاطئ");
+		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
 	}
  	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".numTo3Float(priceCurr($shoppingCharges)) .",".$discountPercentage . ',' . priceCurr($visaCard) . ',' . $userDiscountP. ",". numTo3Float($subPriceNew) . ",". numTo3Float((float)substr(getExtarsTotal(),0,6));
 }

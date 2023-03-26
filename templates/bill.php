@@ -45,7 +45,9 @@ body{background-color:#fafafa}
 <div class="checkoutsidebar">
 <?php
 if ( getCartItemsTotal() < 1 || !isset($_POST["address"]["place"]) ){
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+	if ( isset($_SERVER['HTTP_REFERER']) ){
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+	}
 }else{
 	echo loadCartItems();
 }
@@ -133,11 +135,13 @@ if( isset($userID) ){
 <?php
 if( $express = selectDB("settings","`id` = '1'") ){
 	$express = json_decode(stripslashes($express[0]["expressDelivery"]),true);
+	$expressOption = direction("Experss Delivery","توصيل سريع");
+	$expressPeriod = direction($express["English"],$express["arabic"]);
+	$expressPrice = numTo3Float(priceCurr($express["expressDeliveryCharge"])) . selectedCurr();
 	if( $express["status"] == 1 ){
-		$expressOption = direction("Experss Delivery","توصيل سريع");
-		$expressPeriod = direction($express["English"],$express["arabic"]);
-		$expressPrice = numTo3Float(priceCurr($express["expressDeliveryCharge"])) . selectedCurr();
 		echo "<div class='mt-3'><input name='express' type='checkbox' class=''> <span>{$expressOption} {$expressPeriod} - {$expressPrice}</span></div>";
+	}else{
+		$expressPrice = 0;
 	}
 }
 ?>
@@ -169,6 +173,7 @@ if( $express = selectDB("settings","`id` = '1'") ){
 	<input type="hidden" class="form-control orderVoucherInput" name="voucher" value="">
 	<input type="hidden" name="paymentMethod" value="<?php echo $_POST["paymentMethod"] ?>">
 	<input type="hidden" name="creditTax" class="VisaClass" value="<?php echo $VisaCard ?>">
+	<input type="hidden" name="expressDelivery" id="expressDel" value="0">
 	<textarea style="display:none" name="info"><?php echo json_encode($info,JSON_UNESCAPED_UNICODE) ?></textarea>
 	<textarea style="display:none" name="giftCard"><?php echo json_encode($_POST["giftCard"],JSON_UNESCAPED_UNICODE) ?></textarea>
 	<textarea style="display:none" name="address"><?php echo json_encode($_POST["address"],JSON_UNESCAPED_UNICODE) ?></textarea>
@@ -178,11 +183,22 @@ if( $express = selectDB("settings","`id` = '1'") ){
 
 <Script>
 $(function(){
+	function stripLetters(str) {
+		const numericString = str.replace(/[^0-9.]/g, '');
+		return parseFloat(numericString);
+	}
 	$("input[name=express]").change(function(){
+		var delivery = stripLetters("<?php echo $userDelivery ?>");
+		var expressDelivery = stripLetters("<?php echo $expressPrice ?>");
+		var cartTotal = stripLetters($(".totalSpan").html())-stripLetters($(".ShoppingSpan").html());
 		if ($(this).is(":checked")) {
-			alert("Checkbox is checked");
+			$(".ShoppingSpan").html(parseFloat(expressDelivery).toFixed(3)+"<?php echo selectedCurr() ?>");
+			$(".totalSpan").html(parseFloat(cartTotal+expressDelivery).toFixed(3)+"<?php echo selectedCurr() ?>");
+			$("#expressDel").val(expressDelivery);
 		} else {
-			alert("Checkbox is unchecked");
+			$(".ShoppingSpan").html(parseFloat(delivery).toFixed(3)+"<?php echo selectedCurr() ?>");
+			$(".totalSpan").html(parseFloat(cartTotal+delivery).toFixed(3)+"<?php echo selectedCurr() ?>");
+			$("#expressDel").val(0);
 		}
 	})
 	$('.sendVoucher').click(function(e){
@@ -196,7 +212,7 @@ $(function(){
 				visaCardCheck: <?php echo $VisaCard ?>,
 				userDiscountCheck: <?php echo $totals2 ?>,
 				totals2: <?php echo $totals2 ?>,
-				shippingChargesInput : <?php echo $userDelivery ?>,
+				shippingChargesInput : stripLetters($(".ShoppingSpan").html()),
 				paymentMethodInput : <?php echo $_POST["paymentMethod"] ?>,
 				userDiscountPercentage: <?php echo $userDiscount; ?>,
 			},

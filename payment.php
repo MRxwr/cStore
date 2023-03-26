@@ -64,13 +64,19 @@ if( $voucherData = selectDB("vouchers","`id` = '{$_POST["voucher"]}' AND `endDat
 
 // call payapi to get payment link \\
 $address = json_decode($_POST["address"],true);
+if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
+	$address["shipping"] = $_POST["expressDelivery"];
+	$address["express"] = 1;
+}else{
+	$address["express"] = 0;
+}
 $totalPrice = numTo3Float($price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
 require_once ('api/paymentBody.php');
 
 // full order details \\
 $data = array(
 	"info" 			=> $_POST["info"],
-	"address"		=> $_POST["address"],
+	"address"		=> json_encode($address,JSON_UNESCAPED_UNICODE),
 	"giftCard" 		=> $_POST["giftCard"],
 	"creditTax" 	=> $_POST["creditTax"],
 	"paymentMethod" => $_POST["paymentMethod"],
@@ -80,7 +86,7 @@ $data = array(
 	"voucher"		=> json_encode($voucher,JSON_UNESCAPED_UNICODE),
 	"items"			=> json_encode($items,JSON_UNESCAPED_UNICODE)
 );
-//print_r($data);print_r($postMethodLines);print_r($resultMY);die();
+//print_r($data);die();print_r($postMethodLines);print_r($resultMY);die();
 
 // sending user to pay and view details \\
 if( insertDB("orders2",$data) ){

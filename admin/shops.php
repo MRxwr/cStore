@@ -119,7 +119,7 @@ if( isset($_POST["enTitle"]) ){
 		<tr>
 		<th><?php echo direction("English Title","الإسم الإنجليزي") ?></th>
 		<th><?php echo direction("Arabic Title","الإسم العربي") ?></th>
-		<th class="text-nowrap"><?php echo direction("الخيارات","Actions") ?></th>
+		<th class="text-nowrap"><?php echo direction("Actions","الخيارات") ?></th>
 		</tr>
 		</thead>
 		
