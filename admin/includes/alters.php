@@ -7,4 +7,5 @@ if( $version = selectDB("settings","`id` = '1'") ){
         $dbconnect->query("UPDATE `settings` SET `version` = 'v1.0' ");
     }
 }
+
 ?>
