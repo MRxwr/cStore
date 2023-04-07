@@ -139,7 +139,7 @@ function insertDB($table, $data){
 function updateDB($table, $data, $where) {
     GLOBAL $dbconnect;
     $check = [';', '"'];
-    $data = escapeString($data);
+    //$data = escapeString($data);
     $where = str_replace($check, "", $where);
     $keys = array_keys($data);
     $sql = "UPDATE `" . $table . "` SET ";
