@@ -56,7 +56,7 @@
 			</a>
 			<ul id="myShop" class="collapse-level-1 collapse" aria-expanded="true" style="">
 				<li>
-					<a href="users.php" ><div class="pull-left">
+					<a href="listOfusers.php" ><div class="pull-left">
 					<i class="fa fa-users mr-20"></i>
 					<span class="right-nav-text"><?php echo $Users ?></span>
 					</div>
