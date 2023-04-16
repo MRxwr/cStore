@@ -225,7 +225,7 @@ if ( $row["inStore"] == "1")
 </ul>
 
 <div class="tab-content">
-<input type="hidden" class="form-control" id="pMethod" name="paymentMethod" value="3">
+<input type="hidden" class="form-control" id="pMethod" name="paymentMethod" value="" required>
 <input type="hidden" class="form-control" id="place" name="address[place]" value="1">
 
 <div id="" class="tab-pane active homeFormDiv">
@@ -377,6 +377,10 @@ $(function(){
 			if ( mobileNumber.length > 7 ){
 			}else{
 				alert('<?php echo $mobileNumberMsg ?>');
+				return false;
+			}
+			if( $('#pMethod').val() == '' ){
+			    alert('<?php echo direction("Please select a payment method","الرجاء إختيار طريقة دفع") ?>');
 				return false;
 			}
 		}else{

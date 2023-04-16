@@ -271,6 +271,7 @@ if( isset($_POST["fullName"]) ){
 			$("input[name=phone]").val(mobile);
 			$("input[name=update]").val(id);
 			$("input[name=fullName]").val(name);
+			$("input[name=fullName]").focus();
 			$("select[name=empType]").val(type);
 			$("select[name=shopId]").val(shop);
 		})
