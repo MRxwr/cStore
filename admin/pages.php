@@ -24,6 +24,7 @@ if( isset($_POST["enTitle"]) ){
 	$id = $_POST["update"];
 	unset($_POST["update"]);
 	if ( $id == 0 ){
+		$_POST["hidden"] = '1';
 		if( insertDB("pages", $_POST) ){
 			header("LOCATION: pages.php");
 		}else{
