@@ -121,9 +121,14 @@ if( isset($_POST["fullName"]) ){
 			<div class="col-md-6">
 			<label><?php echo direction("Type","النوع") ?></label>
 			<select name="empType" class="form-control">
-				<option value="0"><?php echo direction("Admin","مدير") ?></option>
-				<option value="1"><?php echo direction("Employee","موظف") ?></option>
-				<option value="2"><?php echo direction("POS","نقظة بيع") ?></option>
+				<?php 
+				if( $roles = selectDB("roles","`status` = '0' AND `hidden` = '1'") ){
+					for( $i = 0; $i < sizeof($roles); $i++ ){
+						$title = direction($roles[$i]["enTitle"],$roles[$i]["arTitle"]);
+						echo "<option value='{$roles[$i]["id"]}'>{$title}</option>";
+					}
+				}
+				?>
 			</select>
 			</div>
 			
