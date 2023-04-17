@@ -14,7 +14,7 @@
 		$creditTax = $order[0]["creditTax"];
 		$paymentMethod = $order[0]["paymentMethod"];
 		$price = $order[0]["price"]+$address["shipping"];
-		$deliveryText = $address["express"] == 0 ? direction("Delivery","التوصيل") : direction("Express Delivery","التوصيل السريع");
+		$deliveryText = (isset($address["express"]) && $address["express"]) == 0 ? direction("Delivery","التوصيل") : direction("Express Delivery","التوصيل السريع");
 		if( $paymentMethod == 1 ){
 			$method = "KNET";
 		}elseif( $paymentMethod == 2 ){

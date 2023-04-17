@@ -46,6 +46,7 @@ if (isset($_POST["title"])) {
 			`headerButton` = '" . $_POST["headerButton"] . "',
 			`google` = '" . urlencode($_POST["google"]) . "',
 			`pixil` = '" . urlencode($_POST["pixil"]) . "',
+			`whatsappNoti` = '" . json_encode($_POST["whatsappNoti"]) . "',
 			`website` = '" . $_POST["website"] . "',";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
 		$directory = "../logos/";
@@ -93,6 +94,7 @@ $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
 $google = urldecode($row["google"]);
 $pixil = urldecode($row["pixil"]);
+$whatsappNoti = json_decode($row["whatsappNoti"],true);
 
 $sql = "SELECT * FROM `s_media` WHERE `id` LIKE '3'";
 $result = $dbconnect->query($sql);
@@ -498,6 +500,110 @@ if ($currList = getCurr()) {
 													<div class="panel-body">
 														<div class="text">
 															<textarea class="form-control" rows="10" name="google"><?php echo $google ?></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-12">
+							<div class="panel panel-default card-view">
+								<div class="panel-heading">
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark"><?php echo direction("Whatsapp Notification", "إشعار الواتساب") ?></h6>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body">
+										<!-- whatsapp status -->
+										<div class="col-md-6">
+											<div class="panel panel-default card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark"><?php echo direction("Turn On/Off","تشغيل/إيقاف") ?></h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="text">
+														<select class="form-control" name="whatsappNoti[status]" >
+															<?php 
+															$wStatus = [0,1];
+															$wTitle = [direction("No","لا"),direction("Yes","نعم")];
+															for( $i = 0; $i < sizeof($wStatus); $i++){
+																$wSelected = (isset($whatsappNoti["status"]) && $whatsappNoti["status"] == $wStatus[$i]) ? "selected" : "";
+																echo "<option value='{$wStatus[$i]}' {$wSelected}>{$wTitle[$i]}</option>";
+															}
+															?>
+														</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- whatsapp Language -->
+										<div class="col-md-6">
+											<div class="panel panel-default card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="text">
+														<select class="form-control" name="whatsappNoti[lang]" >
+															<?php 
+															$wStatus = ["en","ar"];
+															$wTitle = [direction("English","الإنجليزية"),direction("Arabic","العربية")];
+															for( $i = 0; $i < sizeof($wStatus); $i++){
+																$wSelected = (isset($whatsappNoti["lang"]) && $whatsappNoti["lang"] == $wStatus[$i]) ? "selected" : "";
+																echo "<option value='{$wStatus[$i]}' {$wSelected}>{$wTitle[$i]}</option>";
+															}
+															?>
+														</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- whatsapp status -->
+										<div class="col-md-12">
+											<div class="panel panel-default card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="col-md-4">
+														<div class="text">
+														<input class="form-control" name="whatsappNoti[name]" value="<?php echo $wSelected = isset($whatsappNoti["name"]) ? "{$whatsappNoti["name"]}" : "" ?>" placeholder="<?php echo direction("Website Name","إسم الموقع") ?>">
+														</div>
+														</div>
+
+														<div class="col-md-4">
+														<div class="text">
+														<input class="form-control" name="whatsappNoti[domain_token]" value="<?php echo $wSelected = isset($whatsappNoti["domain_token"]) ? "{$whatsappNoti["domain_token"]}" : "" ?>" placeholder="<?php echo direction("Automate Domain Token","رمز الموقع من أوتوميت") ?>">
+														</div>
+														</div>
+
+														<div class="col-md-4">
+														<div class="text">
+														<input class="form-control" name="whatsappNoti[to]" value="<?php echo $wSelected = isset($whatsappNoti["to"]) ? "{$whatsappNoti["to"]}" : "" ?>" placeholder="<?php echo direction("Orders Phone","هاتف الطلبات") ?>">
+														</div>
 														</div>
 													</div>
 												</div>
