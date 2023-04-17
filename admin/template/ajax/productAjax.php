@@ -65,7 +65,7 @@ if ( $row["collection"] == 1 ){
 		$action .='<a href="add-collection.php?id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="Collection"><i class="fa fa-object-group"></i></a>';
 
 }
-if ($userType == 0 ){
+
 	$action .='<a href="add-products.php?act=edit&id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="<?php echo $edit ?>"><i class="zmdi zmdi-edit"></i></a>';
 
 	if ( $row["hidden"] == 0 ){
@@ -93,7 +93,6 @@ if ($userType == 0 ){
 	}
 	$action .='<a href="?newId='.$row["id"].'" class="font-18 '.$color.' mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.direction("Recent","جديدنا").'"><i class="fa fa-plus-square"></i></a>';
 
-   }
 $arTitle=$row['arTitle'];
    $data[] = array( 
       "id"=>str_pad($i,2,"0",STR_PAD_LEFT),
