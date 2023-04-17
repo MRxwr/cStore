@@ -149,7 +149,7 @@ function whatsappNoti($order){
 		$data["customer_name"] = $whatsappNoti["name"];
 		$data["invoiceid"] = $order;
 		$data["invoice_name"] = "invoice-{$whatsappNoti["name"]}-{$order}";
-		$data["invoice_url"] = html_to_pdf($order);
+		$data["invoice_url"] = $order;
 	}else{
 		$data = array();
 	}
