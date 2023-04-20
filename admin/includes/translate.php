@@ -35,7 +35,7 @@ if ( isset($_GET["lang"]) ){
 	$_COOKIE["CREATEkwLANG"] = $settingsLang;
 }
 
-if (  $_COOKIE["CREATEkwLANG"] == "AR" ){
+if (  isset($_COOKIE["CREATEkwLANG"]) && $_COOKIE["CREATEkwLANG"] == "AR" ){
 	$selectSubProduct = "إختر المنتج الفرعي";
 	$empTypeText = "نوع الموظف";
 	$postalCodeText = "الرمز البريدي";

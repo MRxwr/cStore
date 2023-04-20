@@ -141,15 +141,19 @@ function showLogo(){
 function whatsappNoti($order){
 	if( $whatsappNoti = selectDB("settings","`id` = '1'") ){
 		$whatsappNoti = json_decode($whatsappNoti[0]["whatsappNoti"],true);
-		$data["type"] = "template";
-		$data["comapany_name"] = "createkuwait";
-		$data["lang"] = $whatsappNoti["lang"];
-		$data["domain_token"] = $whatsappNoti["domain_token"];
-		$data["to"] = $whatsappNoti["to"];
-		$data["customer_name"] = $whatsappNoti["name"];
-		$data["invoiceid"] = $order;
-		$data["invoice_name"] = "invoice-{$whatsappNoti["name"]}-{$order}";
-		$data["invoice_url"] = $order;
+		if( $whatsappNoti["status"] != 1 ){
+			$data = array();
+		}else{
+			$data["type"] = "template";
+			$data["comapany_name"] = "createkuwait";
+			$data["lang"] = $whatsappNoti["lang"];
+			$data["domain_token"] = $whatsappNoti["domain_token"];
+			$data["to"] = $whatsappNoti["to"];
+			$data["customer_name"] = $whatsappNoti["name"];
+			$data["invoiceid"] = $order;
+			$data["invoice_name"] = "invoice-{$whatsappNoti["name"]}-{$order}";
+			$data["invoice_url"] = getPDF($order);
+		}
 	}else{
 		$data = array();
 	}
@@ -167,6 +171,27 @@ function whatsappNoti($order){
 	  CURLOPT_HTTPHEADER => array(
 		'Cookie: XSRF-TOKEN=eyJpdiI6Im5NMzk2M3B6bU92UzdmY2tCK3NCMXc9PSIsInZhbHVlIjoiQnJrRjEzTjVON1ZSVjN4ZEtwN1oveCtHTXhnWU5pRTFEVHpNeStzRDhmZE1rN1dFMjMzb3ZENFJ0OUVXbnBGSmRYRmdPYm9hTmlkQnMxVUxCRDROU1Q0TXQvdE5JRS9heENTOEI3dW9Gb2d0Y1hJVi9UMUVQWHRFOWRDaGRxdHQiLCJtYWMiOiI3YWNhNmNmZDk4YjNmZDM5ZjM1YjY4ZDI5ZDI4YWIxMTZjYTdmOGNhODQ1ZmQwNGUxYmRmNWY5Y2VmMDE1NTZhIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IlJHY2sxMnVrdFBUOUZlSlQ3UlhJN0E9PSIsInZhbHVlIjoiTmhCS3RUaFJMOTZxNEF3TFdieXM1YkF4RTVJTGx4WkVadURLSWhnOEV1c0E4Tm9ueEdaUlJzSkgycXgvbzVmMXg4aWE2RkduVEdZdWdDdGtXdkMvQUdaVEJjRDZ6QzlCYWo5MmpzTzdvcmZQaUVJVS84RkdFZnJZVU9tQ0NCUHUiLCJtYWMiOiIzN2VmNzE2ZWZlZjQ0NmFjOGUzMjlhYzYxNTVlNTg5MGZlYWQ3ZWYyMGY1ZmRhMDMwMzkzYzkwYzY3Y2E0MGExIiwidGFnIjoiIn0%3D'
 	  ),
+	));
+	$response = curl_exec($curl);
+	curl_close($curl);
+	return $response;
+}
+
+function getPDF($orderId){
+	$settings = selectDB("settings","`id` = '1'");
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	CURLOPT_URL => "{$settings[0]["website"]}/invoice.php?orderId={$orderId}",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => '',
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 0,
+	CURLOPT_FOLLOWLOCATION => true,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => 'GET',
+	CURLOPT_HTTPHEADER => array(
+		'Cookie: XSRF-TOKEN=eyJpdiI6Ik9TWmJlUDF2VGdNNVIzek5Yc0RHUUE9PSIsInZhbHVlIjoiWUxlSVpqVVZvMFhBbmtwZzM3Z0U3NW5ScFVYeVVhdVA5UU1xMXBTemtrZmJZQnNkNldaUzArZFpuR1krUGp5TzkzaDI1WnZmMEpNdUxtWU5ERVdTRnpzZlBjeVRyR2RTa0IwRDYrRnJ5SW5xMy9ob1JzUkV0anFOdUtlL0ZpcTciLCJtYWMiOiJlMjljZWUwNGJhYmE4NGM2ODc1MjFlMWI1ZGI3YTFjMmMwYjZiMTRiYzAxNzljNGJlYTQ2MTFmYTBjZmUwMTJmIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6IjRoZGhHbHJyTmhjNUZmVUdsZldieHc9PSIsInZhbHVlIjoiOVhSY0VFampJQjJOSVdxVGlCZkZYWmdkb1NoaGExNmduVHlLN2l3bDNQNVd1VnNLTWorMTN6SCtkMGtaVjVOeDl2N1FjZkZrcWlDRVBmcVQzd2FNMWtkYTRYR1NPY0psTFJFakNxbmRQMDduZGNKbU5TN2c1Y2twWWp4c0lEK20iLCJtYWMiOiIwODViMmJlN2RjZjUwZjExMDM0YTU2NGE2NWMyYjc2NDM4MGU3OGE2MDY1YzBkMDQ3MzYzZmVhYTMxMzZkYTM0IiwidGFnIjoiIn0%3D'
+	),
 	));
 	$response = curl_exec($curl);
 	curl_close($curl);

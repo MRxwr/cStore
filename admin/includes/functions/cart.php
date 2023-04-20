@@ -254,4 +254,57 @@ function loadItems($items){
 	return $output;
 }
 
+function loadWhatsappItems($items){
+	$output = "";
+	$extraPrice = [0];
+	$items = json_decode($items,true);
+	for ($i =0; $i < sizeof($items); $i++){
+		$product = selectDB("products","`id` = '{$items[$i]["productId"]}'");
+		$attribute = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}'");
+		if( $items[$i]["priceAfterVoucher"] != 0 ){
+			$sale = $items[$i]["priceAfterVoucher"];
+		}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
+			$sale = $items[$i]["discountPrice"];
+		}else{
+			$sale = $items[$i]["price"];
+		}
+		$output .= "<td class='col-md-9'>{$items[$i]["quantity"]}x ";
+		$output .= direction($product[0]["enTitle"],$product[0]["arTitle"]);
+		if( !empty(direction($attribute[0]["enTitle"],$attribute[0]["arTitle"])) ){
+			$output .= " - " . direction($attribute[0]["enTitle"],$attribute[0]["arTitle"]);
+		}
+		$collection = $items[$i]["collections"];
+		for( $y = 0; $y < sizeof($collection) ; $y++ ){
+			if ( !empty($collection[$y]) ){
+				$productsInfo = selectDB('products', "`id` = '{$collection[$y]}'");
+				$output .= "[ " . direction($productsInfo[0]["enTitle"],$productsInfo[0]["arTitle"]) . " ]";
+			}
+		}
+		$extras = $items[$i]["extras"];
+		for( $y = 0; $y < sizeof($extras["id"]) ; $y++ ){
+			if ( !empty($extras["variant"][$y]) ){
+				$extraInfo = selectDB('extras', "`id` = '{$extras["id"][$y]}'");
+				$extraInfo[0]['price'] = ($extraInfo[0]['priceBy'] == 0 ? $extraInfo[0]['price'] : $extras["variant"][$y]);
+				$extras["variant"][$y] = ($extraInfo[0]['priceBy'] == 0 ? $extras["variant"][$y] : "");
+				$extraPriceView = $extraInfo[0]['price'] == 0 ? "]" : numTo3Float(priceCurr($extraInfo[0]['price'])). selectedCurr()." ]";
+				$output .= "[ " . direction($extraInfo[0]["enTitle"],$extraInfo[0]["arTitle"]) . ": {$extras["variant"][$y]} ". $extraPriceView;
+				$extraPrice[] = $extraInfo[0]['price'];
+			}
+		}
+		$giftCard = $items[$i]["giftCard"];
+		if ( isset($giftCard["body"]) ){
+			$giftCard["to"] = ( $giftCard["to"] == "" ? "" : $giftCard["to"]);
+			$giftCard["from"] = ( $giftCard["from"] == "" ? "" : $giftCard["from"]);
+			$giftCard["body"] = ( $giftCard["body"] == "" ? "" : $giftCard["body"]);
+			$output .= "[To:{$giftCard["to"]}, From:{$giftCard["from"]}, Message:{$giftCard["body"]}]";
+		}
+		if ( !empty($items[$i]["note"]) ){
+			$output .= "[{$items[$i]["note"]}]";
+		}
+		$output .= "</td><td class='col-md-3'><i class='fa fa-inr'></i> " . numTo3Float(priceCurr($sale)) . selectedCurr()."</td></tr>";
+		$extraPrice = [0]; 
+	}
+	return $output;
+}
+
 ?>

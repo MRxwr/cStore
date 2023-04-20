@@ -81,6 +81,7 @@ if ( $order[0]["status"] == '0' ){
 		
 	}
 	sendNotification($data);
+	whatsappNoti($order);
 }
 
 ?>
