@@ -140,18 +140,18 @@ function showLogo(){
 // whatsapp notification \\
 function whatsappNoti($order){
 	if( $whatsappNoti = selectDB("settings","`id` = '1'") ){
-		$whatsappNoti = json_decode($whatsappNoti[0]["whatsappNoti"],true);
-		if( $whatsappNoti["status"] != 1 ){
+		$whatsappNoti1 = json_decode($whatsappNoti[0]["whatsappNoti"],true);
+		if( $whatsappNoti1["status"] != 1 ){
 			$data = array();
 		}else{
 			$data["type"] = "template";
 			$data["comapany_name"] = "createkuwait";
-			$data["lang"] = $whatsappNoti["lang"];
-			$data["domain_token"] = $whatsappNoti["domain_token"];
-			$data["to"] = $whatsappNoti["to"];
-			$data["customer_name"] = $whatsappNoti["name"];
+			$data["lang"] = $whatsappNoti1["lang"];
+			$data["domain_token"] = $whatsappNoti1["domain_token"];
+			$data["to"] = $whatsappNoti1["to"];
+			$data["customer_name"] = $whatsappNoti1["name"];
 			$data["invoiceid"] = $order;
-			$data["invoice_name"] = "invoice-{$whatsappNoti["name"]}-{$order}";
+			$data["invoice_name"] = "invoice-{$whatsappNoti1["name"]}-{$order}";
 			$data["invoice_url"] = getPDF($order);
 		}
 	}else{
@@ -181,7 +181,7 @@ function getPDF($orderId){
 	$settings = selectDB("settings","`id` = '1'");
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
-	CURLOPT_URL => "{$settings[0]["website"]}/invoice.php?orderId={$orderId}",
+	CURLOPT_URL => $settings[0]["website"]."/invoice.php?orderId={$orderId}",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_ENCODING => '',
 	CURLOPT_MAXREDIRS => 10,
