@@ -181,7 +181,7 @@ function getPDF($orderId){
 	$settings = selectDB("settings","`id` = '1'");
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
-	CURLOPT_URL => $settings[0]["website"]."/invoice.php?orderId={$orderId}",
+	CURLOPT_URL => "https://automate.createkwservers.com/api/generate/pdf?url={$settings[0]["website"]}/invoice.php?orderId={$orderId}",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_ENCODING => '',
 	CURLOPT_MAXREDIRS => 10,
