@@ -121,7 +121,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
     			<tr class="receipt-header">
 					<td class="col-xs-6 col-sm-6 col-md-6">
 						<div class="receipt-left">
-						    <img src="logos/<?php echo $settings[0]["logo"] ?>" style="width:200px">
+						    <img src="<?php echo "{$settings[0]["website"]}/logos/{$settings[0]["logo"]}" ?>" style="width:200px">
 						</div>
 					</td>
 					<td class="col-xs-6 col-sm-6 col-md-6" style="text-align:right">

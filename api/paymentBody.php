@@ -20,7 +20,7 @@ if (is_numeric($info["phone"])){
 
 // build request body for payapi \\
 $postMethodLines = array(
-	"endpoint" 				=> "PaymentRequestExicuteForStore",
+	"endpoint" 				=> "PaymentRequestExicute", // "ForStore" was 
 	"apikey" 				=> $PaymentAPIKey,
 	"PaymentMethodId" 		=> $paymentMethod,
 	"CustomerName"			=> $info["name"],

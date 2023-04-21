@@ -182,7 +182,7 @@ for ($i =0; $i < sizeof($items); $i++){
 	/*
 	<td style="margin-top:10px" colspan="2"><br></td>
 	*/
-	echo "<tr class='txt-dark'><td>".direction("Sub Total","المجموع الفرعي")."</td><td>".numTo3Float(array_sum($subTotal)).$defaultCurr."</td></tr>";
+	echo "<tr class='txt-dark'><td>".direction("Sub Total","المجموع الفرعي")."</td><td>".numTo3Float($order[0]["price"]).$defaultCurr."</td></tr>";
 	
 	if ( isset($extraPrice) ){
 		echo "<tr class='txt-dark'><td>".direction("Add-ons","الإضافات")."</td><td>".numTo3Float(array_sum($extraPrice1)) . $defaultCurr ."</td></tr>";
