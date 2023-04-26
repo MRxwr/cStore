@@ -47,6 +47,7 @@ if (isset($_POST["title"])) {
 			`google` = '" . urlencode($_POST["google"]) . "',
 			`pixil` = '" . urlencode($_POST["pixil"]) . "',
 			`whatsappNoti` = '" . json_encode($_POST["whatsappNoti"]) . "',
+			`shippingMethod` = '".$_POST["shippingMethod"]."',
 			`website` = '" . $_POST["website"] . "',";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
 		$directory = "../logos/";
@@ -92,6 +93,7 @@ $websiteColor = $row["websiteColor"];
 $headerButton = $row["headerButton"];
 $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
+$shippingMethod = $row["shippingMethod"];
 $google = urldecode($row["google"]);
 $pixil = urldecode($row["pixil"]);
 $whatsappNoti = json_decode($row["whatsappNoti"],true);
@@ -204,6 +206,35 @@ if ($currList = getCurr()) {
 													<div class="panel-body">
 														<div class="text">
 															<input class="form-control" type="text" name="version" placeholder="Create-Store" value="<?php echo $version ?>">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										
+										<!-- default international shipping -->
+										<div class="col-md-4">
+											<div class="panel panel-default card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark"><?php echo direction("International Shipping", "التوصيل الدولي") ?></h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="text">
+															<select class="form-control" type="text" name="shippingMethod">
+																<?php
+																$shippingMethodValues = [0, 1, 2];
+																$shippingMethodText = [direction("None", "لا يوجد"), direction("DHL", "دي اتش ال"), direction("Aramex", "أراميكس")];
+																for ($i = 0; $i < sizeof($shippingMethodValues); $i++) {
+																	$selected = $shippingMethod == $shippingMethodValues[$i] ? "selected" : "";
+																	echo "<option value='{$shippingMethodValues[$i]}' {$selected}>{$shippingMethodText[$i]}</option>";
+																}
+																?>
+															</select>
 														</div>
 													</div>
 												</div>

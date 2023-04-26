@@ -1,7 +1,4 @@
 <?php
-// get user info \\
-$info = json_decode($_POST["info"],true);
-
 // check payment status [ kent to cash ]\\
 if ( $_POST["paymentMethod"] == 3 ){
 	$paymentMethod = 1;
@@ -9,13 +6,6 @@ if ( $_POST["paymentMethod"] == 3 ){
 }else{
 	$paymentMethod = $_POST["paymentMethod"];
 	$cash = 0;
-}
-
-// check phone number \\
-if (is_numeric($info["phone"])){
-	$phone1 = $info["phone"];
-}else{
-	$phone1 = "12345678";
 }
 
 // build request body for payapi \\
@@ -31,10 +21,13 @@ $postMethodLines = array(
 	"invoiceValue"			=> (float)$totalPrice,
 	"SourceInfo"			=> '',
 	"CallBackUrl"			=> $settingsWebsite.'/details.php',
-	"ErrorUrl"				=> $settingsWebsite.'/checkout.php?error=3'
-
+	"ErrorUrl"				=> $settingsWebsite.'/checkout.php?error=3',
+	"ShippingMethod"		=> $settingsShippingMethod,
+	"invoiceItems" 			=> $itemList,
+	"ShippingConsignee" 	=> $shippingInfo,
+	"CustomerAddress" 		=> $customerAddress
 );
-
+// echo json_encode($postMethodLines);die();
 // try to get link for 10 times if not send user to check out page \\
 for( $i=0; $i < 10; $i++ ){
 	$curl = curl_init();
@@ -53,7 +46,7 @@ for( $i=0; $i < 10; $i++ ){
 	$response = curl_exec($curl);
 	curl_close($curl);
 	$resultMY = json_decode($response, true);
-	//echo json_encode($resultMY);die();
+	echo json_encode($resultMY);die();
 	if( isset($resultMY["data"]["InvoiceId"]) ){
 	  $gatewayId = $resultMY["data"]["InvoiceId"];
 	  break;

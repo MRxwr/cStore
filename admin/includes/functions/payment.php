@@ -223,4 +223,60 @@ function checkPayment($data){
 	];
 	return $array;
 }
+
+// Get Items Details For PaymentAPI \\
+function getItemsForPayment($cartId,$prices){
+	if ( $cart = selectDB("cart","`cartId` = '{$cartId}'") ){
+		for( $i = 0; $i < sizeof($cart); $i++ ){
+			$item = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
+			$attribute = selectDB("products","`id` = '{$cart[$i]["subId"]}'");
+			$item[0]["enTitle"] = (!empty($attribute[0]["enTitle"]) ? "{$item[0]["enTitle"]} - {$attribute[0]["enTitle"]}" : $item[0]["enTitle"]);
+			$returnData[] = array(
+				"ItemName" 		=> $item[0]["enTitle"],
+				"ProductName" 	=> $item[0]["enTitle"],
+				"Description" 	=> $item[0]["enTitle"],
+				"Quantity" 		=> $cart[$i]["quantity"],
+				"UnitPrice" 	=> $prices[$i],
+				"Width" 		=> $item[0]["width"] = ($item[0]["width"] == 0 ? "1": $item[0]["width"]),
+				"Weight" 		=> $item[0]["weight"] = ($item[0]["weight"] == 0 ? "1": $item[0]["weight"]),
+				"Height" 		=> $item[0]["height"] = ($item[0]["height"] == 0 ? "1": $item[0]["height"]),
+				"Depth" 		=> $item[0]["depth"] = ($item[0]["depth"] == 0 ? "1": $item[0]["depth"])
+			);
+		}
+	}
+	return $returnData;
+}
+
+// calculate international shipping \\
+function getInternationalShipping($items,$address){
+	GLOBAL $PaymentAPIKey, $settingsShippingMethod;
+	$data = array(
+		'endpoint' => 'CalculateShippingCharge',
+		'apikey' => $PaymentAPIKey,
+		'ShippingMethod' => $settingsShippingMethod,
+		'Items' => $items,
+		'CityName' => (string)$address["area"],
+		'PostalCode' => (string)$address["postalCode"],
+		'CountryCode' => (string)$address["country"]
+	);
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	CURLOPT_URL => 'https://createkwservers.com/payapi/api/v2/index.php',
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => '',
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 0,
+	CURLOPT_FOLLOWLOCATION => true,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => 'POST',
+	CURLOPT_POSTFIELDS => json_encode($data),
+	CURLOPT_HTTPHEADER => array(
+		'Cookie: PHPSESSID=cb3847a7ccd73fefff9a1cb3c5f53080'
+	)
+	));
+	$response = curl_exec($curl);
+	$response = json_decode($response,true);	
+	$fees = ($response["data"]["IsSuccess"] == true ? $response["data"]["Data"]["Fees"] : $address["shipping"]);
+	return $fees;
+}
 ?>

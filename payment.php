@@ -7,6 +7,11 @@ require("includes/checksouthead.php");
 
 ini_set( 'precision', 4 );
 ini_set( 'serialize_precision', -1 );
+// get user info \\
+$info = json_decode($_POST["info"],true);
+
+// check phone number \\
+$phone1 = (is_numeric($info["phone"]) ? $info["phone"] : "12345678");
 
 // cart details \\
 $getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
@@ -23,6 +28,13 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 			$items[$i]["price"] = $subQuan[0]["price"];
 			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"]);
 			$items[$i]["priceAfterVoucher"] = numTo3Float(checkItemVoucherDefault($_POST["voucher"],$items[$i]["subId"]));
+			if( $items[$i]["priceAfterVoucher"] != 0 ){
+				$paymentAPIPrice[] = $items[$i]["priceAfterVoucher"];
+			}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
+				$paymentAPIPrice[] = $items[$i]["discountPrice"];
+			}else{
+				$paymentAPIPrice[] = $items[$i]["price"];
+			}
 		}else{
 			deleteDB("cart","`id` = '{$cart[$i]["id"]}'");
 			header("LOCATION: checkout.php?error=5");die();
@@ -70,7 +82,51 @@ if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
 }else{
 	$address["express"] = 0;
 }
-$totalPrice = numTo3Float($price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
+
+// create item list \\
+$itemList = getItemsForPayment($getCartId["cart"],$paymentAPIPrice);
+$itemList[] = array(
+	"ItemName" 		=> "Items - Extras",
+	"ProductName" 	=> "Items - Extras",
+	"Description" 	=> "Items - Extras",
+	"Quantity" 		=> 1,
+	"UnitPrice" 	=> (float)substr(getExtarsTotalDefault(),0,6)
+);
+
+// shiiping information \\
+if( $address["country"] == "KW" ){
+	$settingsShippingMethod = 0;
+	$area = selectDB("areas","`id` = '{$address["area"]}'");
+	$address["area"] = $area[0]["enTitle"];
+	$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
+	$itemList[] = array(
+		"ItemName" 		=> "Delivery charges",
+		"ProductName" 	=> "Delivery charges",
+		"Description" 	=> "Delivery charges",
+		"Quantity" 		=> 1,
+		"UnitPrice" 	=> (float)$address["shipping"]
+	);
+}else{
+	$address["shipping"] = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$address);
+	$totalPrice = numTo3Float((float)$price + (float)substr(getExtarsTotalDefault(),0,6));
+}
+$shippingInfo = array(
+	"CountryCode"	=> $address["country"],
+	"CityName"		=> $address["area"],
+	"LineAddress"	=> "Blk. {$address["block"]}, St.{$address["street"]}, Ave.{$address["avenue"]}, Bld.{$address["building"]}, Fl.{$address["floor"]}, Apt.{$address["apartment"]}",
+	"PostalCode"	=> $address["postalCode"],
+	"PersonName"	=> $info["name"],
+	"Mobile"		=> substr($phone1,0,11)
+);
+
+$customerAddress = array(
+	"Block" => $address["block"],
+	"Street" => $address["street"],
+	"HouseBuildingNo" => "Ave.{$address["avenue"]}, Bld.{$address["building"]}, Fl.{$address["floor"]}, Apt.{$address["apartment"]}",
+	"Address" => $address["area"],
+	"AddressInstructions" => $address["notes"]
+);
+
 require_once ('api/paymentBody.php');
 
 // full order details \\
