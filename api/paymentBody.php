@@ -46,7 +46,7 @@ for( $i=0; $i < 10; $i++ ){
 	$response = curl_exec($curl);
 	curl_close($curl);
 	$resultMY = json_decode($response, true);
-	echo json_encode($resultMY);die();
+	//echo json_encode($resultMY);die();
 	if( isset($resultMY["data"]["InvoiceId"]) ){
 	  $gatewayId = $resultMY["data"]["InvoiceId"];
 	  break;
