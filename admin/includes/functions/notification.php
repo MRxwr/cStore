@@ -58,7 +58,7 @@ function emailBody($orderId){
 			
 			if( $address["place"] != 3 ){
 				if( $address["country"] == "KW" ){
-					$area = selectDB("areas","`id` = '{$address["area"]}'");
+					$area = selectDB("areas","`enTitle` = '{$address["area"]}' OR `arTitle` = '{$address["area"]}'");
 					$areaTitle = $area[0]["enTitle"];
 				}else{
 					$areaTitle = $address["area"];
