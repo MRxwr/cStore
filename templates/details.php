@@ -233,7 +233,7 @@ if ( $order[0]["status"] == '0' ){
 									$keys = array_keys($address2);
                                     for( $i = 0; $i < sizeof($address2); $i++){
 										if( $address2["country"] == "KW" && $keys[$i] == "area" ){
-											$areaTitle = selectDB("areas","`id` = '{$address2[$keys[$i]]}'");
+											$areaTitle = selectDB("areas","`enTitle` = '{$address2[$keys[$i]]}' OR `arTitle` = '{$address2[$keys[$i]]}'");
 												$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 										}
 										if( !empty($address2[$keys[$i]]) ){
