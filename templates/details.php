@@ -113,12 +113,8 @@ if ( $order[0]["status"] == '0' ){
                                 <p class="bold"><?php echo $paymentMethodText ?></p>
                                 <p>
 								<?php
-								if ( $order[0]["paymentMethod"] == 1 ){
-									echo "K-NET";
-								}elseif($order[0]["paymentMethod"] == 3){
-									echo "CASH";
-								}else{
-									echo "Visa/Master";
+								if ( $paymentMethodId = selectDB("p_methods","`paymentId` = '{$order[0]["paymentMethod"]}'") ){
+									echo direction($paymentMethodId[0]["enTitle"],$paymentMethodId[0]["arTitle"]);
 								} 
 								?>
 								</p>
@@ -133,7 +129,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("Sub Total","المجموع الفرعي") ?></p>
-                                <p><?php echo numTo3Float($order[0]["price"]) . selectedCurr() ?></p>
+                                <p><?php echo numTo3Float(priceCurr($order[0]["price"])) . selectedCurr() ?></p>
                             </div>
 							<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $deliveryText ?></p>
@@ -156,7 +152,7 @@ if ( $order[0]["status"] == '0' ){
 							?>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("Total","المجموع") ?></p>
-                                <p><?php echo numTo3Float((float)$order[0]["price"]+priceCurr((float)$address["shipping"])+(float)$extras) . selectedCurr()?></p>
+                                <p><?php echo numTo3Float(priceCurr((float)$order[0]["price"]+(float)$address["shipping"]+(float)$extras)) . selectedCurr()?></p>
                             </div>
                         </div>
                     </div>

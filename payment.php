@@ -146,17 +146,11 @@ $data = array(
 
 // sending user to pay and view details \\
 if( insertDB("orders2",$data) ){
-	if ( $_POST["paymentMethod"] == 3 ){
+	if ( $_POST["paymentMethod"] == 10 ){
 		$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 		$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
 		header("Location: details.php?c={$orderId}");
-	}
-	elseif ( $_POST["paymentMethod"] == 1 ){
-		$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
-		$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
-		header("Location: " . $resultMY["data"]["PaymentURL"]);
-	}
-	elseif ( $_POST["paymentMethod"] == 2 ){
+	}else{
 		$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 		$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
 		header("Location: " . $resultMY["data"]["PaymentURL"]);

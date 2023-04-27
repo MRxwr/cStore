@@ -12,17 +12,10 @@
 		$orderId = $order[0]["orderId"];
 		$gatewayId = $order[0]["gatewayId"];
 		$creditTax = $order[0]["creditTax"];
-		$paymentMethod = $order[0]["paymentMethod"];
 		$price = $order[0]["price"]+$address["shipping"];
 		$deliveryText = (isset($address["express"]) && $address["express"]) == 0 ? direction("Delivery","التوصيل") : direction("Express Delivery","التوصيل السريع");
-		if( $paymentMethod == 1 ){
-			$method = "KNET";
-		}elseif( $paymentMethod == 2 ){
-			$method = "VISA/MASTER";
-		}elseif( $paymentMethod == 3 ){
-			$method = "CASH";
-		}else{
-			$method = "";
+		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$order[0]["paymentMethod"]}'") ){
+			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
 		}
 		if( $voucher["discountType"] == 1 ){
 			$discountAmount = $voucher["discount"] . "%";
@@ -82,7 +75,7 @@ if ( $address["place"] != "3" ){
 	$keys = array_keys($address2);
 	for( $i = 0; $i < sizeof($address2); $i++){
 		if( $address2["country"] == "KW" && $keys[$i] == "area" ){
-			$areaTitle = selectDB("areas","`id` = '{$address2[$keys[$i]]}'");
+			$areaTitle = selectDB("areas","`enTitle` = '{$address2[$keys[$i]]}' OR `arTitle` = '{$address2[$keys[$i]]}'");
 				$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 		}
 		echo $keys[$i] . ": " . $address2[$keys[$i]] . ", ";

@@ -265,56 +265,20 @@ if ( $row["inStore"] == "1")
     <p class="checkout-heading-text"></p>
 </div>
 </div>
-<div class="row form-row d-flex align-items-center justify-content-center payment-box">
-
+<div class="row form-row d-flex payment-box">
 <?php
-$sql = "SELECT `knet` FROM `s_media` WHERE `id` LIKE '3'";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-if ( $row["knet"] == "1")
-{
-?>
-<div class="col-sm-6 col-12 col-md-12">
-    <a class="payKnet"><label id="payKnet" class="radiocardwrapper">
-        <img src="img/knet.png" class="d-block">
-        <span class="cardcontent d-block">KNET</span>
-    </label></a>
-</div>
-<?php
-}
-?>
-
-<?php
-$sql = "SELECT `visa` FROM `s_media` WHERE `id` LIKE '3'";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-if ( $row["visa"] == "1")
-{
-?>
-<div class="col-sm-6 col-12 col-md-12">
-        <a class="payVisa"><label id="payVisa" class="radiocardwrapper ">
-        <img src="https://i.imgur.com/Q4nZ3El.png" style="width:33px; height:21px" class="d-block">
-        <span class="cardcontent d-block">Visa / Master</span>
-    </label></a>
-</div>
-<?php
-}
-?>
-
-<?php
-$sql = "SELECT `cash` FROM `s_media` WHERE `id` LIKE '3'";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-if ( $row["cash"] == "1")
-{
-?>
-<div class="col-sm-6 col-12 col-md-12">
-        <a class="payCash"><label id="payCash" class="radiocardwrapper active">
-        <img src="https://i.imgur.com/AZyDbmw.png" style="width:33px; height:21px" class="d-block">
-        <span class="cardcontent d-block">CASH</span>
-    </label></a>
-</div>
-<?php
+if( $pMethods = selectDB("p_methods","`hidden` = '1' AND `status` = '0' ORDER BY `rank` ASC")){
+	for( $i  = 0; $i < sizeof($pMethods); $i++){
+		$paymentClassLabelId = str_replace("-","",str_replace("/","",str_replace(" ","",direction($pMethods[$i]["enTitle"],$pMethods[$i]["arTitle"]))));
+		?>
+		<div class="col-sm-4 col-4 col-md-4">
+			<a class="<?php echo $paymentClassLabelId ?>" id="<?php echo $pMethods[$i]["paymentId"] ?>"><label id="pMethods<?php echo $pMethods[$i]["paymentId"] ?>" class="pMethods radiocardwrapper">
+				<img src="logos/<?php echo $pMethods[$i]["icon"] ?>" style="width:40px;height:25px" class="d-block">
+				<span class="cardcontent d-block"><?php echo direction($pMethods[$i]["enTitle"],$pMethods[$i]["arTitle"]) ?></span>
+			</label></a>
+		</div>
+		<?php
+	}
 }
 ?>
 </div>
@@ -471,24 +435,21 @@ $(function(){
 		$('#apartmentFormId').removeClass('active');
 		$('#place').val('3');
 	}); 
-	$('.payVisa').click(function(){
-		$('#payVisa').addClass('active');
-		$('#payKnet').removeClass('active');
-		$('#payCash').removeClass('active');
-		$('#pMethod').val("2");
-		alert('<?php echo $visaTaxMsg ?>');
-	});
-	$('.payKnet').click(function(){
-		$('#payKnet').addClass('active');
-		$('#payVisa').removeClass('active');
-		$('#payCash').removeClass('active');
-		$('#pMethod').val("1")
-	});
-	$('.payCash').click(function(){
-		$('#payCash').addClass('active');
-		$('#payVisa').removeClass('active');
-		$('#payKnet').removeClass('active');
-		$('#pMethod').val("3")
-	});
+	<?php
+	if( $pMethods = selectDB("p_methods","`hidden` = '1' AND `status` = '0' ORDER BY `rank` ASC")){
+		for( $i  = 0; $i < sizeof($pMethods); $i++){
+			$paymentClassLabelId = str_replace("-","",str_replace("/","",str_replace(" ","",direction($pMethods[$i]["enTitle"],$pMethods[$i]["arTitle"]))));
+			?>
+			$('.<?php echo $paymentClassLabelId ?>').click(function(){
+				var payId = $(this).attr("id");
+				$('.pMethods').removeClass('active');
+				$('#pMethods'+payId).addClass('active');
+				$('#pMethod').val("<?php echo $pMethods[$i]["paymentId"] ?>");
+				//alert('<?php echo $visaTaxMsg ?>');
+			});
+			<?php
+		}
+	}
+	?>
 })
 </script>

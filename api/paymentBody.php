@@ -1,6 +1,6 @@
 <?php
 // check payment status [ kent to cash ]\\
-if ( $_POST["paymentMethod"] == 3 ){
+if ( $_POST["paymentMethod"] == 10 ){
 	$paymentMethod = 1;
 	$cash = 1;
 }else{
