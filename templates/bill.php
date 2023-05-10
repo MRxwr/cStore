@@ -7,14 +7,52 @@ if (isset($_POST["paymentMethod"]) AND $_POST["paymentMethod"] == "2"){
     $VisaCard = 0 ;
 }
 
+$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
+if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	$items = $cart;
+	for( $i = 0; $i < sizeof($items); $i++ ){
+		unset($items[$i]["collections"]);
+		unset($items[$i]["extras"]);
+		unset($items[$i]["giftCard"]);
+		$items[$i]["collections"] = json_decode($cart[$i]["collections"],true);
+		$items[$i]["extras"] = json_decode($cart[$i]["extras"],true);
+		$items[$i]["giftCard"] = json_decode($cart[$i]["giftCard"],true);
+		if( $subQuan = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}' AND `quantity` >= '{$items[$i]["quantity"]}'") ){
+			$items[$i]["price"] = $subQuan[0]["price"];
+			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"]);
+			if(isset($_POST["voucher"])){
+			  $items[$i]["priceAfterVoucher"] = numTo3Float(checkItemVoucherDefault($_POST["voucher"],$items[$i]["subId"]));  
+			}else{
+			   $items[$i]["priceAfterVoucher"] = 0  ;
+			}
+			
+			if( $items[$i]["priceAfterVoucher"] != 0 ){
+				$paymentAPIPrice[] = $items[$i]["priceAfterVoucher"];
+			}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
+				$paymentAPIPrice[] = $items[$i]["discountPrice"];
+			}else{
+				$paymentAPIPrice[] = $items[$i]["price"];
+			}
+		}else{
+			deleteDB("cart","`id` = '{$cart[$i]["id"]}'");
+			header("LOCATION: checkout.php?error=5");die();
+		}
+	}
+}
+
 if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && $_POST["address"]["place"] != 3 ){
 	if ( $_POST["address"]["country"] == "KW" && $delivery = selectDB("areas","`id` = '{$_POST["address"]["area"]}'") ){
 		$shoppingCharges = $delivery[0]["charges"];
-	}elseif( $delivery = selectDB("s_media","`id` = '2'") ){
-		if ( getCartItemsTotal() == 1 ){
-			$shoppingCharges = $delivery[0]["internationalDelivery"];
+	}elseif( $delivery = selectDB("settings","`id` = '1'") ){
+		if( $delivery[0]["shippingMethod"] != 0 ){
+			$shoppingCharges = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$_POST["address"]);
 		}else{
-			$shoppingCharges = ($delivery[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $delivery[0]["internationalDelivery"];
+			$shippingPerPiece = selectDB("s_media","`id` = '2'");
+			if ( getCartItemsTotal() == 1 ){
+				$shoppingCharges = $shippingPerPiece[0]["internationalDelivery"];
+			}else{
+				$shoppingCharges = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
+			}
 		}
 	}
 	$userDelivery = $shoppingCharges;
@@ -133,7 +171,7 @@ if( isset($userID) ){
 <span style="color:red"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
 
 <?php
-if( $express = selectDB("settings","`id` = '1'") ){
+if( $_POST["address"]["country"] == "KW" && $express = selectDB("settings","`id` = '1'") ){
 	$express = json_decode(stripslashes($express[0]["expressDelivery"]),true);
 	$expressOption = direction("Experss Delivery","توصيل سريع");
 	$expressPeriod = direction($express["English"],$express["arabic"]);

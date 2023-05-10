@@ -11,8 +11,7 @@ function checkItemVoucher($code,$id){
 			}
 			return numTo3Float(priceCurr($price));;
 		}elseif( $voucher[0]["type"] == 2 ){
-			$subProduct = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");
-			$price = $subProduct[0]["price"];
+			$price = $sale;
 			if( $voucher = selectDB("vouchers","JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE '%{$id}%'") ){
 				if( $voucher[0]["discountType"] == 1 ){
 					$price = $price * ((100-$voucher[0]["discount"])/100);

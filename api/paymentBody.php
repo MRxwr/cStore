@@ -10,7 +10,7 @@ if ( $_POST["paymentMethod"] == 10 ){
 
 // build request body for payapi \\
 $postMethodLines = array(
-	"endpoint" 				=> "PaymentRequestExicute", // "ForStore" was 
+	"endpoint" 				=> "PaymentRequestExicuteShipping", // "ForStore" was 
 	"apikey" 				=> $PaymentAPIKey,
 	"PaymentMethodId" 		=> $paymentMethod,
 	"CustomerName"			=> $info["name"],

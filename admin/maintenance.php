@@ -300,7 +300,7 @@ $settings = selectDB("settings","`id` = '1'");
 				</div>
 				
 				<!-- /Row -->
-				
+				<?php /*
 				<div class="col-md-3">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
@@ -378,7 +378,8 @@ $settings = selectDB("settings","`id` = '1'");
 						</div>
 					</div>
 				</div>
-				
+				*/
+				?>
 				<div class="col-md-3">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
