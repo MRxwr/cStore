@@ -124,6 +124,10 @@ if ( $order[0]["status"] == '0' ){
                                 <p>%<?php echo $voucher["discount"] ?></p>
                             </div>
 							<div class="col-md-3 col-sm-6 col-6">
+                                <p class="bold"><?php echo direction("User Discount","خصم الأعضاء") ?></p>
+                                <p>%<?php echo $order[0]["userDiscount"] ?></p>
+                            </div>
+							<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("Addons","الإضافات") ?></p>
                                 <p><?php echo $extras = priceCurr(getExtrasOrder($order[0]["orderId"])) . selectedCurr() ?></p>
                             </div>

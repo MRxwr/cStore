@@ -93,6 +93,7 @@ for( $i =0; $i < sizeof($categoryId) ; $i++ ){
 }
 
 if( $product[0]["type"] == 1 ){
+	$oldId = selectDB("attributes_products","`productId` = '{$id}'");
 	deleteDB("attributes_products","`productId` = {$id}");
 	$dataInsert = array(
 		"productId" => $id,
@@ -102,6 +103,8 @@ if( $product[0]["type"] == 1 ){
 		"sku" => $sku
 	);
 	insertDB("attributes_products",$dataInsert);
+	$newId = selectDB("attributes_products","`productId` = '{$id}'");
+	updateDB("cart",array("subId" => $newId[0]["id"]),"`subId` = '{$oldId[0]["id"]}'");
 }
 
 

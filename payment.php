@@ -25,16 +25,18 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 		$items[$i]["extras"] = json_decode($cart[$i]["extras"],true);
 		$items[$i]["giftCard"] = json_decode($cart[$i]["giftCard"],true);
 		if( $subQuan = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}' AND `quantity` >= '{$items[$i]["quantity"]}'") ){
-			$items[$i]["price"] = $subQuan[0]["price"];
-			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"]);
-			$items[$i]["priceAfterVoucher"] = numTo3Float(checkItemVoucherDefault($_POST["voucher"],$items[$i]["subId"]));
+			$items[$i]["originalPrice"] = $subQuan[0]["price"];
+			$items[$i]["price"] = $subQuan[0]["price"]* ((100-$userDiscount)/100);
+			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"])* ((100-$userDiscount)/100);
+			$items[$i]["priceAfterVoucher"] = numTo3Float(checkItemVoucherDefault($_POST["voucher"],$items[$i]["subId"]) * ((100-$userDiscount)/100));
 			if( $items[$i]["priceAfterVoucher"] != 0 ){
-				$paymentAPIPrice[] = $items[$i]["priceAfterVoucher"];
+				$itemPrice = $items[$i]["priceAfterVoucher"];
 			}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
-				$paymentAPIPrice[] = $items[$i]["discountPrice"];
+				$itemPrice = $items[$i]["discountPrice"];
 			}else{
-				$paymentAPIPrice[] = $items[$i]["price"];
+				$itemPrice = $items[$i]["price"];
 			}
+			$paymentAPIPrice[] = $itemPrice;
 		}else{
 			deleteDB("cart","`id` = '{$cart[$i]["id"]}'");
 			header("LOCATION: checkout.php?error=5");die();
@@ -73,6 +75,8 @@ if( $voucherData = selectDB("vouchers","`id` = '{$_POST["voucher"]}' AND `endDat
 		"percentage" => 0
 	);
 }
+// check price after user discount \\
+$price = $price * ((100-$userDiscount)/100);
 
 // call payapi to get payment link \\
 $address = json_decode($_POST["address"],true);
@@ -106,10 +110,20 @@ if( $address["country"] == "KW" ){
 		"Quantity" 		=> 1,
 		"UnitPrice" 	=> (float)$address["shipping"]
 	);
-}else{
-	$address["shipping"] = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$address);
-	$totalPrice = numTo3Float((float)$price + (float)substr(getExtarsTotalDefault(),0,6));
+}elseif( $deliverySetting = selectDB("settings","`id` = '1'") ){
+	if( $deliverySetting[0]["shippingMethod"] != 0 ){
+		$address["shipping"] = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$address);
+	}else{
+		$shippingPerPiece = selectDB("s_media","`id` = '2'");
+		if ( getCartItemsTotal() == 1 ){
+			$address["shipping"] = $shippingPerPiece[0]["internationalDelivery"];
+		}else{
+			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
+		}
+	}
+	$totalPrice = numTo3Float((float)$price  + (float)substr(getExtarsTotalDefault(),0,6));
 }
+	
 $shippingInfo = array(
 	"CountryCode"	=> $address["country"],
 	"CityName"		=> $address["area"],
@@ -139,10 +153,11 @@ $data = array(
 	"gatewayId" 	=> $gatewayId,
 	"orderId" 		=> $orderId,
 	"price" 		=> $price,
+	"userDiscount"	=> $userDiscount,
 	"voucher"		=> json_encode($voucher,JSON_UNESCAPED_UNICODE),
 	"items"			=> json_encode($items,JSON_UNESCAPED_UNICODE)
 );
-//print_r($data);die();print_r($postMethodLines);print_r($resultMY);die();
+//print_r($data);print_r($postMethodLines);print_r($resultMY);die();
 
 // sending user to pay and view details \\
 if( insertDB("orders2",$data) ){

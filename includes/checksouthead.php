@@ -9,9 +9,9 @@ if ( isset($_COOKIE[$cookieSession."Store"]) ){
 		$userEmail = $user[0]["email"];
 		$username = $user[0]["fullName"];
 		$_SESSION[$cookieSession."Store"] = $email;	
-	}
-	if( $userDis = selectDB("s_media","`id` = '4'") ){
-		$userDiscount = $userDis[0]["userDiscount"];
+		if( $userDis = selectDB("s_media","`id` = '4'") ){
+			$userDiscount = $userDis[0]["userDiscount"];
+		}
 	}else{
 		$userDiscount = 0;
 	}

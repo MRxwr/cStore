@@ -12,6 +12,7 @@
 		$orderId = $order[0]["orderId"];
 		$gatewayId = $order[0]["gatewayId"];
 		$creditTax = $order[0]["creditTax"];
+		$userDiscount = $order[0]["userDiscount"];
 		$price = $order[0]["price"]+$address["shipping"];
 		$deliveryText = (isset($address["express"]) && $address["express"]) == 0 ? direction("Delivery","التوصيل") : direction("Express Delivery","التوصيل السريع");
 		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$order[0]["paymentMethod"]}'") ){
@@ -177,13 +178,18 @@ for ($i =0; $i < sizeof($items); $i++){
 	*/
 	echo "<tr class='txt-dark'><td>".direction("Sub Total","المجموع الفرعي")."</td><td>".numTo3Float($order[0]["price"]).$defaultCurr."</td></tr>";
 	
-	if ( isset($extraPrice) ){
+	if ( isset($extraPrice) && !empty($extraPrice1)){
 		echo "<tr class='txt-dark'><td>".direction("Add-ons","الإضافات")."</td><td>".numTo3Float(array_sum($extraPrice1)) . $defaultCurr ."</td></tr>";
 	}
 	
 	if ( $voucher["discount"] != '0' ){
 		$discountText = direction("Discount","الخصم");
 		echo "<tr class='txt-dark'><td>{$discountText}</td><td>{$discountAmount}</td></tr>";
+	}
+	
+	if ( $order[0]["userDiscount"] != '0' ){
+		$discountText = direction("User Discount","خصم الأعضاء");
+		echo "<tr class='txt-dark'><td>{$discountText}</td><td>{$userDiscount}%</td></tr>";
 	}
 	
 	if ( $creditTax != 0 ){

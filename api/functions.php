@@ -57,11 +57,11 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 		}elseif( $voucher[0]["type"] == 3 ){
 			$newTotal = voucherDoubleDiscount($voucherId);
 		}
-		$subPriceNew = $newTotal;
+		$subPriceNew = $newTotal * ((100-$userDiscount)/100);
 		$discountPercentage = $voucher[0]["discount"];
 		$totals2 = $subPriceNew + priceCurr($shoppingCharges) + priceCurr($visaCard) + (float)substr(getExtarsTotal(),0,6);
 		$msg = direction("Code has been applied successfully.","تم تفعيل كود الخصم بنجاح");
-		$userDiscountP = 0;
+		$userDiscountP = $userDiscountP;
 	}else{
 		$voucherId = 0;
 		$discountPercentage = 0;
