@@ -95,7 +95,7 @@ if ( $address["place"] != "3" ){
 <?php
 if( !empty($info["civilId"])){
 	$civilText = direction("Civil id","الرقم المدني");
-	echo "<br><span class='address-head mb-5'>{$civilText} id:{$info["civilid"]}</span>";
+	echo "<br><span class='address-head mb-5'>{$civilText} id:{$info["civilId"]}</span>";
 }
 ?>
 </address>
