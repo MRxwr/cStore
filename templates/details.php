@@ -39,6 +39,7 @@ for( $i = 0; $i < sizeof($items); $i++ ){
 if( isset($voucher["voucher"]) && !empty($voucher["voucher"]) ){
 	$orderDetailsNoti .= "[-VOUCHER-]: {$voucher["voucher"]}, ";
 }
+$orderDetailsNoti .= "[-USER DISCOUNT-]: {$order[0]["userDiscount"]}%, ";
 $orderDetailsNoti .= "[-DELIVERY-]: {$address["shipping"]}KD, ";
 if( $address["place"] != 3 ){
 	if( $address["country"] == "KW" ){

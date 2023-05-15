@@ -75,10 +75,17 @@ function emailBody($orderId){
 			</tr>';
 			for( $i = 0 ; $i < sizeof($items) ; $i++ ){
 				$subProduct = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}'");
+				if( $items[$i]["priceAfterVoucher"] != 0 ){
+					$sale = $items[$i]["priceAfterVoucher"];
+				}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
+					$sale = $items[$i]["discountPrice"];
+				}else{
+					$sale = $items[$i]["price"];
+				}
 				$product = selectDB("products","`id` = '{$subProduct[0]["productId"]}'");
 				$body .= "<tr>
 						<td>{$items[$i]["quantity"]}x {$product[0]["enTitle"]} - {$subProduct[0]["enTitle"]} - {$subProduct[0]["sku"]} - {$items[$i]["note"]}</td>
-						<td>{$subProduct[0]["price"]}KD</td>
+						<td>{$sale}KD</td>
 						</tr>";
 			}
 			$body .= '<tr>
@@ -91,6 +98,14 @@ function emailBody($orderId){
 				<tr>
 				<td>Voucher<hr></td>
 				<td>'.$voucher["voucher"].'KD<hr></td>
+				</tr>
+				';
+			}
+			if ( isset($order[0]["userDiscount"]) && !empty($order[0]["userDiscount"]) ){
+				$body .= '
+				<tr>
+				<td>User Discount<hr></td>
+				<td>'.$order[0]["userDiscount"].'%<hr></td>
 				</tr>
 				';
 			}

@@ -194,6 +194,13 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
                             <p>
                                 <strong>Discount: </strong>
                             </p>
+							<?php 
+							if( isset($order[0]["userDiscount"]) && !empty($order[0]["userDiscount"]) ){
+								echo "<p>
+                                <strong>User Discount: </strong>
+                            </p>";
+							}
+							?>
 							<p>
                                 <strong>Delivery: </strong>
                             </p>
@@ -243,12 +250,19 @@ for ($i =0; $i < sizeof($items); $i++){
 								}elseif( $voucher["discountType"] == 2 ){
 									$discountAmount = $voucher["discount"] . $defaultCurr;
 								}else{
-									$discountAmount = "";
+									$discountAmount = "/-";
 								}
 								echo $discountAmount;
 								?>
 								</strong>
                             </p>
+							<?php
+							if( isset($order[0]["userDiscount"]) && !empty($order[0]["userDiscount"]) ){
+								echo "<p>
+                                <strong><i class='fa fa-inr'></i>{$order[0]["userDiscount"]}%</strong>
+                            </p>";
+							}
+							?>
 							<p>
                                 <strong><i class="fa fa-inr"></i> <?php echo numTo3Float($address["shipping"]) ?>/-</strong>
                             </p>
