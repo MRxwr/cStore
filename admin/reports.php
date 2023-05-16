@@ -271,9 +271,9 @@ $totalIntInvoices = 0;
 		<td><?php echo $address["shipping"] ?>KD</td>
 		<td><?php
 		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orderIds[$i]["paymentMethod"]}'") ){
-			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
+			echo $method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
 		}else{
-			$method = $orderIds[$i]["paymentMethod"];
+			echo $method = "";
 		}
 		?></td>
 		<td><?php echo numTo3Float($profit) ?>KD</td>
