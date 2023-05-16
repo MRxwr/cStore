@@ -194,7 +194,7 @@ if ( isset($_POST["endDate"]) ){
 			if ( $_POST["status"] != "" ){
 				$where .= " AND `status` = '{$_POST["status"]}'";
 			}
-	if( $orderIds = selectDB("orders2",$where) ){
+	if( $orderIds = selectDB("orders2",$where . " GROUP BY `orderId`") ){
 	}else{
 		$orderIds = array();
 	}
@@ -270,12 +270,10 @@ $totalIntInvoices = 0;
 		<td><?php echo $voucher["percentage"] ?>%</td>
 		<td><?php echo $address["shipping"] ?>KD</td>
 		<td><?php
-		if( $orderIds[$i]["paymentMethod"] == 1 ){
-			echo "K-NET";
-		}elseif( $orderIds[$i]["paymentMethod"] == 2 ){
-			echo "Visa/Master";
+		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orderIds[$i]["paymentMethod"]}'") ){
+			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
 		}else{
-			echo "Cash";
+			$method = "";
 		}
 		?></td>
 		<td><?php echo numTo3Float($profit) ?>KD</td>
