@@ -13,6 +13,8 @@ $info = json_decode($_POST["info"],true);
 // check phone number \\
 $phone1 = (is_numeric($info["phone"]) ? $info["phone"] : "12345678");
 
+
+$userDiscount = (isset($userDiscount) && !empty($userDiscount)) ? $userDiscount : 0;
 // cart details \\
 $getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
 if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
