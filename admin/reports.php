@@ -245,7 +245,7 @@ $totalIntInvoices = 0;
 		$items = json_decode($orderIds[$i]["items"],true);
 		for( $y = 0; $y < sizeof($items); $y++ ){
 			$item = selectDB("attributes_products","`id` = '{$items[$y]["subId"]}'");
-			$cost[] = $item[0]["cost"]*$items[$y]["quantity"];
+			$cost[] = ($item[0]["cost"] != 0) ? $item[0]["cost"]*$items[$y]["quantity"] : 0;
 		}
 		$profit = $orderIds[$i]["price"] - array_sum($cost);
 		$totalPrice[] = $orderIds[$i]["price"];
