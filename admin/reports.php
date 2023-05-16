@@ -273,7 +273,7 @@ $totalIntInvoices = 0;
 		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orderIds[$i]["paymentMethod"]}'") ){
 			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
 		}else{
-			$method = "";
+			$method = $orderIds[$i]["paymentMethod"];
 		}
 		?></td>
 		<td><?php echo numTo3Float($profit) ?>KD</td>
