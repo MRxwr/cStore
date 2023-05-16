@@ -35,7 +35,7 @@ if ( $address["place"] != "3" ){
 	$keys = array_keys($address2);
 	for( $i = 0; $i < sizeof($address2); $i++){
 		if( $address2["country"] == "KW" && $keys[$i] == "area" ){
-			$areaTitle = selectDB("areas","`id` = '{$address2[$keys[$i]]}'");
+			$areaTitle = selectDB("areas","`enTitle` LIKE '%{$address2[$keys[$i]]}%' OR `arTitle` LIKE '%{$address2[$keys[$i]]}%'");
 				$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 		}
 		if( !empty($address2[$keys[$i]]) ){
@@ -51,7 +51,8 @@ if ( $address["place"] != "3" ){
 <div class="orderdetails-costcalculation">
 <div class="costcalculation-price grandtotal" style="justify-content: space-evenly;">
     <?php echo $deliveryText . ": " . numTo3Float(priceCurr($address["shipping"])) . selectedCurr()?><br>
-    <?php echo $discountText . ": ". $discountAmount ?><br>    
+    <?php echo $discount = ( $discountAmount == 0 ) ? $discountText . ": ". $discountAmount . "<br>": "";?>    
+    <?php echo $userDiscountText = ($order[0]["userDiscount"] != 0 ) ? direction("User Discount","خصم الأعضاء") . ": ". $order[0]["userDiscount"] . "%<br>": ""; ?>    
     <?php echo $totalPriceText . ": " . numTo3Float(priceCurr($order[0]["price"])+priceCurr($address["shipping"])+priceCurr(getExtrasOrder($_GET["orderId"]))) . selectedCurr()?><br>
 </div>
 </div>

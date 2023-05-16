@@ -248,7 +248,7 @@ if ( $row["inStore"] == "1")
 		<input type="hidden" class="form-control" id="apartment" name="address[apartment]" placeholder="<?php echo $apartmentText ?>" value="">
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" id="postalCode" name="address[postalCode]" placeholder="<?php echo $postalCodeText ?>">
+		<input type="text" class="form-control" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>">
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" id="notes" name="address[notes]" placeholder="<?php echo $specialInstructionText ?>">
