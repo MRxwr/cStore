@@ -108,7 +108,7 @@ if ( isset($userID) AND !empty($userID) )
     $row = $result->fetch_assoc();
     ?>
     <div class="form-group">
-    <input type="text" class="form-control" name="name" value="<?php echo $row["fullName"] ?>" >
+    <input type="text" class="form-control checkLetters" name="name" value="<?php echo $row["fullName"] ?>" >
     </div>
     <div class="form-group">
     <input type="number" class="form-control" name="phone" value="<?php echo $row["phone"] ?>" minlength="8" required>
@@ -123,7 +123,7 @@ if ( isset($userID) AND !empty($userID) )
 }else{
 ?>
 	<div class="form-group">
-	<input type="text" class="form-control" name="name" placeholder="<?php echo $fullNameText ?>" >
+	<input type="text" class="form-control checkLetters" name="name" placeholder="<?php echo $fullNameText ?>" >
 	</div>
 	<div class="form-group">
 	<input type="number" class="form-control" name="phone" placeholder="<?php echo $Mobile ?>" minlength="8" required >
@@ -230,25 +230,25 @@ if ( $row["inStore"] == "1")
 
 <div id="" class="tab-pane active homeFormDiv">
 	<div class="form-group">
-		<input type="text" class="form-control" id="block" name="address[block]" placeholder="<?php echo $blockText ?>" required>
+		<input type="text" class="form-control checkLetters" id="block" name="address[block]" placeholder="<?php echo $blockText ?>" required>
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" id="street" name="address[street]" placeholder="<?php echo $streetText ?>" required>
+		<input type="text" class="form-control checkLetters" id="street" name="address[street]" placeholder="<?php echo $streetText ?>" required>
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" id="avenue" name="address[avenue]" placeholder="<?php echo $avenueText ?>" >
+		<input type="text" class="form-control checkLetters" id="avenue" name="address[avenue]" placeholder="<?php echo $avenueText ?>" >
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" id="building" name="address[building]" placeholder="<?php echo direction("Building","المبنى") ?>" required>
+		<input type="text" class="form-control checkLetters" id="building" name="address[building]" placeholder="<?php echo direction("Building","المبنى") ?>" required>
 	</div>
 	<div class="form-group">
-		<input type="hidden" class="form-control" id="floor" name="address[floor]" placeholder="<?php echo $floorText ?>" value="">
+		<input type="hidden" class="form-control checkLetters" id="floor" name="address[floor]" placeholder="<?php echo $floorText ?>" value="">
 	</div>
 	<div class="form-group">
-		<input type="hidden" class="form-control" id="apartment" name="address[apartment]" placeholder="<?php echo $apartmentText ?>" value="">
+		<input type="hidden" class="form-control checkLetters" id="apartment" name="address[apartment]" placeholder="<?php echo $apartmentText ?>" value="">
 	</div>
 	<div class="form-group">
-		<input type="text" class="form-control" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>">
+		<input type="text" class="form-control checkLetters" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>">
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" id="notes" name="address[notes]" placeholder="<?php echo $specialInstructionText ?>">
@@ -335,6 +335,18 @@ $(function(){
 		}
 		?>
 	});
+	$('.checkLetters').keyup(function() {
+		var countryName = $('.CountryClick').val()
+		if ( countryName != "KW" ){
+			var inputValue = $(this).val();
+			var englishLettersAndNumbersRegex = /^[a-zA-Z0-9]+$/;
+			// Check if the input matches the desired pattern
+			if (!englishLettersAndNumbersRegex.test(inputValue)) {
+				alert("<?php echo direction("Only english letters and numbers are allowed","مسموح فقط بالأحرف و الأرقام الإنجليزية") ?>");
+				$(this).val('');
+			}
+		}
+	});
 	$('.payBtnNow').on('click',function(){
 		var mobileNumber = $('input[name=phone]').val();
 		if ( $.isNumeric(mobileNumber) ){
@@ -364,6 +376,13 @@ $(function(){
 			$('input[name="civilId"]').attr('type','text');
 			$('#payCash').hide();
 			$('#civilIdDiv').show();
+			var inputValue1 = $('input[name="name"]').val();
+			var englishLettersAndNumbersRegex1 = /^[a-zA-Z0-9]+$/;
+			// Check if the input matches the desired pattern
+			if (!englishLettersAndNumbersRegex1.test(inputValue1)) {
+				alert("<?php echo direction("Only english letters and numbers are allowed","مسموح فقط بالأحرف و الأرقام الإنجليزية") ?>");
+				$('input[name="name"]').val('');
+			}
 		}else{
 			$('input[name="name"]').removeAttr('required');
 			$('input[name="postalCode"]').removeAttr('required');
