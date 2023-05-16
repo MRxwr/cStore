@@ -39,8 +39,11 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 			$statusId = [0,1,2,3,4,5,6];
 			$statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
 			$statusBgColor = ["default","primary","info","warning","success","danger","default"];
-			$paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'");
-			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
+			if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'") ){
+				$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
+			}else{
+				$method = "";
+			}
 			$price = numTo3Float($orders[$i]["price"]+getExtrasOrder($orders[$i]["orderId"]));
 			echo "<tr><td>".timeZoneConverter($orders[$i]["date"])."</td>";
 			echo "<td>{$orders[$i]["orderId"]}</td>";
