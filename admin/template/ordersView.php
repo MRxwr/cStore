@@ -34,7 +34,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 </thead>
 <tbody>
 	<?php
-	if( $orders = selectDB("orders2","`id` != '0' {$type} AND `status` != '0' GROUP BY `orderId`") ){
+	if( $orders = selectDB("orders2","`id` != '0' {$type} GROUP BY `orderId`") ){
 		for( $i = 0; $i < sizeof($orders); $i++ ){
 			$statusId = [0,1,2,3,4,5,6];
 			$statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
