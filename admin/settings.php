@@ -286,7 +286,7 @@ updateDB("currency", array("realValue" => (string)$value, "yourValue" => (string
 							<?php
 							if( $listOfCountries = selectDB("cities","`id` != '0' GROUP BY `countryName`") ){
 								for ($i = 0; $i < sizeof($listOfCountries); $i++) {
-									$selected = $defaultCountry == $listOfCountries[$i] ? "selected" : "";
+									$selected = $defaultCountry == $listOfCountries[$i]["CountryCode"] ? "selected" : "";
 									echo "<option value='{$listOfCountries[$i]["CountryCode"]}' {$selected}>{$listOfCountries[$i]["CountryName"]}</option>";
 								}
 							}
