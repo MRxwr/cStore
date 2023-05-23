@@ -4,69 +4,68 @@
 require("template/header.php");
 
 if (isset($_POST["title"])) {
-// change websote color \\
-$color = selectDB("settings", "`id` = '1'");
-$css = file_get_contents("../css/custome.css");
-$css = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $css);
-file_put_contents('../css/custome.css', $css);
-$header = file_get_contents("../templates/header.php");
-$header = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $header);
-$header = str_replace($color[0]["headerButton"], $_POST["headerButton"], $header);
-file_put_contents('../templates/header.php', $header);
-$bill = file_get_contents("../templates/bill.php");
-$bill = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $bill);
-$bill = str_replace($color[0]["headerButton"], $_POST["headerButton"], $bill);
-file_put_contents('../templates/bill.php', $bill);
-// update db \\
-$sql = "UPDATE `s_media` 
-SET
-`theme` = '" . $_POST["theme"] . "'
-WHERE
-`id` LIKE '3'
-";
-$result = $dbconnect->query($sql);
+	// change websote color \\
+	$color = selectDB("settings", "`id` = '1'");
+	$css = file_get_contents("../css/custome.css");
+	$css = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $css);
+	file_put_contents('../css/custome.css', $css);
+	$header = file_get_contents("../templates/header.php");
+	$header = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $header);
+	$header = str_replace($color[0]["headerButton"], $_POST["headerButton"], $header);
+	file_put_contents('../templates/header.php', $header);
+	$bill = file_get_contents("../templates/bill.php");
+	$bill = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $bill);
+	$bill = str_replace($color[0]["headerButton"], $_POST["headerButton"], $bill);
+	file_put_contents('../templates/bill.php', $bill);
+	// update db \\
+	$sql = "UPDATE `s_media` 
+	SET
+	`theme` = '" . $_POST["theme"] . "'
+	WHERE
+	`id` LIKE '3'
+	";
+	$result = $dbconnect->query($sql);
 
-$sql = "UPDATE `settings` 
-SET 
-`title` = '" . $_POST["title"] . "',
-`cookie` = '" . $_POST["cookie"] . "',
-`refference` = '" . $_POST["refference"] . "',
-`dTime` = '" . $_POST["dTime"] . "',
-`dTimeArabic` = '" . $_POST["dTimeArabic"] . "',
-`PaymentAPIKey` = '" . $_POST["PaymentAPIKey"] . "',
-`package` = '" . $_POST["package"] . "',
-`startDate` = '" . $_POST["startDate"] . "',
-`amount` = '" . $_POST["amount"] . "',
-`OgDescription` = '" . $_POST["OgDescription"] . "',
-`currency` = '" . $_POST["currency"] . "',
-`language` = '" . $_POST["language"] . "',
-`version` = '" . $_POST["version"] . "',
-`showLogo` = '" . $_POST["showLogo"] . "',
-`websiteColor` = '" . $_POST["websiteColor"] . "',
-`headerButton` = '" . $_POST["headerButton"] . "',
-`google` = '" . urlencode($_POST["google"]) . "',
-`pixil` = '" . urlencode($_POST["pixil"]) . "',
-`whatsappNoti` = '" . json_encode($_POST["whatsappNoti"]) . "',
-`shippingMethod` = '".$_POST["shippingMethod"]."',
-`website` = '" . $_POST["website"] . "',";
-if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
-$directory = "../logos/";
-$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["bgImage"]["name"]);
-move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
-$filenewname = str_replace("../logos/", '', $originalfile);
-$sql .= "`bgImage` = '" . $filenewname . "',";
-}
-if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
-$directory = "../logos/";
-$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["logo"]["name"]);
-move_uploaded_file($_FILES["logo"]["tmp_name"], $originalfile);
-$filenewname = str_replace("../logos/", '', $originalfile);
-$sql .= "`logo` = '" . $filenewname . "',";
-}
-$sql .= "`email` = '" . $_POST["email"] . "'
-WHERE `id` LIKE '1'
-";
-$result = $dbconnect->query($sql);
+	$sql = "UPDATE `settings` 
+	SET 
+	`title` = '" . $_POST["title"] . "',
+	`cookie` = '" . $_POST["cookie"] . "',
+	`refference` = '" . $_POST["refference"] . "',
+	`dTime` = '" . $_POST["dTime"] . "',
+	`dTimeArabic` = '" . $_POST["dTimeArabic"] . "',
+	`PaymentAPIKey` = '" . $_POST["PaymentAPIKey"] . "',
+	`package` = '" . $_POST["package"] . "',
+	`startDate` = '" . $_POST["startDate"] . "',
+	`amount` = '" . $_POST["amount"] . "',
+	`OgDescription` = '" . $_POST["OgDescription"] . "',
+	`currency` = '" . $_POST["currency"] . "',
+	`language` = '" . $_POST["language"] . "',
+	`country` = '" . $_POST["country"] . "',
+	`version` = '" . $_POST["version"] . "',
+	`showLogo` = '" . $_POST["showLogo"] . "',
+	`websiteColor` = '" . $_POST["websiteColor"] . "',
+	`headerButton` = '" . $_POST["headerButton"] . "',
+	`google` = '" . urlencode($_POST["google"]) . "',
+	`pixil` = '" . urlencode($_POST["pixil"]) . "',
+	`whatsappNoti` = '" . json_encode($_POST["whatsappNoti"]) . "',
+	`shippingMethod` = '".$_POST["shippingMethod"]."',
+	`website` = '" . $_POST["website"] . "',";
+	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
+	$directory = "../logos/";
+	$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["bgImage"]["name"]);
+	move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
+	$filenewname = str_replace("../logos/", '', $originalfile);
+	$sql .= "`bgImage` = '" . $filenewname . "',";
+	}
+	if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
+	$directory = "../logos/";
+	$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["logo"]["name"]);
+	move_uploaded_file($_FILES["logo"]["tmp_name"], $originalfile);
+	$filenewname = str_replace("../logos/", '', $originalfile);
+	$sql .= "`logo` = '" . $filenewname . "',";
+	}
+	$sql .= "`email` = '" . $_POST["email"] . "'WHERE `id` LIKE '1'";
+	$result = $dbconnect->query($sql);
 }
 
 $sql = "SELECT * FROM `settings` WHERE `id` LIKE '1'";
@@ -87,6 +86,7 @@ $refference = $row["refference"];
 $amount = $row["amount"];
 $defaultCurr = $row["currency"];
 $language = $row["language"];
+$defaultCountry = $row["country"];
 $version = $row["version"];
 $showLogo = $row["showLogo"];
 $websiteColor = $row["websiteColor"];
@@ -262,6 +262,35 @@ updateDB("currency", array("realValue" => (string)$value, "yourValue" => (string
 								$selected = $language == $languageValue[$i] ? "selected" : "";
 								echo "<option value='{$languageValue[$i]}' {$selected}>{$languages[$i]}</option>";
 							}
+							?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- default Language -->
+	<div class="col-md-4">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Country", "الدولة") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<div class="text">
+						<select class="form-control" type="text" name="country">
+							<?php
+							if( $listOfCountries = selectDB("cities","`id` != '0' GROUP BY `countryName`") ){
+								for ($i = 0; $i < sizeof($listOfCountries); $i++) {
+									$selected = $defaultCountry == $listOfCountries[$i] ? "selected" : "";
+									echo "<option value='{$listOfCountries[$i]["CountryCode"]}' {$selected}>{$listOfCountries[$i]["CountryName"]}</option>";
+								}
+							}
+							
 							?>
 						</select>
 					</div>
