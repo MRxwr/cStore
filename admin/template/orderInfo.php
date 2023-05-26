@@ -149,6 +149,7 @@ for ($i =0; $i < sizeof($items); $i++){
 	$extras = $items[$i]["extras"];
 	print_r($extras);
 	for( $y = 0; $y < sizeof($extras) ; $y++ ){
+		echo $extras["variant"][$y];
 		if ( !empty($extras["variant"][$y]) ){
 			$extraInfo = selectDB('extras', "`id` = '{$extras["id"][$y]}'");
 			$extraInfo[0]["price"] = ($extraInfo[0]["priceBy"] == 0 ? $extraInfo[0]["price"] : $extras["variant"][$y]);
