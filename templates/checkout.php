@@ -186,20 +186,16 @@ if ( $row["inStore"] == "1")
 <div class="form-group areaSelection">
 <p class="mb-2"><?php echo $countryText ?></p>
 <select name="address[country]" class="form-control CountryClick select2Country" required>
-<option value="KW" selected >Kuwait</option>
-<?php
-if( $countries = selectDB("cities","`status` = '1' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
-	for( $i =0; $i < sizeof($countries); $i++ ){
-?>
-   <option value="<?php echo $countries[$i]["CountryCode"] ?>"><?php echo $countries[$i]["CountryName"] ?></option>
-<?php
-	}
-}else{
-	?>
-	<option value="KW" selected >KUWAIT</option>
+	<option value="KW" selected >Kuwait</option>
 	<?php
-}
-?>
+	if( $countries = selectDB("cities","`status` = '1' AND `CountryCode` NOT LIKE 'KW' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
+		for( $i =0; $i < sizeof($countries); $i++ ){
+	?>
+	<option value="<?php echo $countries[$i]["CountryCode"] ?>"><?php echo $countries[$i]["CountryName"] ?></option>
+	<?php
+		}
+	}
+	?>
 </select>
 <i class="fa fa-angle-down d-none"></i>
 </div>
