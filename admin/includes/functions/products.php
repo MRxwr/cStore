@@ -15,7 +15,7 @@ function getExtrasOrder($id){
 	$items = json_decode($order[0]["items"],true);
 	for( $i = 0; $i < sizeof($items); $i++){
 		$extras = $items[$i]["extras"];
-		for( $y = 0; $y < sizeof($extras); $y++ ){
+		for( $y = 0; $y < sizeof($extras["id"]); $y++ ){
 			if ( isset($extras["id"][$y]) && !empty($extras["variant"][$y]) && $extra = selectDB("extras","`id` = '{$extras["id"][$y]}'") ){
 				$extra[0]["price"] = ($extra[0]["priceBy"] == 0 ? $extra[0]["price"] : $extras["variant"][$y]);
 				$extraPrice[] = numTo3Float($extra[0]["price"] * $items[$i]["quantity"]);
