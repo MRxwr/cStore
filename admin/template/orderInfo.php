@@ -147,6 +147,7 @@ for ($i =0; $i < sizeof($items); $i++){
 	}
 	$extraPrice = [0];
 	$extras = $items[$i]["extras"];
+	print_r($extras);
 	for( $y = 0; $y < sizeof($extras) ; $y++ ){
 		if ( !empty($extras["variant"][$y]) ){
 			$extraInfo = selectDB('extras', "`id` = '{$extras["id"][$y]}'");
@@ -160,7 +161,7 @@ for ($i =0; $i < sizeof($items); $i++){
 		}
 	}
 	$itemGiftCard = $items[$i]["giftCard"];
-	if ( isset($itemGiftCard["body"]) ){
+	if ( isset($itemGiftCard["body"]) && !empty($itemGiftCard["body"]) ){
 		$itemGiftCard["to"] = ( $itemGiftCard["to"] == "" ? "" : $itemGiftCard["to"]);
 		$itemGiftCard["from"] = ( $itemGiftCard["from"] == "" ? "" : $itemGiftCard["from"]);
 		$itemGiftCard["body"] = ( $itemGiftCard["body"] == "" ? "" : $itemGiftCard["body"]);
