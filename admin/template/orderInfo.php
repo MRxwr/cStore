@@ -193,8 +193,10 @@ for ($i =0; $i < sizeof($items); $i++){
 	}
 	
 	if ( $creditTax != 0 ){
+		/*
 		$VisaText = direction("Visa/Master Tax","ضرائب الفيزا");
 		echo "<tr class='txt-dark'><td>{$VisaText}</td><td>{$creditTax}{$defaultCurr}</td></tr>";
+		*/
 	}
 	
 	if ( isset($voucher["voucher"]) AND !empty($voucher["voucher"]) ){

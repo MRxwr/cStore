@@ -142,6 +142,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
 							<?php
 								if( $order[0]["creditTax"] != 0 ){
+									/*
 									?>
 								<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo "Visa/Master Tax" ?></p>
@@ -153,6 +154,7 @@ if ( $order[0]["status"] == '0' ){
 								</p>
 								</div>
 								<?php
+								*/
 								}
 							?>
                             <div class="col-md-3 col-sm-6 col-6">

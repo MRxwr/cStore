@@ -146,48 +146,7 @@ if ( isset($userID) AND !empty($userID) )
     <p class="checkout-heading-text"></p>
 </div>
 </div>
-<div class="form-group">
-<p class="mb-2"><?php echo $countryText ?></p>
-<select name="address[country]" class="form-control CountryClick select2Country" required>
-<option value="KW" selected >Kuwait</option>
-<?php
-if( $countries = selectDB("cities","`status` = '1' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
-	for( $i =0; $i < sizeof($countries); $i++ ){
-?>
-   <option value="<?php echo $countries[$i]["CountryCode"] ?>"><?php echo $countries[$i]["CountryName"] ?></option>
-<?php
-	}
-}else{
-	?>
-	<option value="KW" selected >KUWAIT</option>
-	<?php
-}
-?>
-</select>
-<i class="fa fa-angle-down d-none"></i>
-</div>
 
-<div class="form-group">
-	<p class="mb-2"><?php echo $selectAreaText ?></p>
-	<select name="address[area]" class="form-control getAreas select2Area" required>
-		<option selected disabled value=""><?php echo $selectAreaText ?></option>
-		<?php 
-		$orderAreas = direction("enTitle","arTitle");
-		if( $areas = selectDB("areas","`id` != '0' ORDER BY `{$orderAreas}` ASC") ){
-			for( $i =0; $i < sizeof($areas); $i++ ){
-			?>
-			<option value="<?php echo $areas[$i]['id'] ?>">
-			<?php
-			echo direction($areas[$i]["enTitle"],$areas[$i]["arTitle"]);
-			?>
-			</option>
-			<?php
-			}
-		}
-		?>
-	</select>
-</div>
-			
 <ul class="nav nav-tabs" style="padding-right:0px">
 <li class="nav-item">
     <a class="nav-link active homeForm" id="homeFormId">
@@ -224,11 +183,53 @@ if ( $row["inStore"] == "1")
 ?>
 </ul>
 
+<div class="form-group areaSelection">
+<p class="mb-2"><?php echo $countryText ?></p>
+<select name="address[country]" class="form-control CountryClick select2Country" required>
+<option value="KW" selected >Kuwait</option>
+<?php
+if( $countries = selectDB("cities","`status` = '1' GROUP BY `CountryCode` ORDER BY `CountryName` ASC") ){
+	for( $i =0; $i < sizeof($countries); $i++ ){
+?>
+   <option value="<?php echo $countries[$i]["CountryCode"] ?>"><?php echo $countries[$i]["CountryName"] ?></option>
+<?php
+	}
+}else{
+	?>
+	<option value="KW" selected >KUWAIT</option>
+	<?php
+}
+?>
+</select>
+<i class="fa fa-angle-down d-none"></i>
+</div>
+
+<div class="form-group areaSelection">
+	<p class="mb-2"><?php echo $selectAreaText ?></p>
+	<select name="address[area]" class="form-control getAreas select2Area" required>
+		<option selected disabled value=""><?php echo $selectAreaText ?></option>
+		<?php 
+		$orderAreas = direction("enTitle","arTitle");
+		if( $areas = selectDB("areas","`id` != '0' ORDER BY `{$orderAreas}` ASC") ){
+			for( $i =0; $i < sizeof($areas); $i++ ){
+			?>
+			<option value="<?php echo $areas[$i]['id'] ?>">
+			<?php
+			echo direction($areas[$i]["enTitle"],$areas[$i]["arTitle"]);
+			?>
+			</option>
+			<?php
+			}
+		}
+		?>
+	</select>
+</div>
+
 <div class="tab-content">
 <input type="hidden" class="form-control" id="pMethod" name="paymentMethod" value="" required>
 <input type="hidden" class="form-control" id="place" name="address[place]" value="1">
 
-<div id="" class="tab-pane active homeFormDiv">
+<div id="" class="tab-pane active homeFormDiv addressDiv">
 	<div class="form-group">
 		<input type="text" class="form-control checkLetters" id="block" name="address[block]" placeholder="<?php echo $blockText ?>" required>
 	</div>
@@ -247,13 +248,13 @@ if ( $row["inStore"] == "1")
 	<div class="form-group">
 		<input type="hidden" class="form-control checkLetters" id="apartment" name="address[apartment]" placeholder="<?php echo $apartmentText ?>" value="">
 	</div>
+</div>
 	<div class="form-group">
-		<input type="text" class="form-control checkLetters" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>">
+		<input type="text" class="form-control checkLetters" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>" pattern="^[a-zA-Z0-9\s]+$">
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" id="notes" name="address[notes]" placeholder="<?php echo $specialInstructionText ?>">
 	</div>
-</div>
 </div>
 </div>
 
@@ -339,7 +340,7 @@ $(function(){
 		var countryName = $('.CountryClick').val()
 		if ( countryName != "KW" ){
 			var inputValue = $(this).val();
-			var englishLettersAndNumbersRegex = /^[a-zA-Z0-9]+$/;
+			var englishLettersAndNumbersRegex = /^[a-zA-Z0-9\s]+$/;
 			// Check if the input matches the desired pattern
 			if (!englishLettersAndNumbersRegex.test(inputValue)) {
 				alert("<?php echo direction("Only english letters and numbers are allowed","مسموح فقط بالأحرف و الأرقام الإنجليزية") ?>");
@@ -347,23 +348,41 @@ $(function(){
 			}
 		}
 	});
-	$('.payBtnNow').on('click',function(){
+	$('.payBtnNow').on('click', function(event) {
 		var mobileNumber = $('input[name=phone]').val();
-		if ( $.isNumeric(mobileNumber) ){
-			if ( mobileNumber.length > 7 ){
-			}else{
+		var countryName = $('.CountryClick').val();
+		var englishLettersAndNumbersRegex = /^[a-zA-Z0-9\s]+$/;
+		var isValid = true; // Flag variable to track validation status
+		if ($.isNumeric(mobileNumber)) {
+			if (mobileNumber.length <= 7) {
 				alert('<?php echo $mobileNumberMsg ?>');
-				return false;
+				isValid = false;
 			}
-			if( $('#pMethod').val() == '' ){
-			    alert('<?php echo direction("Please select a payment method","الرجاء إختيار طريقة دفع") ?>');
-				return false;
+			if ($('#pMethod').val() == '') {
+				alert('<?php echo direction("Please select a payment method","الرجاء إختيار طريقة دفع") ?>');
+				isValid = false;
 			}
 		}else{
 			alert('<?php echo $mobileNumberMsg ?>');
+			isValid = false;
+		}
+		$('.addressDiv').find('input:not(:hidden)').each(function() {
+			if (countryName != "KW") {
+				var inputValue = $(this).val();
+				var inputId = $(this).attr("id");
+				if (!englishLettersAndNumbersRegex.test(inputValue)) {
+					alert(inputId+". "+"<?php echo direction('Only English letters, numbers.','مسموح فقط بالأحرف والأرقام الإنجليزية.') ?>");
+					$(this).val('').focus();
+					isValid = false;
+				}
+			}
+		});
+		if (!isValid) {
+			event.preventDefault(); // Prevent form submission
 			return false;
 		}
 	});
+
 	$('.CountryClick').change(function(e){
 		$('#mainView').attr('style','display:none');
 		$('#loader').attr('style','display:block');
@@ -383,7 +402,7 @@ $(function(){
 			$('#payCash').hide();
 			$('#civilIdDiv').show();
 			var inputValue1 = $('input[name="name"]').val();
-			var englishLettersAndNumbersRegex1 = /^[a-zA-Z0-9]+$/;
+			var englishLettersAndNumbersRegex1 = /^[a-zA-Z0-9\s]+$/;
 			// Check if the input matches the desired pattern
 			if (!englishLettersAndNumbersRegex1.test(inputValue1)) {
 				alert("<?php echo direction("Only english letters and numbers are allowed","مسموح فقط بالأحرف و الأرقام الإنجليزية") ?>");
@@ -421,11 +440,15 @@ $(function(){
 		$('#apartment').prop('required',false);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('.getAreas').prop('required',true);
 		$('#floor').attr("type","hidden");
 		$('#apartment').attr("type","hidden");
 		$('#homeFormId').addClass('active');
 		$('#apartmentFormId').removeClass('active');
 		$('#pickUpFROMid').removeClass('active');
+		$('#postalCode').attr('style',"display:block");
+		$('#notes').attr('style',"display:block");
+		$('.areaSelection').attr('style',"display:block");
 		$('#place').val('1');
 	});
 	$('.apartmentForm').click(function(e){
@@ -438,11 +461,15 @@ $(function(){
 		$('#apartment').prop('required',true);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('.getAreas').prop('required',true);
 		$('#floor').attr("type","text");
 		$('#apartment').attr("type","text");
 		$('#apartmentFormId').addClass('active');
 		$('#homeFormId').removeClass('active');
 		$('#pickUpFROMid').removeClass('active');
+		$('#postalCode').attr('style',"display:block");
+		$('#notes').attr('style',"display:block");
+		$('.areaSelection').attr('style',"display:block");
 		$('#place').val('2');
 	});
 	$('.pickUpFROM').click(function(e){
@@ -455,6 +482,10 @@ $(function(){
 		$('#apartment').prop('required',false);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('.getAreas').prop('required',false);
+		$('#postalCode').attr('style',"display:none");
+		$('#notes').attr('style',"display:none");
+		$('.areaSelection').attr('style',"display:none");
 		$('#pickUpFROMid').addClass('active');
 		$('#homeFormId').removeClass('active');
 		$('#apartmentFormId').removeClass('active');

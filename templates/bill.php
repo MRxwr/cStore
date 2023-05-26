@@ -2,7 +2,8 @@
 $totals2 = (float)substr(getCartPrice(),0,6);
 if (isset($_POST["paymentMethod"]) AND $_POST["paymentMethod"] == "2"){
     $VisaCard =  round(($totals2*2.75/100),2);
-    $totals2 = $totals2 + $VisaCard ;
+    //$totals2 = $totals2 + $VisaCard ;
+    $totals2 = $totals2 ;
 }else{
     $VisaCard = 0 ;
 }
@@ -121,6 +122,7 @@ if ( getCartItemsTotal() < 1 || !isset($_POST["address"]["place"]) ){
     </span>
 </div>
 <?php
+/*
 if( $VisaCard != 0 ){
 ?>
 <div class="calc-text-box d-flex justify-content-between">
@@ -131,6 +133,7 @@ if( $VisaCard != 0 ){
 </div>
 <?php
 }
+*/
 ?>
 
 <?php
@@ -157,13 +160,15 @@ if( isset($userID) ){
 			$totals2 = ((100-$userDiscount)/100)*$totals2;
 		}
 		$totals21 = $totals2 + priceCurr($userDelivery) + (float)substr(getExtarsTotal(),0,6); 
+		/*
 		if($VisaCard != 0){
 			$totals21 = $totals21 + numTo3Float(priceCurr($VisaCard)) ;
 			echo numTo3Float((float)$totals21) ;
 		}else{
 			echo numTo3Float((float)$totals21) ;
 		}
-		echo selectedCurr();
+		*/
+		echo numTo3Float((float)$totals21) . selectedCurr();
 		?>
     </span>
 </div>

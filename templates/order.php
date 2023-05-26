@@ -1,19 +1,23 @@
 <?php
-if ( isset($_GET["orderId"]) && $order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'")){
-	$info = json_decode($order[0]["info"],true);
-	$address = json_decode($order[0]["address"],true);
-	$giftCard = json_decode($order[0]["giftCard"],true);
-	$voucher = json_decode($order[0]["voucher"],true);
-	$items = json_decode($order[0]["items"],true);
-	if( $voucher["discountType"] == 1 ){
-		$discountAmount = $voucher["discount"] . "%";
-	}elseif( $voucher["discountType"] == 2 ){
-		$discountAmount = $voucher["discount"] . "KD";
-	}else{
-		$discountAmount = "";
-	}
+if( isset($orderUserEmail) && !empty($orderUserEmail) && $checkUser = selectDB("orders2","JSON_UNQUOTE(JSON_EXTRACT(info,'$.email')) LIKE '%{$orderUserEmail}%' AND `orderId` = '{$_GET["orderId"]}'") ){
+    if ( isset($_GET["orderId"]) && $order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'")){
+        $info = json_decode($order[0]["info"],true);
+        $address = json_decode($order[0]["address"],true);
+        $giftCard = json_decode($order[0]["giftCard"],true);
+        $voucher = json_decode($order[0]["voucher"],true);
+        $items = json_decode($order[0]["items"],true);
+        if( $voucher["discountType"] == 1 ){
+            $discountAmount = $voucher["discount"] . "%";
+        }elseif( $voucher["discountType"] == 2 ){
+            $discountAmount = $voucher["discount"] . "KD";
+        }else{
+            $discountAmount = "";
+        }
+    }else{
+        header("LOCATION: index?error=1");die();
+    }
 }else{
-	header("LOCATION: index?error=1");die();
+    header("LOCATION: index?error=1");die();
 }
 ?>
 <div class="sec-pad">

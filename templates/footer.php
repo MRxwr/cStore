@@ -346,11 +346,14 @@ $row = $result->fetch_assoc();
                     <h4 class="title"><?php echo $OrdersHistoryText ?></h4>
                     <p class="mb-4"><?php echo $checkOrdersBelowText ?></p>
                     <div class="row mb-3">
-					<div class="col-6">
-                    <?php echo direction("#","#") ?>
-                    </div>
-                    <div class="col-6">
+                    <div class="col-4">
                     <?php echo $dateText ?>
+                    </div>
+					<div class="col-4">
+                    <?php echo direction("Order #","الطلب#") ?>
+                    </div>
+                    <div class="col-4">
+                    <?php echo direction("Price","السعر") ?>
                     </div>
                     </div>
                     <?php 
@@ -361,17 +364,21 @@ $row = $result->fetch_assoc();
 								ORDER BY `date` DESC
 								";
 						$result = $dbconnect->query($sql);
-						while ( $row = $result->fetch_assoc() )
-						{
+						while ( $row = $result->fetch_assoc() ){
 							?>
 							<div class="row mb-3" style="font-size:14px">
-							<div class="col-6" style="overflow-wrap: break-word;">
-							<?php echo $row["orderId"]; ?>
-							</div>
-							<div class="col-6">
+                            <div class="col-4">
 							<a class="text-danger" href="order?orderId=<?php echo $row["orderId"]; ?>">
 							<?php echo substr(str_replace("-","/",$row["date"]),0,10) ?>
 							</a>
+							</div>
+							<div class="col-4" style="overflow-wrap: break-word;">
+                            <a class="text-danger" href="order?orderId=<?php echo $row["orderId"]; ?>">
+							<?php echo $row["orderId"] ?>
+							</a>
+							</div>
+                            <div class="col-4" style="overflow-wrap: break-word;">
+							<?php echo numTo3Float(priceCurr($row["totalPrice"])) . selectedCurr(); ?>
 							</div>
 							</div>
 							<?php 

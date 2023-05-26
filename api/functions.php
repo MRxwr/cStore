@@ -44,7 +44,8 @@ if ( isset($_POST["removeItemBoxId"]) ){
 if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POST["shippingChargesInput"])  ) {
 	$totals2 		 = $_POST["totals2"];
 	$shoppingCharges = $_POST["shippingChargesInput"];
-	$visaCard 		 = $_POST["visaCardCheck"];
+	//$visaCard 		 = $_POST["visaCardCheck"];
+	$visaCard 		 = 0;
 	$userDiscountP 	 = $_POST["userDiscountPercentage"];
 	$incomingVoucher = $_POST["checkVoucherVal"];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
