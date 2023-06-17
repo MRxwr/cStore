@@ -14,7 +14,7 @@ if( $product = selectDB("products","`id` LIKE '{$_GET["id"]}' AND `hidden` = '0'
 		if( isset($attribute[0]["sku"]) AND !empty($attribute[0]["sku"]) ){
 			$sku = $attribute[0]["sku"];
 		}
-		if( isset($attribute[0]["quantity"]) AND !empty($attribute[0]["quantity"]) ){
+		if( isset($attribute[0]["quantity"]) ){
 			$quantity = $attribute[0]["quantity"];
 		}
 		if( $product[0]["discountType"] == 0 ){
@@ -297,7 +297,7 @@ if ( $theme == 1 ){
 			   <div class="btn btn-theme-cust btn-large" id="wishlistBtn" ><span class="fa fa-heart"></span> <?php echo direction("Add to Whislist","أضف للمفضلة") ?></div>
 			</div>
 			<div class="col-6 mt-2">
-			   <button class="btn btn-theme-cust btn-large"  ><span class="fa fa-shopping-cart"></span> <?php echo direction("Add to cart","أضف للسلة") ?></button>
+			   <button class="btn btn-theme-cust btn-large" id="subminBtn" ><span class="fa fa-shopping-cart"></span> <?php echo direction("Add to cart","أضف للسلة") ?></button>
 			</div>
 
 			<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>">
@@ -368,6 +368,22 @@ $(function(){
 		$("#price").html($("#price"+id).html()+"<?php echo selectedCurr() ?>");
 		$("#sale").html($("#priceBefore"+id).html()+"<?php echo selectedCurr() ?>");
 		$("input[name=qorder]").attr("max",$("#quantity"+id).html());
+		var quan = parseInt($("#quantity"+id).html());
+		if( quan <= 0 ){
+			$("#subminBtn").attr("disabled","disabled");
+			$("#subminBtn").html('<span class="fa fa-shopping-cart"></span> ' + "<?php echo direction("Sold Out","انتهت الكمية") ?>");
+		}else{
+			$("#subminBtn").removeAttr("disabled");
+			$("#subminBtn").html('<span class="fa fa-shopping-cart"></span> ' + "<?php echo direction("Add to cart","أضف للسلة") ?>");
+		}
+	});
+
+	$(document).ready(function(){
+		var maxQuantity = $("input[name=qorder]").attr("max");
+		if( maxQuantity <= 0 ){
+			$("#subminBtn").attr("disabled","disabled");
+			$("#subminBtn").html('<span class="fa fa-shopping-cart"></span> ' + "<?php echo direction("Sold Out","انتهت الكمية") ?>");
+		}
 	});
 
 

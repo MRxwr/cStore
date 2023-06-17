@@ -1,7 +1,8 @@
-<div class="mt-3">
+
     <?php
     if($banners = selectDB("banner","`status` = '0' AND `hidden` = '1' ORDER BY `rank` ASC")){
     ?>
+    <div class="mt-3">
     <div class="sec-pad">
     <div class="container-fluid">
         <div class="row">
@@ -23,7 +24,7 @@
         </div>
     </div>
     </div>
+    </div>
     <?php
     }
     ?>
-</div>

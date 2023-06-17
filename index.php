@@ -121,9 +121,9 @@ if ( $theme == 1 ){
 	require 'templates/sidebar.php';
     require 'templates/main-container.php';
 }else{
-    require 'templates/categories.php';
 	require 'templates/bestsellers.php';   
 	require 'templates/recent.php'; 
+    require 'templates/categories.php';
 }
 require 'templates/footer.php'; 
 ?>
