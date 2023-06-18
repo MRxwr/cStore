@@ -17,9 +17,9 @@ if ( isset ( $_COOKIE[$cookieSession."A"] ) ){
 		$userType = $row["empType"];
 		$_SESSION[$cookieSession."A"] = $email;	
 	}else{
-		header("Location: logout.php");
+		header("Location: logout.php");die();
 	}
 }elseif( !isset ( $_COOKIE[$cookieSession."A"] ) ){
-	header("Location: login.php");
+	header("Location: login.php");die();
 }
 ?>
