@@ -178,6 +178,16 @@ include_once("includes/config.php");
 
 <div class="col-md-4">
 	<div class="form-group">
+		<label class="control-label mb-10"><?php echo direction("Size Chart","لوحة المقاسات") ?></label>
+		<select name="sizeChart" class="form-control">
+			<option value="0">NO</option>
+			<option value="1">Yes</option>
+		</select>
+	</div>
+</div>
+
+<div class="col-md-4">
+	<div class="form-group">
 		<label class="control-label mb-10">One Time</label>
 		<select name="oneTime" class="form-control">
 			<option value="0">NO</option>

@@ -39,14 +39,18 @@ if ( isset($_GET["order"]) && !empty($_GET["order"]) ){
 $joinArray["select"] = ["t.productId","t.categoryId"];
 $joinArray["join"] = ["attributes_products", "products"];
 $joinArray["on"] = ["t.productId = t1.productId", "t.productId = t2.id"];
+$settings = selectDB("settings","`id` = '1'"); 
+$productShape = ( $settings[0]["productView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
 
 if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND t1.hidden = '0' AND t1.status = '0' GROUP BY t.productId ORDER BY {$getOrder}") ){
 	for ( $y = 0; $y < sizeof($cpLink); $y++ ){
 	if( $subProductDetails = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$cpLink[$y]["productId"]}' GROUP BY `productId` ORDER BY `price` ASC") ){
+		$getQuantity = selectDB2("sum(quantity) as totalQuan","attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$cpLink[$y]["productId"]}'");
 			for ( $i =0; $i < sizeof($subProductDetails); $i++ ){
 				if($listOfProducts = selectDB("products","`id` = '{$subProductDetails[$i]["productId"]}' AND `hidden` = '0'")){
 				$image = selectDB("images","`productId` = '{$listOfProducts[0]["id"]}' ORDER BY `id` ASC LIMIT 1");
 				$category = selectDB("categories","`id` = '{$cpLink[$y]["categoryId"]}'");
+				
 				?>
 					<div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6 my-product <?php echo $listOfProducts[0]["categoryId"] ?>-product">
 					<table style="width:100%;direction:<?php echo $directionHTML ?>">
@@ -73,7 +77,7 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 						echo '</span>';
 					}
 					?>
-					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>" class='img-fluid product-box-img' ><img src='logos/m<?php echo $image[0]["imageurl"] ?>' style='width: 100%;' alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
+					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>"><img src='logos/m<?php echo $image[0]["imageurl"] ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
 					<div class="product-text">
 					<label class="product-title txt-dark" style="height:50px;overflow-y:auto">
 					<?php echo direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]); ?>
@@ -100,7 +104,7 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 					<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn" style="">
 					<span class="fa fa-shopping-basket mr-2 ml-2"></span>
 					<?php
-						if ( $subProductDetails[$i]["quantity"] > 0 ){
+						if ( $getQuantity[0]["totalQuan"] > 0 ){
 							echo $viewText;
 						}else{
 							echo "<del style='color:red;font-size:10px'>Sold Out</del>";

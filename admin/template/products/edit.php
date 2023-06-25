@@ -32,6 +32,7 @@ $preorderText = $row["preorderText"];
 $preorderTextAr = $row["preorderTextAr"];
 $type = $row["type"];
 $isImage = $row["isImage"];
+$sizeChart = $row["sizeChart"];
 if( $productExtras = json_decode($row["extras"],true) ){
 	$productExtras = json_decode($row["extras"],true);
 }else{
@@ -271,6 +272,21 @@ if ( $type == 1 ){
 <label class="control-label mb-10"><?php echo $Video_Link ?> (YOUTUBE)</label>
 <input name="video" type="text" class="form-control"  value="<?php echo $videoLink ?>">
 </div>
+</div>
+
+<div class="col-md-4">
+	<div class="form-group">
+		<label class="control-label mb-10"><?php echo direction("Size Chart","لوحة المقاسات") ?></label>
+		<select name="sizeChart" class="form-control">
+			<?php
+			if( $sizeChart == 1 ){
+				echo '<option value="1">Yes</option><option value="0">No</option>';
+			}else{
+				echo '<option value="0">No</option><option value="1">Yes</option>';
+			}
+			?>
+		</select>
+	</div>
 </div>
 
 <div class="col-md-4">

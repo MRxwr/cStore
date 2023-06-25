@@ -32,13 +32,14 @@ if( isset($_POST["id"]) ){
 	$joinArray["select"] = ["t.productId","t.categoryId"];
 	$joinArray["join"] = ["attributes_products"];
 	$joinArray["on"] = ["t.productId = t1.productId"];
-	
+	$settings = selectDB("settings","`id` = '1'"); 
+	$productShape = ( $settings[0]["productView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
 	if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} GROUP BY t.productId ORDER BY {$getOrder}") ){
 		for ( $y = 0; $y < sizeof($cpLink); $y++ ){
 		if( $subProductDetails = selectDB("attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$cpLink[$y]["productId"]}' GROUP BY `productId` ORDER BY `price` ASC") ){
+			$getQuantity = selectDB2("sum(quantity) as totalQuan","attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$cpLink[$y]["productId"]}'");
 				for ( $i =0; $i < sizeof($subProductDetails); $i++ ){
 					if($listOfProducts = selectDB("products","`id` = '{$subProductDetails[$i]["productId"]}' AND `hidden` = '0'")){
-						
 					$image = selectDB("images","`productId` = '{$listOfProducts[0]["id"]}' ORDER BY `id` ASC LIMIT 1");
 					$category = selectDB("categories","`id` = '{$cpLink[$y]["categoryId"]}'");
 					
@@ -68,7 +69,7 @@ if( isset($_POST["id"]) ){
 							}
 							$output .= "</span>";
 						}
-					$output .= "<a href='product.php?id={$listOfProducts[0]["id"]}' class='img-fluid product-box-img' ><img src='logos/m{$image[0]["imageurl"]}' style='width: 100%;' alt='{$listOfProducts[0]["enTitle"]}'></a>
+					$output .= "<a href='product.php?id={$listOfProducts[0]["id"]}' class='img-fluid {$productShape}' ><img src='logos/m{$image[0]["imageurl"]}' style='width: 100%;' alt='{$listOfProducts[0]["enTitle"]}'></a>
 						<div class='product-text'>
 						<h6 class='product-title' style='height:50px; overflow-y:auto'>
 						";
@@ -96,7 +97,7 @@ if( isset($_POST["id"]) ){
 						<button type='button' class='btn cart-btn add-to-cart add-to-cart-btn' style=''>
 						<span class='fa fa-shopping-basket mr-2 ml-2'></span>
 						";
-							if ( $subProductDetails[$i]["quantity"] > 0 ){
+							if ( $getQuantity[0]["totalQuan"] > 0 ){
 								$output .= $viewText;
 							}else{
 								$output .= "<del style='color:red;font-size:10px'>Sold Out</del>";

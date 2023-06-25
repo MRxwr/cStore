@@ -57,14 +57,18 @@ function forgetPass($data){
 function getCategories(){
 	$output = "";
 	if($categories = selectDB("categories","`status` = '0' AND `hidden` = '1' ORDER BY `rank` ASC")){
+		$settings = selectDB("settings","`id` = '1'"); 
 	    for ($i =0; $i < sizeof($categories); $i++){
+			$categoryShape = ( $settings[0]["categoryView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
     		$output .= "<div class='col-xl-4 col-lg-4 col-md-4 col-sm-4 col-6' style='text-align: -webkit-center!important'>
     		<a href='list.php?id={$categories[$i]["id"]}'>
-    		<img src='logos/{$categories[$i]["imageurl"]}' class='img-fluid product-box-img rounded' alt='{$categories[$i]["enTitle"]}'>
-    		<span style='font-weight: 600;font-size: 18px;'>";
-    		$output .= direction($categories[$i]["enTitle"],$categories[$i]["arTitle"]);
-    		$output .= "</span>
-    		</a>
+    		<img src='logos/{$categories[$i]["imageurl"]}' class='img-fluid {$categoryShape} rounded' alt='{$categories[$i]["enTitle"]}'>";
+    		if ( $settings[0]["showCategoryTitle"] == 0 ){
+				$output .= "<span style='font-weight: 600;font-size: 18px;'>";
+				$output .= direction($categories[$i]["enTitle"],$categories[$i]["arTitle"]);
+				$output .= "</span>";
+			}
+    		$output .= "</a>
     		</div>";
 	    }
 	}

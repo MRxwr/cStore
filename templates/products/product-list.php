@@ -6,6 +6,8 @@
 <div class="mb-3"></div>
 <?php
 if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' ORDER BY RAND() LIMIT 4") ){ 
+	$settings = selectDB("settings","`id` = '1'"); 
+	$productShape = ( $settings[0]["productView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
 	?>
 	<div class="container p-0">
 	<div class="row m-0 w-100">
@@ -14,6 +16,7 @@ if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' 
 		$image = selectDB("images","`productId` = '{$products[$i]["id"]}'");
 		$category = selectDB("categories","`id` = '{$products[$i]["categoryId"]}'");
 		$subProduct = selectDB("attributes_products","`productId` = '{$products[$i]["id"]}' ORDER BY `price` ASC");
+		$getQuantity = selectDB2("sum(quantity) as totalQuan","attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$products[$i]["id"]}'");
 		$price = 0;
 		$sale = 0;
 		$quantity = 0;
@@ -52,7 +55,7 @@ if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' 
 				echo '</span>';
 			}
 			?>
-			<a href="product.php?id=<?php echo $products[$i]["id"] ?>" class='img-fluid product-box-img' alt="<?php echo $products[$i]["enTitle"] ?>"><img src='logos/m<?php echo $image[0]["imageurl"] ?>' style='width: 100%;' alt="<?php echo $products[$i]["enTitle"] ?>"></a>
+			<a href="product.php?id=<?php echo $products[$i]["id"] ?>"  alt="<?php echo $products[$i]["enTitle"] ?>"><img src='logos/m<?php echo $image[0]["imageurl"] ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $products[$i]["enTitle"] ?>"></a>
 			<div class="product-text">
 			<label class="product-title txt-dark" style="height:50px;overflow-y:auto">
 			<?php echo direction($products[$i]["enTitle"],$products[$i]["arTitle"]); ?>
@@ -71,7 +74,7 @@ if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' 
 			<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn">
 			<span class="fa fa-shopping-basket mr-2 ml-2"></span>
 			<?php
-				if ( $quantity > 0 ){
+				if ( $getQuantity[0]["totalQuan"] > 0 ){
 					echo $viewText;
 				}else{
 					echo "<del style='color:red;font-size:10px'>Sold Out</del>";

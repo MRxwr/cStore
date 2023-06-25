@@ -279,4 +279,60 @@ function getInternationalShipping($items,$address){
 	$fees = ($response["data"]["IsSuccess"] == true ? $response["data"]["Data"]["Fees"] : $address["shipping"]);
 	return $fees;
 }
+
+// send order to store \\
+function sendOrderToAllowMENA($orderId){
+	GLOBAL $settingsShippingMethod;
+	if ( $settingsShippingMethod == 3 ){
+		$order = selectDB("orders2","`orderId` = '{$orderId}'");
+		$order[0]["paymentMethod"] = ($order[0]["paymentMethod"] == 3) ? 0 : $order[0]["paymentMethod"];
+		$address = json_decode($_POST["address"],true);
+		$info = json_decode($_POST["info"],true);
+		$shipping = ( isset($address["express"]) && !empty($address["express"]) && $address["express"] == 0 ) ? $address["shipping"] : $address["express"];
+		$address1 = "Country:{$address["country"]}, Area:{$address["area"]},";
+		$address2 = "Blk:{$address["block"]}, St:{$address["street"]}, Ave:{$address["avenue"]}, Bld:{$address["building"]}, Fl:{$address["floor"]}, Apt:{$address["apartment"]}";
+		$array["order_details"] = array(
+			"order_id" => $order[0]["orderId"],
+			"customer_name" => $info["name"],
+			"customer_email" => $info["email"],
+			"customer_mobile" => $info["phone"],
+			"country_id" => 114,
+			"total" => format_float($order[0]["price"]),
+			"shipping_total" => format_float($shipping),
+			"discount" => 0,
+			"postal_code" => $address["postalCode"],
+			"payment_method" => $order[0]["paymentMethod"],
+			"notes" => "{$address["notes"]}",
+			"address1" => $address1,
+			"address2" => $address2
+		);
+		$items = json_decode($_POST["items"],true);
+		for( $i = 0; $i < sizeof($items); $i++ ){
+			$item = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}'");
+			$array["order_items"][] = array(
+				"barcode" =>$item[0]["sku"],
+				"quantity" =>$items[$i]["quantity"]
+			);
+		}
+		$curl = curl_init();
+		curl_setopt_array($curl, array(
+		CURLOPT_URL => 'https://wms.allowmena.com/api/v1/create-order',
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_ENCODING => '',
+		CURLOPT_MAXREDIRS => 10,
+		CURLOPT_TIMEOUT => 0,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		CURLOPT_CUSTOMREQUEST => 'POST',
+		CURLOPT_POSTFIELDS => json_encode($array),
+		CURLOPT_HTTPHEADER => array(
+			'Accept: application/json',
+			'Authorization: Bearer 20036|BlGoGzvcn22jOOVe8rE0tP44BEc6PdOyPFnsJLCo',
+			'Content-Type: application/json'
+		),
+		));
+		$response = curl_exec($curl);
+		curl_close($curl);
+	}
+}
 ?>

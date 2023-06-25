@@ -1,8 +1,6 @@
 <?php
 ob_start();
 require ("includes/checksouthead.php");
-require ("includes/functions.php");
-require ("includes/translate.php");
 require ("payment.php");
 ?>
 <!DOCTYPE html>
@@ -44,8 +42,8 @@ require ("payment.php");
 	<!-- Custom CSS -->
 	<link href="dist/css/style.css" rel="stylesheet" type="text/css">
 	<!-- Favicon -->
-	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="../logos/<?php echo $settingslogo ?>">
+	<link rel="icon" href="../logos/<?php echo $settingslogo ?>" type="image/x-icon">
 
 	<!-- Data table CSS -->
 	<link href="../vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>

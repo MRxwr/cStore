@@ -26,6 +26,7 @@ $discountType = $_POST["discountType"];
 $preorderText = escapeStringDirect($_POST["preorderText"]);
 $preorderTextAr = escapeStringDirect($_POST["preorderTextAr"]);
 $isImage = $_POST["isImage"];
+$sizeChart = $_POST["sizeChart"];
 if( $extras = json_encode($_POST["extras"]) ){
 	$extras = json_encode($_POST["extras"]);
 }else{
@@ -45,9 +46,9 @@ if ( isset($_POST["weight"]) ){
 
 $sql = "INSERT INTO 
 		`products`
-		(`categoryId`, `arTitle`, `enTitle`, `arDetails`, `enDetails`, `price`, `cost`, `video`, `storeQuantity`, `onlineQuantity`,`discount`,`discountType`, `weight`, `width`, `height`,`depth`, `preorder`, `preorderText`, `preorderTextAr`, `type`, `oneTime`, `collection`, `isImage`,`extras`, `giftCard`) 
+		(`categoryId`, `arTitle`, `enTitle`, `arDetails`, `enDetails`, `price`, `cost`, `video`, `storeQuantity`, `onlineQuantity`,`discount`,`discountType`, `weight`, `width`, `height`,`depth`, `preorder`, `preorderText`, `preorderTextAr`, `type`, `oneTime`, `collection`, `isImage`,`extras`, `giftCard`, `sizeChart`) 
 		VALUES
-		('{$categoryId[0]}','{$artitle}','{$entitle}','{$arDetails}','{$enDetails}', '{$price}', '{$cost}','{$videoLink}','{$storeQuantity}','{$onlineQuantity}', '{$discount}', '{$discountType}','{$weight}','{$width}','{$height}', '{$depth}', '{$preorder}', '{$preorderText}', '{$preorderTextAr}', '{$type}', '{$oneTime}', '{$collection}', '{$isImage}', '{$extras}', '{$giftCard}')";
+		('{$categoryId[0]}','{$artitle}','{$entitle}','{$arDetails}','{$enDetails}', '{$price}', '{$cost}','{$videoLink}','{$storeQuantity}','{$onlineQuantity}', '{$discount}', '{$discountType}','{$weight}','{$width}','{$height}', '{$depth}', '{$preorder}', '{$preorderText}', '{$preorderTextAr}', '{$type}', '{$oneTime}', '{$collection}', '{$isImage}', '{$extras}', '{$giftCard}', '{$sizeChart}')";
 $result = $dbconnect->query($sql);
 
 $sql = "SELECT * FROM `products` WHERE `enTitle` LIKE '{$entitle}' AND `arTitle` LIKE '{$artitle}'";

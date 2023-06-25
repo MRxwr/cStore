@@ -48,6 +48,14 @@ if ( isset($_POST["userDiscount"]) ){
 	updateDB("s_media",array('userDiscount' => $_POST["userDiscount"]),"`id` = '4'");
 }
 
+if ( isset($_FILES['sizeChartImage']) && is_uploaded_file($_FILES['sizeChartImage']['tmp_name'])) {
+	$directory = "../logos/";
+	$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["sizeChartImage"]["name"]);
+	move_uploaded_file($_FILES["sizeChartImage"]["tmp_name"], $originalfile);
+	$filenewname = str_replace("../logos/", '', $originalfile);
+	updateDB("s_media",array('sizeChartImage' => $filenewname),"`id` = '4'");
+}
+
 $options = selectDB("s_media","`id` != '0'");
 $visaSwitch = $options[2]["visa"];
 $storeSwitch = $options[2]["inStore"];
@@ -146,6 +154,45 @@ $settings = selectDB("settings","`id` = '1'");
 						</div>
 					</div>
 				</div>
+
+				<?php 
+				$sql = "SELECT * FROM `s_media` WHERE `id` LIKE '4'";
+				$result = $dbconnect->query($sql);
+				$row = $result->fetch_assoc(); 
+				?>
+				<div class="col-md-4">
+					<div class="panel panel-default card-view">
+						<div class="panel-heading">
+							<div class="pull-left">
+								<h6 class="panel-title txt-dark"><?php echo direction("Enable Size Chart","تفعيل لوحة المقاسات") ?></h6>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="panel-wrapper collapse in">
+							<div class="panel-body">
+								<form method="POST" action="" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-md-6">
+								<div class="text">
+									<input type="file" class="form-control" name="sizeChartImage" >
+									<br><input type="submit"  class="form-control btn btn-default" value="submit" >
+								</div>
+								</div>
+								<div class="col-md-6">
+									<?php 
+									if( isset($row["sizeChartImage"]) && !empty($row["sizeChartImage"]) ){
+										?>
+										<a href="../logos/<?php echo $row["sizeChartImage"] ?>" taget="_blank"><img src="../logos/<?php echo $row["sizeChartImage"] ?>" style="width:100px;height:100px"></a>
+										<?php
+									}
+									?>
+								</div>
+							</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			
 				<div class="col-md-4">
 					<div class="panel panel-default card-view">
@@ -159,7 +206,7 @@ $settings = selectDB("settings","`id` = '1'");
 							<div class="panel-body">
 								<form method="POST" action="">
 								<div class="text">
-									<input type="float"  class="form-control" name="userDiscount"  value="<?php echo $userDiscount ?>">
+									Percentage %<input type="float"  class="form-control" name="userDiscount"  value="<?php echo $userDiscount ?>">
 									<br><input type="submit"  class="form-control btn btn-default" value="submit">
 								</div>
 								</form>
@@ -262,8 +309,8 @@ $settings = selectDB("settings","`id` = '1'");
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<form method="POST" action="">
-									<input type="text" name="dTime" class="form-control" value="<?php echo $settings[0]["dTime"] ?>">
-									<input type="text" name="dTimeArabic" class="form-control mt-5" value="<?php echo $settings[0]["dTimeArabic"] ?>">
+									<input type="text" name="dTime" class="form-control" value="<?php echo $settings[0]["dTime"] ?>" placeholder="Delivery Within 48 Hours" >
+									<input type="text" name="dTimeArabic" class="form-control mt-5" value="<?php echo $settings[0]["dTimeArabic"] ?>" placeholder="التوصيل خلال 48 ساعة">
 									<input type="submit" class="form-control btn btn-default"  value="submit">
 								</form>
 							</div>
@@ -300,86 +347,6 @@ $settings = selectDB("settings","`id` = '1'");
 				</div>
 				
 				<!-- /Row -->
-				<?php /*
-				<div class="col-md-3">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo $cashONOFFText ?></h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<form method="POST" action="">
-								<div class="radio">
-									<input type="radio"  class="form-control" name="switchCash" id="radio12" value="1" <?php if ( $cashSwitch == 1 ) { echo 'checked=""'; } ?>>
-									<label for="radio12"> <?php echo $On ?> </label>
-								</div>
-								<div class="radio">
-									<input type="radio"  class="form-control" name="switchCash" id="radio12" value="0" <?php if ( $cashSwitch == 0 ) { echo 'checked=""'; } ?>>
-									<label for="radio12"> <?php echo $Off ?> </label>
-								</div>
-								<input type="submit"  class="form-control btn btn-default" value="submit">
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-3">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo direction("Turn Knet On","تشغيل الكي نت") ?></h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<form method="POST" action="">
-								<div class="radio">
-									<input type="radio" class="form-control"  name="switchKent" id="radio17" value="1" <?php if ( $switchKent == 1 ) { echo 'checked=""'; } ?>>
-									<label for="radio13"> <?php echo $On ?> </label>
-								</div>
-								<div class="radio">
-									<input type="radio" class="form-control"  name="switchKent" id="radio17" value="0" <?php if ( $switchKent == 0 ) { echo 'checked=""'; } ?>>
-									<label for="radio13"> <?php echo $Off ?> </label>
-								</div>
-								<input type="submit" class="form-control btn btn-default"  value="submit">
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-3">
-					<div class="panel panel-default card-view">
-						<div class="panel-heading">
-							<div class="pull-left">
-								<h6 class="panel-title txt-dark"><?php echo $visaOnOFFText ?></h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body">
-								<form method="POST" action="">
-								<div class="radio">
-									<input type="radio" class="form-control"  name="switchVisa" id="radio13" value="1" <?php if ( $visaSwitch == 1 ) { echo 'checked=""'; } ?>>
-									<label for="radio13"> <?php echo $On ?> </label>
-								</div>
-								<div class="radio">
-									<input type="radio" class="form-control"  name="switchVisa" id="radio13" value="0" <?php if ( $visaSwitch == 0 ) { echo 'checked=""'; } ?>>
-									<label for="radio13"> <?php echo $Off ?> </label>
-								</div>
-								<input type="submit" class="form-control btn btn-default"  value="submit">
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				*/
-				?>
 				<div class="col-md-3">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">

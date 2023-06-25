@@ -83,6 +83,7 @@ if ( $order[0]["status"] == '0' ){
 	}
 	sendNotification($data);
 	whatsappNoti($order[0]["orderId"]);
+	sendOrderToAllowMENA($order[0]["orderId"]);
 }
 
 ?>

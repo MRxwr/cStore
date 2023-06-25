@@ -209,7 +209,7 @@
                     <div class="form-group">
                         <input type="password" class="form-control LoginPass" name="password" placeholder="<?php echo $paswordText ?>">
                     </div>
-                    <a href="profile.html"><button class="btn theme-btn w-100 LoginAj"><?php echo $continueText ?></button></a>
+                    <button class="btn theme-btn w-100 LoginAj"><?php echo $continueText ?></button>
                     <p class="mt-4 mb-4"><?php echo $DontHaveAnAccountText ?><a href="#" class="link" data-dismiss="modal" data-toggle="modal" data-target="#reg_popup"><?php echo $signUpText ?></a></p>
                 </div>
                 <div class="forgot-link">
@@ -312,6 +312,29 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- sizeChart modal -->
+<div class="modal form-popup myModal--effect-zoomIn" id="sizeChartPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle"><?php echo direction("Size Chart","لوحة المقاسات") ?></h5>
+        <button type="button" data-dismiss="modal" aria-label="Close" style="border: 1px solid #9a9a9a;border-radius: 5px;background-color: #c8c8c8;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body m-3">
+      <?php 
+        if( $sizeChart = selectDB("s_media","`id` = '4'") ){
+            if ( !empty($sizeChart[0]["sizeChartImage"]) ){
+                echo "<img src='logos/{$sizeChart[0]["sizeChartImage"]}' style='width:100%'>";
+            }
+        }
+        ?>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- minPrice modal -->

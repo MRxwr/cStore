@@ -115,6 +115,11 @@ if ( $theme == 1 ){
 		 </div>
 		 <p class="ft-20 text-black-cust mb-2"><?php echo direction("Description","الوصف") ?></p>
 		 <p  class="ft-18 c-grey mb-4" ><?php echo direction($product[0]["enDetails"],$product[0]["arDetails"]) ?>   </p>
+		 <?php 
+		 if( $product[0]["sizeChart"] == 1 ){
+			echo "<p  class='ft-18 c-grey mb-4' ><button id='sizeChart' data-toggle='modal' data-target='#sizeChartPopup' class='btn btn-default' >".direction("Size Chart","لوحة المقاسات")."</button></p>";
+		 }
+		 ?>
 		 <form action="<?php echo $formAction ?>" method="POST" enctype="multipart/form-data" accept-charset="UTF-8"> 
 		 <div class="row pt-2">
 		 <?php

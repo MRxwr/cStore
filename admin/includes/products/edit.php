@@ -22,6 +22,7 @@ $discountType = $_POST["discountType"];
 $preorderText = escapeStringDirect($_POST["preorderText"]);
 $preorderTextAr = escapeStringDirect($_POST["preorderTextAr"]);
 $isImage = $_POST["isImage"];
+$sizeChart = $_POST["sizeChart"];
 $sku = $_POST["sku"];
 $quantity = $_POST["quantity"];
 if( $extras = json_encode($_POST["extras"]) ){
@@ -77,6 +78,7 @@ $sql = "UPDATE
 		`preorderText`='{$preorderText}',
 		`preorderTextAr`='{$preorderTextAr}',
 		`extras`='{$extras}',
+		`sizeChart`='{$sizeChart}',
 		`depth`='$depth'
 		WHERE 
 		`id`= '$id'";
