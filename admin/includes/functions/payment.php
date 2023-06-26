@@ -286,8 +286,8 @@ function sendOrderToAllowMENA($orderId){
 	if ( $settingsShippingMethod == 3 ){
 		$order = selectDB("orders2","`orderId` = '{$orderId}'");
 		$order[0]["paymentMethod"] = ($order[0]["paymentMethod"] == 3) ? 0 : $order[0]["paymentMethod"];
-		$address = json_decode($_POST["address"],true);
-		$info = json_decode($_POST["info"],true);
+		$address = json_decode($order[0]["address"],true);
+		$info = json_decode($order[0]["info"],true);
 		$shipping = ( isset($address["express"]) && !empty($address["express"]) && $address["express"] == 0 ) ? $address["shipping"] : $address["express"];
 		$address1 = "Country:{$address["country"]}, Area:{$address["area"]},";
 		$address2 = "Blk:{$address["block"]}, St:{$address["street"]}, Ave:{$address["avenue"]}, Bld:{$address["building"]}, Fl:{$address["floor"]}, Apt:{$address["apartment"]}";
@@ -297,8 +297,8 @@ function sendOrderToAllowMENA($orderId){
 			"customer_email" => $info["email"],
 			"customer_mobile" => $info["phone"],
 			"country_id" => 114,
-			"total" => format_float($order[0]["price"]),
-			"shipping_total" => format_float($shipping),
+			"total" => numTo3Float($order[0]["price"]),
+			"shipping_total" => numTo3Float($shipping),
 			"discount" => 0,
 			"postal_code" => $address["postalCode"],
 			"payment_method" => $order[0]["paymentMethod"],
@@ -306,7 +306,7 @@ function sendOrderToAllowMENA($orderId){
 			"address1" => $address1,
 			"address2" => $address2
 		);
-		$items = json_decode($_POST["items"],true);
+		$items = json_decode($order[0]["items"],true);
 		for( $i = 0; $i < sizeof($items); $i++ ){
 			$item = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}'");
 			$array["order_items"][] = array(
