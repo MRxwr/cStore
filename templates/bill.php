@@ -181,7 +181,7 @@ if( $_POST["address"]["country"] == "KW" && $express = selectDB("settings","`id`
 	$expressOption = direction("Experss Delivery","توصيل سريع");
 	$expressPeriod = direction($express["English"],$express["arabic"]);
 	$expressPrice = numTo3Float(priceCurr($express["expressDeliveryCharge"])) . selectedCurr();
-	if( $express["status"] == 1 ){
+	if( isset($express["status"]) && $express["status"] == 1 ){
 		echo "<div class='mt-3'><input name='express' type='checkbox' class=''> <span>{$expressOption} {$expressPeriod} - {$expressPrice}</span></div>";
 	}else{
 		$expressPrice = 0;
