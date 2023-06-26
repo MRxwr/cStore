@@ -21,6 +21,8 @@ $PaymentAPIKey = $row["PaymentAPIKey"];
 $settingsOgDescription = $row["OgDescription"];
 $SettingsServiceCharge = $row["serviceCharge"];
 $settingsShippingMethod = $row["shippingMethod"];
+$headerButton = $row["headerButton"];
+$websiteColor = $row["websiteColor"];
 $defaultCountry = $row["country"];
 $settingsLang = (isset($row["language"]) && $row["language"] == "0") ? "ENG" : "AR";
 

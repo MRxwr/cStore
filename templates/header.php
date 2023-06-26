@@ -38,7 +38,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="theme-color" content="#512375" />
+	<meta name="theme-color" content="<?php echo $websiteColor ?>" />
     <link href="logos/<?php echo $settingslogo ?>" rel="shortcut icon" />
     <title><?php echo $settingsTitle ?></title>
     <meta name="description" content="<?php echo $settingsOgDescription ?>">
@@ -89,8 +89,8 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 		padding:0 !important;
     }
     .join-btn {
-		background: #fbbe9f;
-		color: #512375;
+		background: <?php echo $headerButton ?>;
+		color: <?php echo $websiteColor ?>;
 		padding: 0.4rem 1.2rem;
 		border-radius: 6px;
 	}
@@ -99,12 +99,12 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 
 <div class="v-body">
 
-<div class="header fixme d-md-block d-sm-none d-none" style="background-color: #512375;border: 1px solid #51237514;">
+<div class="header fixme d-md-block d-sm-none d-none" style="background-color: <?php echo $websiteColor ?>;border: 1px solid <?php echo $websiteColor ?>14;">
     <div class="container-fluid">
         <div class="row d-flex align-items-center">
             <div class="col-md-2 mt-3 mb-3" style="white-space:nowrap">
 				<form method="post" action="index.php">
-                <input type="submit" style="color: #512375;font-size: 22px;background: #fbbe9f;padding: 10px;border-radius: 6px;border: 0px;" value="<?php echo $settingsTitle ?>">
+                <input type="submit" style="color: <?php echo $websiteColor ?>;font-size: 22px;background: <?php echo $headerButton ?>;padding: 10px;border-radius: 6px;border: 0px;" value="<?php echo $settingsTitle ?>">
 				</form>
             </div>
             <div class="col-md-10 text-left">
@@ -148,7 +148,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
     </div>
 </div>
 
-<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: #512375; padding: 10px 0px 0px 0px !important">
+<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: <?php echo $websiteColor ?>; padding: 0px 0px 0px 0px !important">
     <nav role='navigation' style="direction: rtl !important; float:right !important; width: 100%;">
         
         
@@ -173,16 +173,13 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 				</a>
 			</div>
 			
-			<div class="col-10 <?php echo direction("text-right","text-left") ?>">
-				<!--<a href="index.php" class="" style="color:#fbbe9f; font-size:24px;font-family: 'Tajawal', sans-serif;white-space: nowrap;">
-					<span style="margin-right: 70px;font-family: 'Tajawal';"><?php echo $settingsTitle ?></span>
-				</a>-->
+			<div class="col-10 <?php echo "text-center" //direction("text-right","text-left") ?> mt-2">
 				<form method="post" action="index.php">
-                <input type="submit" style="color:#fbbe9f; font-size:24px;white-space: nowrap;background: transparent;border: 0px;direction: ltr;" value="<?php echo $settingsTitle ?>">
+                <input type="submit" style="color:<?php echo $headerButton ?>; font-size:24px;white-space: nowrap;background: transparent;border: 0px;direction: ltr;" value="<?php echo $settingsTitle ?>">
 				</form>
 			</div>
 			
-			<div class="col-1 text-center mt-2">
+			<div class="col-1 text-center mt-3">
 				<div id="menuToggle">
 					<input type="checkbox" style="margin-top: -21px;" aria-label="menu"/>
 					<span style="margin-top: -21px;"></span>
@@ -252,7 +249,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 										echo "
 										<li style='padding: 10px;'>
 											<a style='font-size: 20px;height: 36px;width: 36px;' href='{$smURL[$i]}{$socialMedia[0][$smIndex[$i]]}' aria-label='{$smIndex[$i]}'>
-												<span class='{$smIcon[$i]}' style='height: 15px; background: #512375;'></span>
+												<span class='{$smIcon[$i]}' style='height: 15px; background: {$websiteColor}'></span>
 											</a>
 										</li>";
 									}
