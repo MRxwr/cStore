@@ -8,6 +8,7 @@ if (isset($_POST["title"])) {
 	$color = selectDB("settings", "`id` = '1'");
 	$css = file_get_contents("../css/custome.css");
 	$css = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $css);
+	$css = str_replace($color[0]["headerButton"], $_POST["headerButton"], $css);
 	file_put_contents('../css/custome.css', $css);
 	$header = file_get_contents("../templates/header.php");
 	$header = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $header);
