@@ -288,7 +288,7 @@ function sendOrderToAllowMENA($orderId){
 		$order[0]["paymentMethod"] = ($order[0]["paymentMethod"] == 3) ? 0 : $order[0]["paymentMethod"];
 		$address = json_decode($order[0]["address"],true);
 		$info = json_decode($order[0]["info"],true);
-		$shipping = ( $address["express"] == 0 ) ? $address["shipping"] : $address["express"];
+		$shipping = ( $address["express"] == 0 ) ? $address["shipping"] : $address["express"]; 
 		$address1 = "Country:{$address["country"]}, Area:{$address["area"]},";
 		$address2 = "Blk:{$address["block"]}, St:{$address["street"]}, Ave:{$address["avenue"]}, Bld:{$address["building"]}, Fl:{$address["floor"]}, Apt:{$address["apartment"]}";
 		$array["order_details"] = array(
