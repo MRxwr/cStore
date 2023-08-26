@@ -71,7 +71,7 @@ function voucherSelectedItems($code){
 		$price = $price * $cart[$i]["quantity"];
 		$finalPrice[] = $price;
 	}
-	return array_sum(priceCurr($finalPrice));
+	return priceCurr(array_sum($finalPrice));
 }
 
 function voucherDoubleDiscount($code){
@@ -98,6 +98,6 @@ function voucherDoubleDiscount($code){
 		$price = $price * $cart[$i]["quantity"];
 		$finalPrice[] = $price;
 	}
-	return array_sum(priceCurr($finalPrice));
+	return priceCurr(array_sum($finalPrice));
 }
 ?>
