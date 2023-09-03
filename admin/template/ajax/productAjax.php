@@ -15,20 +15,21 @@ $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 $searchValue = mysqli_real_escape_string($dbconnect,$_POST['search']['value']); // Search value
 
 $searchQuery = " ";
-// if($searchValue != ''){
-//   $searchQuery = " and ( p.id like '%".$searchValue."%' or 
-//         p.arTitle like '%".$searchValue."%' or 
-//         p.enTitle like'%".$searchValue."%' ) ";
-// }
+ if($searchValue != ''){
+   $searchQuery = " AND ( `id` LIKE '%".$searchValue."%' OR 
+         `arTitle` LIKE '%".$searchValue."%' OR 
+         `enTitle` LIKE'%".$searchValue."%' ) ";
+ }
 
 ## Total number of records without filtering
 
-$sel = $dbconnect->query("select COUNT(DISTINCT id) as allcount from `products` WHERE `hidden` != 2");
+$sel = $dbconnect->query("SELECT COUNT(DISTINCT id) AS allcount FROM `products` WHERE `hidden` != 2");
 $records = mysqli_fetch_assoc($sel);
 $totalRecords = $records['allcount'];
 
 ## Total number of record with filtering
 $sel = $dbconnect->query("select COUNT(DISTINCT id) as allcount from `products` WHERE `hidden` != 2 ".$searchQuery);
+$sel = $dbconnect->query("SELECT COUNT(DISTINCT id) AS allcount FROM `products` WHERE `hidden` != 2 ".$searchQuery);
 $records = mysqli_fetch_assoc($sel);
 $totalRecordwithFilter = $records['allcount'];
 
@@ -47,7 +48,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $imagedata ='No image';
     if(isset($image[0]["imageurl"])){
         $imagepath = @$image[0]["imageurl"];
-        $imagedata ='<img src="../logos/'.$imagepath.'" style="width:50px;height:50px" alt="Product Image" />';
+        $imagedata ='<img src="../logos/b'.$imagepath.'" style="width:50px;height:50px" alt="Product Image" />';
     }
     $order='<input class="form-control" type="number" value="'.$row["subId"] .'" name="subId[]" style="width:60px" />
     <input type="hidden" value="'.$row["id"].'" name="ids[]" />';
