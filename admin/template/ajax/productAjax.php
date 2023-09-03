@@ -28,7 +28,6 @@ $records = mysqli_fetch_assoc($sel);
 $totalRecords = $records['allcount'];
 
 ## Total number of record with filtering
-$sel = $dbconnect->query("select COUNT(DISTINCT id) as allcount from `products` WHERE `hidden` != 2 ".$searchQuery);
 $sel = $dbconnect->query("SELECT COUNT(DISTINCT id) AS allcount FROM `products` WHERE `hidden` != 2 ".$searchQuery);
 $records = mysqli_fetch_assoc($sel);
 $totalRecordwithFilter = $records['allcount'];
