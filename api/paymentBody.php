@@ -51,7 +51,7 @@ for( $i=0; $i < 10; $i++ ){
 	  $gatewayId = $resultMY["data"]["InvoiceId"];
 	  break;
 	}
-}
+} 
 
 if( !isset($resultMY["data"]["InvoiceId"]) ){
   header("LOCATION: checkout.php?error=4");die();
