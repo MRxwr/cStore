@@ -204,11 +204,17 @@ if( isset($_POST["fullName"]) ){
 				}elseif( $employees[$i]["empType"] == 2 ){
 					$type = "POS";
 				}
+
 				
 				if( $shop = selectDB("shops","`id` = '{$employees[$i]["shopId"]}'") ){
 					$shop = direction($shop[0]["enTitle"],$shop[0]["arTitle"]);
 				}else{
 					$shop = "";
+				}
+				if( $employee = selectDB("roles","`id` = '{$employees[$i]["empType"]}'") ){
+					$employee = direction($employee[0]["enTitle"],$employee[0]["arTitle"]);
+				}else{
+					$employee = "";
 				}
 				
 				?>
@@ -216,7 +222,7 @@ if( isset($_POST["fullName"]) ){
 				<td id="name<?php echo $employees[$i]["id"]?>" ><?php echo $employees[$i]["fullName"] ?></td>
 				<td id="email<?php echo $employees[$i]["id"]?>" ><?php echo $employees[$i]["email"] ?></td>
 				<td id="mobile<?php echo $employees[$i]["id"]?>" ><?php echo $employees[$i]["phone"] ?></td>
-				<td><?php echo $type ?></td>
+				<td><?php echo $employee ?></td>
 				<td><?php echo $shop ?></td>
 				<td class="text-nowrap">
 				
