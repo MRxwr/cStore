@@ -147,7 +147,7 @@ function sendMails($orderId, $email){
 			$msg = emailBody($orderId);
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'myid.createkwservers.com/api/v1/send/notify',
+			CURLOPT_URL => 'https://createid.link/api/v1/send/notify',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,
@@ -174,7 +174,7 @@ function sendMailsAdmin($orderId, $email){
 			$msg = emailBody($orderId);
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'myid.createkwservers.com/api/v1/send/notify',
+			CURLOPT_URL => 'https://createid.link/api/v1/send/notify',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,

@@ -59,10 +59,10 @@ if( !empty($giftCard["from"]) ){
 	$orderDetailsNoti .= "[-TO-]: {$giftCard["to"]}, ";
 }
 
-if ( $order[0]["status"] == '0' ){
+if ( $order[0]["status"] == '0' ){ 
 	$data = array("status" => "1");
 	updateDB("orders2",$data,"`orderId` = '{$orderId}'");
-	if ( $order[0]["paymentMethod"] == 3 ){
+	if ( $order[0]["paymentMethod"] == 10 ){
 		$noti = 2;
 	}else{
 		$noti = 1;

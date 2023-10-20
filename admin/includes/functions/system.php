@@ -20,7 +20,7 @@ function forgetPass($data){
 	$domainName = substr($domainName, strpos($domainName, '//') + 2);
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => 'myid.createkwservers.com/api/v1/send/notify',
+		CURLOPT_URL => 'https://createid.link/api/v1/send/notify',
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => '',
 		CURLOPT_MAXREDIRS => 10,
@@ -163,7 +163,7 @@ function whatsappNoti($order){
 	}
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
-	  CURLOPT_URL => 'https://automate.createkwservers.com/api/whatsapp/send',
+	  CURLOPT_URL => 'https://automate.createstore.link/api/whatsapp/send',
 	  CURLOPT_RETURNTRANSFER => true,
 	  CURLOPT_ENCODING => '',
 	  CURLOPT_MAXREDIRS => 10,
@@ -185,7 +185,7 @@ function getPDF($orderId){
 	$settings = selectDB("settings","`id` = '1'");
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
-	CURLOPT_URL => "https://automate.createkwservers.com/api/generate/pdf?url={$settings[0]["website"]}/invoice.php?orderId={$orderId}",
+	CURLOPT_URL => "https://automate.createstore.link/api/generate/pdf?url={$settings[0]["website"]}/invoice.php?orderId={$orderId}",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_ENCODING => '',
 	CURLOPT_MAXREDIRS => 10,

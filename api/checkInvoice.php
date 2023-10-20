@@ -11,7 +11,7 @@ if ( isset($_GET["c"]) ){
 	}
 }elseif( isset($_GET["paymentId"]) && !empty($_GET["paymentId"]) ){
 	$Key = $_GET["paymentId"];
-	$orderId = $_GET["paymentId"];
+	$orderId = $_GET["paymentId"]; 
 	$KeyType = "paymentId";
 	$postMethodLines = array(
 		"endpoint" 				=> "PaymentStatusCheck",
