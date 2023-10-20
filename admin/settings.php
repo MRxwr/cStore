@@ -18,6 +18,7 @@ if (isset($_POST["title"])) {
 	$bill = str_replace($color[0]["websiteColor"], $_POST["websiteColor"], $bill);
 	$bill = str_replace($color[0]["headerButton"], $_POST["headerButton"], $bill);
 	file_put_contents('../templates/bill.php', $bill);
+	
 	// update db \\
 	$sql = "UPDATE `s_media` 
 	SET
@@ -59,19 +60,31 @@ if (isset($_POST["title"])) {
 	`shippingMethod` = '".$_POST["shippingMethod"]."',
 	`website` = '" . $_POST["website"] . "',";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
-	$directory = "../logos/";
-	$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["bgImage"]["name"]);
-	move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
-	$filenewname = str_replace("../logos/", '', $originalfile);
-	$sql .= "`bgImage` = '" . $filenewname . "',";
+		$fileType = mime_content_type($_FILES['bgImage']['tmp_name']);
+		if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
+			$directory = "../logos/";
+			$originalFileName = pathinfo($_FILES["bgImage"]["name"], PATHINFO_FILENAME);
+			$fileExtension = pathinfo($_FILES["bgImage"]["name"], PATHINFO_EXTENSION);
+			$originalfile = $directory . $originalFileName . "." . $fileExtension;
+			move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
+			$filenewname = str_replace("../logos/", '', $originalfile);
+			$sql .= "`bgImage` = '" . $filenewname . "',";
+		}
 	}
+	
 	if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
-	$directory = "../logos/";
-	$originalfile = $directory . date("d-m-y") . time() . rand(111111, 999999) . "." . getFileExtension($_FILES["logo"]["name"]);
-	move_uploaded_file($_FILES["logo"]["tmp_name"], $originalfile);
-	$filenewname = str_replace("../logos/", '', $originalfile);
-	$sql .= "`logo` = '" . $filenewname . "',";
+		$fileType = mime_content_type($_FILES['logo']['tmp_name']);
+		if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
+			$directory = "../logos/";
+			$originalFileName = pathinfo($_FILES["logo"]["name"], PATHINFO_FILENAME);
+			$fileExtension = pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
+			$originalfile = $directory . $originalFileName . "." . $fileExtension;
+			move_uploaded_file($_FILES["logo"]["tmp_name"], $originalfile);
+			$filenewname = str_replace("../logos/", '', $originalfile);
+			$sql .= "`logo` = '" . $filenewname . "',";
+		}
 	}
+	
 	$sql .= "`email` = '" . $_POST["email"] . "'WHERE `id` LIKE '1'";
 	$result = $dbconnect->query($sql);
 }

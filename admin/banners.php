@@ -31,14 +31,21 @@ if( isset($_POST["title"]) ){
 	$id = $_POST["update"];
 	unset($_POST["update"]);
 	if ( $id == 0 ){
-		if( is_uploaded_file($_FILES['image']['tmp_name']) ){
-			$directory = "../logos/";
-			$originalfile = $directory . date("d-m-y") . time() .  round(microtime(true)). ".png";
-			move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
-			$_POST["image"] = str_replace("../logos/",'',$originalfile);
-		}else{
-			$_POST["image"] = "";
-		}
+		if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $fileType = mime_content_type($_FILES['image']['tmp_name']);
+            if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
+                $directory = "../logos/";
+                $originalFileName = pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME);
+                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+                $originalfile = $directory . $originalFileName . "." . $fileExtension;
+                move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
+                $_POST["image"] = str_replace("../logos/", '', $originalfile);
+            } else {
+                $_POST["image"] = "";
+            }
+        } else {
+            $_POST["image"] = "";
+        }
 		
 		if( insertDB("banner", $_POST) ){
 			header("LOCATION: banners.php");
@@ -50,15 +57,25 @@ if( isset($_POST["title"]) ){
 		<?php
 		}
 	}else{
-		if( is_uploaded_file($_FILES['image']['tmp_name']) ){
-			$directory = "../logos/";
-			$originalfile = $directory . date("d-m-y") . time() .  round(microtime(true)). ".png";
-			move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
-			$_POST["image"] = str_replace("../logos/",'',$originalfile);
-		}else{
-			$imageurl = selectDB("banner","`id` = '{$id}'");
-			$_POST["image"] = $imageurl[0]["image"];
-		}
+		if (is_uploaded_file($_FILES['image']['tmp_name'])) {
+            $fileType = mime_content_type($_FILES['image']['tmp_name']);
+        
+            if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
+                $directory = "../logos/";
+                $originalFileName = pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME);
+                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+                $originalfile = $directory . $originalFileName . "." . $fileExtension;
+                move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
+                $_POST["image"] = str_replace("../logos/", '', $originalfile);
+            } else {
+                $imageurl = selectDB("banner", "`id` = '{$id}'");
+                $_POST["image"] = $imageurl[0]["image"];
+            }
+        } else {
+            $imageurl = selectDB("banner", "`id` = '{$id}'");
+            $_POST["image"] = $imageurl[0]["image"];
+        }
+
 		
 		if( updateDB("banner", $_POST, "`id` = '{$id}'") ){
 			header("LOCATION: banners.php");
