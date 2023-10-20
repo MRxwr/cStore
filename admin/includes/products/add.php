@@ -12,7 +12,7 @@ unset($_POST["sku"]);unset($_POST["quantity"]);unset($_POST["categoryId"]);
 $_POST["extras"] = (isset($_POST["extras"])) ? json_encode($_POST["extras"]) : json_encode(array());
 if ( !isset($_POST["weight"]) ){
     $_POST["weight"] = 0;
-    $_POST["width"] = 0;
+    $_POST["width"] = 0; 
     $_POST["height"] = 0;
     $_POST["depth"] = 0; 
 }
