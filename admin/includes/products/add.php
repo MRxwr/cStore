@@ -3,7 +3,6 @@ require ("../config.php");
 require ("../functions.php");
 
 $categoryId = $_POST["categoryId"];
-}else{
 $quantity = $_POST["quantity"];
 $sku = $_POST["sku"];
 //unset saved data
