@@ -2,27 +2,60 @@
 require ("../config.php");
 require ("../functions.php");
 
+if ( isset($_POST["type"]) ){
+    $type = $_POST["type"];
+}else{
+    $type = "0";
+}
+$artitle = escapeStringDirect($_POST["arTitle"]);
+$entitle = escapeStringDirect($_POST["enTitle"]);
+$arDetails = escapeStringDirect($_POST["arDetails"]);
+$enDetails = escapeStringDirect($_POST["enDetails"]);
 $categoryId = $_POST["categoryId"];
-$quantity = $_POST["quantity"];
-$sku = $_POST["sku"];
-//unset saved data
-unset($_POST["sku"]);unset($_POST["quantity"]);unset($_POST["categoryId"]);
-
-$_POST["extras"] = (isset($_POST["extras"])) ? json_encode($_POST["extras"]) : json_encode(array());
-if ( !isset($_POST["weight"]) ){
-    $_POST["weight"] = 0;
-    $_POST["width"] = 0; 
-    $_POST["height"] = 0;
-    $_POST["depth"] = 0; 
+$price = $_POST["price"];
+$cost = $_POST["cost"];
+$preorder = $_POST["preorder"];
+$oneTime = $_POST["oneTime"];
+$collection = $_POST["collection"];
+$giftCard = $_POST["giftCard"];
+$videoLink = $_POST["video"];
+$storeQuantity = 0;
+$onlineQuantity = 0;
+$discount = $_POST["discount"];
+$discountType = $_POST["discountType"];
+$preorderText = escapeStringDirect($_POST["preorderText"]);
+$preorderTextAr = escapeStringDirect($_POST["preorderTextAr"]);
+$isImage = $_POST["isImage"];
+$sizeChart = $_POST["sizeChart"];
+if( $extras = json_encode($_POST["extras"]) ){
+	$extras = json_encode($_POST["extras"]);
+}else{
+	$extras = json_encode(array());
+}
+if ( isset($_POST["weight"]) ){
+    $weight = $_POST["weight"];
+    $width = $_POST["width"];
+    $height = $_POST["height"];
+    $depth = $_POST["depth"]; 
+}else{
+    $weight = 0;
+    $width = 0;
+    $height = 0;
+    $depth = 0; 
 }
 
-// insert product
-insertDB("products",$_POST);
-// get product id
-$product = selectDB("products","`enTitle` LIKE '{$entitle}' AND `arTitle` LIKE '{$artitle}");
-$productID = $product[0]["id"];
+$sql = "INSERT INTO 
+		`products`
+		(`categoryId`, `arTitle`, `enTitle`, `arDetails`, `enDetails`, `price`, `cost`, `video`, `storeQuantity`, `onlineQuantity`,`discount`,`discountType`, `weight`, `width`, `height`,`depth`, `preorder`, `preorderText`, `preorderTextAr`, `type`, `oneTime`, `collection`, `isImage`,`extras`, `giftCard`, `sizeChart`) 
+		VALUES
+		('{$categoryId[0]}','{$artitle}','{$entitle}','{$arDetails}','{$enDetails}', '{$price}', '{$cost}','{$videoLink}','{$storeQuantity}','{$onlineQuantity}', '{$discount}', '{$discountType}','{$weight}','{$width}','{$height}', '{$depth}', '{$preorder}', '{$preorderText}', '{$preorderTextAr}', '{$type}', '{$oneTime}', '{$collection}', '{$isImage}', '{$extras}', '{$giftCard}', '{$sizeChart}')";
+$result = $dbconnect->query($sql);
 
-// save product list of categories
+$sql = "SELECT * FROM `products` WHERE `enTitle` LIKE '{$entitle}' AND `arTitle` LIKE '{$artitle}'";
+$result = $dbconnect->query($sql);
+$row = $result->fetch_assoc();
+$productID = $row["id"];
+
 for( $i =0; $i < sizeof($categoryId) ; $i++ ){
 	$data = array(
 		"productId" => $productID,
@@ -31,31 +64,28 @@ for( $i =0; $i < sizeof($categoryId) ; $i++ ){
 	insertDB("category_products",$data);
 }
 
-// set simple product main attribute
-if ( $_POST["type"] == 1 ){
-	$mainProductArray = array(
-		"productId" => $productId,
-		"quantity" => $quantity,
-		"sku" => $sku,
-		"price" => $_POST["price"],
-		"price" => $_POST["cost"],
-		"cost" => $productId,
-	);
-	insertDB("attributes_products",$mainProductArray);
+if ( $type == 1){
+	$productId = $productID;
+	$quantity = $_POST["quantity"];
+	$sku = $_POST["sku"];
+
+	$sql = "INSERT INTO 
+			`attributes_products` 
+			(`productId`, `quantity`,`price`,`cost`,`sku`) 
+			VALUES 
+			('{$productId}','{$quantity}','{$price}','{$cost}', '{$sku}'); 
+			";
+	$result = $dbconnect->query($sql);
 }
 
-for($i = 0; $i < sizeof($_FILES['logo']['tmp_name']); $i++ ) {
-    if (is_uploaded_file($_FILES['logo']['tmp_name'][$i])) {
-        $fileType = mime_content_type($_FILES['logo']['tmp_name'][$i]);
-        if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))){
-			$filenewname = uploadImage($_FILES['logo']['tmp_name'][$i]);
-			$insertArray = array(
-				"productId" => $productID,
-				"imageurl" => $filenewname,
-			);
-			insertDB("images",$insertArray);
-        }
-    }
+$i = 0;
+while ( $i < sizeof($_FILES['logo']['tmp_name']) ){
+	if( is_uploaded_file($_FILES['logo']['tmp_name'][$i]) ){
+		$filenewname = uploadImage($_FILES["logo"]["tmp_name"][$i]);
+		$sql = "INSERT INTO `images`(`id`, `productId`, `imageurl`) VALUES (NULL,'{$productID}','{$filenewname}')";
+		$result = $dbconnect->query($sql);
+	}
+	$i++;
 }
 header("LOCATION: ../../product.php");
 
