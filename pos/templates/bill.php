@@ -306,7 +306,7 @@ if( isset($userID) ){
 </div>
 
 <div>
-<form method="POST" action="payment">
+<form method="POST" action="payment.php">
 <input type="hidden" name="totalPrice" class="totalPriceClass" value="<?php echo $totals21 ?>">
 <input type="hidden" class="form-control orderVoucherInput" name="orderVoucher" value="">
 <input type="hidden" name="paymentMethod" value="<?php echo $_POST["paymentMethod"] ?>">
