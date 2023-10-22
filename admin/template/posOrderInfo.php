@@ -185,11 +185,7 @@ if ( $emailOpt == 1 ){
 $totalPrice =0;
 $i = 0;
 while ( $i < sizeof($products) ){
-		if ( $orderDiscount[$i] != 0 ){
-			$checkPrice = $orderPrice[$i] - ( $orderPrice[$i] * $orderDiscount[$i] / 100);
-		}else{
-			$checkPrice = $orderPrice[$i];
-		}
+		$checkPrice = $orderPrice[$i];
 		$pricePerItem = $checkPrice*$quantities[$i];
 		$totalPrice = $totalPrice + $pricePerItem;
 		$productPrice = $checkPrice;
