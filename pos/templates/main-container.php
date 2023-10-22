@@ -40,7 +40,7 @@ for( $z = 0; $z < sizeof($category); $z++){
 		?>
 		<div class="col-12">
 		<details>
-		<summary style="background-color: #512375;color: white;font-weight: 700;font-size: 20px;margin-bottom: 10px;"><b><?php echo direction($category[$z]["enTitle"],$category[$z]["arTitle"]) ?></b>
+		<summary style="background-color: <?php echo $websiteColor ?>;color: <?php echo $headerButton ?>;font-weight: 700;font-size: 20px;margin-bottom: 10px;"><b><?php echo direction($category[$z]["enTitle"],$category[$z]["arTitle"]) ?></b>
 		</summary>
 		<div class="row m-0 w-100">
 		<?php
