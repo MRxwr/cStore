@@ -316,7 +316,7 @@ if( isset($userID) ){
 <input type="hidden" name="cardMsg" value="<?php echo $_POST["cardMsg"] ?>">
 <input type="hidden" name="civilId" value="<?php echo $_POST["civilId"] ?>">
 <input type="hidden" name="notes" value="<?php echo $_POST["notes1"] ?>">
-<input type="submit" name="submit" class="btn btn-large" style="width:100%; color: white; background-color:#6b7782;" value="<?php echo $proceedToPaymentText ?>">
+<input type="submit" name="submit" class="btn btn-large" style="width:100%; color: <?php echo $headerButton ?>; background-color:<?php echo $websiteColor ?>;" value="<?php echo $proceedToPaymentText ?>">
 </form>
 </div>
 
