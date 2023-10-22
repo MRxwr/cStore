@@ -102,7 +102,7 @@ while ( $i < sizeof($_SESSION["cart"]["id"]) ){
 </div>
 </div>
 </div>
-<form method="post" action="bill">
+<form method="post" action="bill.php">
 <div class="content-section">
 
 <?php
@@ -111,7 +111,7 @@ if ( isset($_GET["status"]) )
 ?>
 <div class="checkout-informationbox">
 <div style="color:red; font-size:18px; text-align:center">
-<img src="https://i.imgur.com/h8aeHER.png" style="width:50px;heightL50px">
+<img src="https://i.imgur.com/h8aeHER.png" style="width:50px;height:50px">
 <br>
 <br>
 <?php echo $paymentFailureMsgText ?>

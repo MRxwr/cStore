@@ -6,9 +6,6 @@
 	bottom: 10px;
     position: absolute;
 }
-ul.social-icons {
-    
-}
 
 @media only screen and (max-width: 1025px) {
 	  .marginingTheSearchBar{

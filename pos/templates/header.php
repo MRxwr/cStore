@@ -63,30 +63,28 @@ if ( $maintenace[0]["status"] == 1 ){
 
 </head>
 <style>
+	<?php echo $fontImport ?>
     body {
-        font-family: 'Tajawal';
+		font-family: <?php echo $fontFamily ?>;
 		padding:0 !important;
     }
     .join-btn {
-    background: #fbbe9f;
-    color: #00564e;
-    padding: 0.4rem 1.2rem;
-    border-radius: 6px;
-    font-family: 'Tajawal';
-	
-    
-}
+		background: <?php echo $headerButton ?>;
+		color: <?php echo $websiteColor ?>;
+		padding: 0.4rem 1.2rem;
+		border-radius: 6px;
+	}
 </style>
 <body class="rtl <?php echo $directionBODY ?>" id="body">
 
 <div class="v-body">
 
-<div class="header fixme d-md-block d-sm-none d-none" style="background-color: #512375;border: 1px solid #00000014;">
+<div class="header fixme d-md-block d-sm-none d-none" style="background-color: <?php echo $websiteColor ?>;border: 1px solid <?php echo $websiteColor ?>;">
     <div class="container-fluid">
         <div class="row d-flex align-items-center">
             <div class="col-md-2 mt-3 mb-3" style="white-space:nowrap">
 				<form method="post" action="index.php">
-                <input type="submit" style="color: #00564e;font-size: 22px;font-family: 'Tajawal';background: #fbbe9f;padding: 10px;border-radius: 6px;border: 0px;" value="<?php echo $settingsTitle ?>">
+                <input type="submit" style="color: <?php echo $websiteColor ?>;font-size: 22px;font-family: 'Tajawal';background: <?php echo $headerButton ?>;padding: 10px;border-radius: 6px;border: 0px;" value="<?php echo $settingsTitle ?>">
 				</form>
             </div>
             <div class="col-md-10 text-left">
@@ -118,7 +116,7 @@ if ( $maintenace[0]["status"] == 1 ){
     </div>
 </div>
 
-<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: #512375; padding: 13px 0px 13px 0px !important">
+<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: <?php echo $websiteColor ?>; padding: 13px 0px 13px 0px !important">
     <nav role='navigation' style="direction: rtl !important; float:right !important; width: 100%;">
         
         
@@ -154,7 +152,7 @@ if ( $maintenace[0]["status"] == 1 ){
 					<span style="margin-right: 70px;font-family: 'Tajawal';"><?php echo $settingsTitle ?></span>
 				</a>-->
 				<form method="post" action="index.php">
-                <input type="submit" style="color:#fbbe9f; font-size:24px;font-family: 'Tajawal', sans-serif;white-space: nowrap;background: transparent;border: 0px;" value="<?php echo $settingsTitle ?>">
+                <input type="submit" style="color:<?php echo $headerButton ?>; font-size:24px;font-family: 'Tajawal', sans-serif;white-space: nowrap;background: transparent;border: 0px;" value="<?php echo $settingsTitle ?>">
 				</form>
 			</div>
 			
@@ -166,7 +164,7 @@ if ( $maintenace[0]["status"] == 1 ){
 					<span></span>
 					<ul id="menu">
 						<li>
-							<img src='../logos/<?php echo $settingslogo ?>'); style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
+							<img src='../logos/<?php echo $settingslogo ?>'; style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
 						</li>
 						<li>
 							<a href="index.php" class="active">
@@ -219,7 +217,7 @@ if ( $maintenace[0]["status"] == 1 ){
 							</li>
 							<li>
 								<p class="menu-foot-link">
-								Powered by <a href="http://www.create-kw.com" target="_blank">Create-kw.com</a>
+								Powered by <a href="http://www.createkuwait.com" target="_blank">Createkuwait.com</a>
 								</p>
 							</li>
 					</ul>

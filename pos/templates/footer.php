@@ -15,7 +15,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-body">
-        <form method="get" action="order">
+        <form method="get" action="order.php">
             <table style="width:100%">
             <tr>
             <td>
@@ -71,7 +71,7 @@
             </div>
         </div>
         <div class="CheckoutButtonWrapper">
-		<form action="checkout" method="post">
+		<form action="checkout.php" method="post">
 			<input type="hidden" name="ids" class="cartId" value="">
 			<input type="hidden" name="quantites" class="cartQuan" value="">
             <button class="CheckoutButton checkout-pad-cust">
@@ -85,7 +85,7 @@
 </div>
 
 <!-- sign up popup -->
-<div class="modal form-popup myModal--effect-zoomIn" id="reg_popup" style="">
+<div class="modal form-popup myModal--effect-zoomIn" id="reg_popup">
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -113,7 +113,7 @@
     </div>
 </div>
 
-<div class="modal form-popup myModal--effect-zoomIn" id="cancel_popup" style="">
+<div class="modal form-popup myModal--effect-zoomIn" id="cancel_popup">
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>

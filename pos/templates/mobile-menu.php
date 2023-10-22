@@ -13,7 +13,7 @@
 <div class="card-header mobile-drop-cust-close">
 <a class="card-link collapsed" data-toggle="collapse" href="#Mcollapse0">
 <h6 class="product-category-mobile" type="0">
-<img src="https://i.imgur.com/H2EYo9m.png" style="18px" height="18px" class="ml-3 mr-3">
+<img src="https://i.imgur.com/H2EYo9m.png" style="width:18px;height:18px" class="ml-3 mr-3">
 <?php echo " " ;echo direction("All","الكل"); ?>
 </h6>
 </a>
