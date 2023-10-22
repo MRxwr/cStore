@@ -1,12 +1,12 @@
 <?php
 if( isset($_POST["reason"]) ){
-	updateDB("posOrders",array('status'=>2, 'reason'=>$_POST["reason"]),"`orderId` = '{$_GET["orderId"]}'");
+	updateDB("posorders",array('status'=>2, 'reason'=>$_POST["reason"]),"`orderId` = '{$_GET["orderId"]}'");
 }
 
 if ( isset($_GET["orderId"]) ){
 	$orderId = $_GET["orderId"];
 	$sql = "SELECT *
-			FROM `posOrders`
+			FROM `posorders`
 			WHERE `orderId` = '".$orderId."'
 			";
 	$result = $dbconnect->query($sql);
@@ -14,11 +14,6 @@ if ( isset($_GET["orderId"]) ){
 		header("LOCATION: index?error=1");
 	}else{
 		while ( $row = $result->fetch_assoc() ){
-			$product = selectDB('subproducts',"`id` = '{$row["productId"]}'");
-			$products[] = $product[0]["productId"];
-			$subId[] = $row["subId"];
-			$quantities[] = $row["quantity"];
-			$size[] = $product[0]["size"];
 			$status = $row["status"];
 			$country = $row["country"];
 			$area = $row["area"];
@@ -57,97 +52,24 @@ if( $status != 2 ){
 	<?php
 }
 ?>
-<h3 class="orderstyle-title"><?php echo $orderDetails ?></h3>
-<div class="orderdetails-deliveryinfo">
-<div class="orderdetails-deliveryaddress">
-<h3><?php echo $addressText ?></h3>
-<span>
+<div class="row">
+    <div class="col"><h3 class="orderstyle-title"><?php echo $orderDetails ?></h3></div>
+    <div class="col"><h3 class="orderstyle-title"><?php echo "{$totalPriceText}: {$totalPrice}KD" ?></h3></div>
+</div>
+
 <?php
-if ( $place = "1" )
-{
-echo $country . ", " . $area . "<br> $blockText " . $block . ", $streetText " . $street ;
-if ( !empty($avenue) )
-{
-    echo ", $avenueText " . $avenue;
-}
-
-echo ", $houseText " . $house;
-}
-else
-{
-echo $country . ", " . $area . "<br> $blockText " . $blockA . ", $streetText " . $streetA;
-
-if ( !empty($avenueA) )
-{
-    echo ", $avenueText " . $avenueA;
-}
-
-echo ", $buildingText " . $building . ", $floorText " . $floor . ", $apartmentText " . $apartment;
-}
-?></span>
-</div>
-<div class="orderdetails-costcalculation">
-<div class="costcalculation-price grandtotal" style="justify-content: space-evenly;">
-    <?php echo $deliveryText ?>:
-    <?php echo $delivery ?>KD<br>
-    
-    <?php echo $discountText ?>:
-    %<?php echo $discount ?><br>
-	
-	<?php //echo $serviceChargesText.": 0.250KD<br>" ?>
-    
-    
-    <?php echo $totalPriceText ?>:
-    <?php echo $totalPrice ?>KD<br>
-</div>
-</div>
-</div>
-<div class="order-progresswrapper">
-<div class="order-progressdiv">
-<div class="row justify-content-between w-100 m-auto">
-<?php
-if ( $status != 2 )
-{
+if ( $status == 2 ){
 ?>
-    <div class="order-tracking completed">
-        <span class="is-complete"></span>
-        <p><?php echo $OrderReceivedText ?></p>
-    </div>
-    <div class="order-tracking 
-    <?php 
-        if( $status == 4 OR $status == 5 )
-        {
-            echo "completed";
-        }
-    ?>">
-        <span class="is-complete"></span>
-        <p><?php echo $OrderOnTheWayText ?></p>
-    </div>
-    <div class="order-tracking
-    <?php
-        if( $status == 2 OR $status == 4 )
-        {
-            echo "completed";
-        }?>">
-        <span class="is-complete"></span>
-        <p><?php echo $OrderDeliveredText ?></p>
-    </div>
-    <?php
-}
-else
-{
-    ?>
-    <div class="order-tracking text-center" style="text-align:center;">
-    <img src="https://i.imgur.com/h8aeHER.png" style="width:50px;height:50px">
-        <p style="color:red;font-size:18px"><?php echo $sorryYourOrderHasBeenCancelledText ?></p>
+    <div class="row">
+        <div class="col" style="text-align-last: center;">
+            <img src="https://i.imgur.com/h8aeHER.png" style="width:50px;height:50px">
+            <p style="color:red;font-size:18px"><?php echo $sorryYourOrderHasBeenCancelledText ?></p>
+        </div>
     </div>
     <?php
 }
 ?>
-</div>
-</div>
 
-</div>
 <div class="table-responsive">
 <table class="table order-table">
 <thead>
@@ -160,69 +82,45 @@ else
 </thead>
 <tbody>
 <?php
-$i = 0;
-while ( $i < sizeof($products))
-{
-    $sql = "SELECT 
-            p.arTitle, p.price, p.discount, i.imageurl, p.enTitle, sp.size, sp.sizeAr, sp.color, sp.colorEn,
-			sp.price as realPrice
-            FROM `products` AS p
-            JOIN `images` AS i
-			ON p.id = i.productId
-			JOIN `subproducts` AS sp
-            ON p.id = sp.productId
-            WHERE
-			sp.productId = '".$products[$i]."'
-			AND
-			sp.id = '".$subId[$i]."'
-            ";
-    $result = $dbconnect->query($sql);
-    $row = $result->fetch_assoc();
+if( $listOfProducts = selectDB("posorders","`orderId` = '{$orderId}'") ) {
+    for( $i = 0; $i < sizeof($listOfProducts); $i++ ){
+        $attribute = selectDB('attributes_products',"`id` = '{$listOfProducts[$i]["productId"]}'");
+        $product = selectDB('products',"`id` = '{$attribute[0]["productId"]}'");
+        $image = selectDB('images',"`productId` = '{$product[0]["id"]}' LIMIT 1");
 ?>
     <tr>
         <td class="order-table-imgwrapper" style="padding:15px">
-            <img src="../logos/<?php echo $row["imageurl"] ?>" class="img-fluid">
+            <img src="../logos/<?php echo $image[0]["imageurl"] ?>" class="img-fluid">
         </td>
         <td>
             <div class="order-itemdetails">
                 <p class="order-item-name">
                 <?php
-				echo direction($row["enTitle"],$row["arTitle"]);
+				echo direction($product[0]["enTitle"],$product[0]["arTitle"]);
 				echo " ";
-				echo direction($row["size"],$row["sizeAr"]);
+				echo direction($attribute[0]["enTitle"],$attribute[0]["arTitle"]);
 				echo " ";
-				echo direction($row["colorEn"],$row["color"]);
-				echo " ";
-				echo $productNote[$i];
 				?>
                 </p>
                 <p class="order-item-size">
-                <?php echo $amountText ?>: <?php echo $quantities[$i] ?>
+                <?php echo $amountText ?>: <?php echo $listOfProducts[$i]["quantity"] ?>
                 </p>
-                <p class="order-item-price">
-                <?php
-                    if ( $row["discount"] != 0 ){
-                        echo $price = $row["realPrice"] - ( $row["realPrice"] * $row["discount"] / 100);
-                    }else{
-						echo $price = $row["realPrice"];
-                    }
-                    ?>KD
-                </p>
+                <p class="order-item-price"><?php echo $listOfProducts[$i]["productPrice"]?>KD</p>
             </div>
         </td>
         <td class="text-center">
-        <?php echo $quantities[$i] ?>
+        <?php echo $listOfProducts[$i]["quantity"] ?>
         </td>
         <td>
             <p class="order-table-price">
             <?php
-            echo $quantities[$i] * $price;
+            echo $listOfProducts[$i]["quantity"] * $listOfProducts[$i]["productPrice"];
             ?>KD
             </p>
         </td>
     </tr>
     <?php
-    $i++;
+    }
 }
 ?>
 </tbody>
