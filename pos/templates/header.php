@@ -192,7 +192,7 @@ if ( $maintenace[0]["status"] == 1 ){
 								?>
 								<li style="padding: 10px;">
 									<a style="font-size: 20px;height: 36px;width: 36px;" href="https://www.instagram.com/<?php echo $instagram ?>" aria-label="instagram">
-										<span class="fa fa-instagram" style="height: 15px; background: #00564e;"></span>
+										<span class="fa fa-instagram" style="height: 15px; background: <?php echo $websiteColor ?>;"></span>
 									</a>
 								</li>
 								<?php
@@ -201,7 +201,7 @@ if ( $maintenace[0]["status"] == 1 ){
 								?>
 								<li style="padding: 10px;">
 									<a style="font-size: 20px;height: 36px;width: 36px;" href="https://wa.me/<?php echo $whatsapp ?>" aria-label="whatsapp">
-										<span class="fa fa-whatsapp" style="height: 15px; background: #00564e;"></span>
+										<span class="fa fa-whatsapp" style="height: 15px; background: <?php echo $websiteColor ?>;"></span>
 									</a>
 								</li>
 								<?php }
@@ -209,7 +209,7 @@ if ( $maintenace[0]["status"] == 1 ){
 								?>
 								<li style="padding: 10px;">
 									<a style="font-size: 20px;height: 36px;width: 36px;" href="mailto:<?php echo $email ?>" aria-label="email">
-										<span class="fa fa-envelope" style="height: 15px; background: #00564e;"></span>
+										<span class="fa fa-envelope" style="height: 15px; background: <?php echo $websiteColor ?>;"></span>
 									</a>
 								</li>
 								<?php } ?>
