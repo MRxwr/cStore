@@ -123,7 +123,7 @@ if( $address["country"] == "KW" ){
 			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
 		}
 	}
-	$totalPrice = numTo3Float((float)$price  + (float)substr(getExtarsTotalDefault(),0,6));
+	$totalPrice = numTo3Float((float)$price + $address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
 }
 	
 $shippingInfo = array(
