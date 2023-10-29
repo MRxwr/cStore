@@ -206,7 +206,7 @@ if ( $row["inStore"] == "1")
 		<option selected disabled value=""><?php echo $selectAreaText ?></option>
 		<?php 
 		$orderAreas = direction("enTitle","arTitle");
-		if( $areas = selectDB("areas","`id` != '0' ORDER BY `{$orderAreas}` ASC") ){
+		if( $areas = selectDB("areas","`id` != '0' AND `status` = '0' ORDER BY `{$orderAreas}` ASC") ){
 			for( $i =0; $i < sizeof($areas); $i++ ){
 			?>
 			<option value="<?php echo $areas[$i]['id'] ?>">
