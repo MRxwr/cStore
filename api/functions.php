@@ -9,7 +9,7 @@ require ('../includes/checksouthead.php');
 if ( isset($_POST["getAreasA"]) ){
 	if ( $_POST["getAreasA"] == "KW" ){
 		$orderAreas = direction("enTitle","arTitle");
-		if( $areas = selectDB("areas","`id` != '0' ORDER BY `{$orderAreas}` ASC") ){
+		if( $areas = selectDB("areas","`id` != '0' AND `status` = '0' ORDER BY `{$orderAreas}` ASC") ){
 			for( $i =0; $i < sizeof($areas); $i++ ){
 				$title = direction($areas[$i]['enTitle'],$areas[$i]['arTitle']);
 				echo "<option value='{$areas[$i]['id']}'>{$title}</option>";
