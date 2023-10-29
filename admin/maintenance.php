@@ -216,6 +216,11 @@ $settings = selectDB("settings","`id` = '1'");
 				</div>
 				
 				<!-- </div> /Row -->
+				<?php
+				$sql = "SELECT * FROM `s_media` WHERE `id` LIKE '2'";
+				$result = $dbconnect->query($sql);
+				$row = $result->fetch_assoc(); 
+				?>
 				<div class="col-md-4">
 					<div class="panel panel-default card-view">
 						<div class="panel-heading">
