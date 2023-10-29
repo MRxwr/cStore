@@ -124,6 +124,13 @@ if( $address["country"] == "KW" ){
 		}
 	}
 	$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
+	$itemList[] = array(
+		"ItemName" 		=> "International Delivery charges",
+		"ProductName" 	=> "International Delivery charges",
+		"Description" 	=> "International Delivery charges",
+		"Quantity" 		=> 1,
+		"UnitPrice" 	=> (float)$address["shipping"]
+	);
 }
 	
 $shippingInfo = array(
