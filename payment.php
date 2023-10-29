@@ -123,7 +123,7 @@ if( $address["country"] == "KW" ){
 			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
 		}
 	}
-	$totalPrice = numTo3Float((float)$price + $address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
+	$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
 }
 	
 $shippingInfo = array(
@@ -159,7 +159,7 @@ $data = array(
 	"voucher"		=> json_encode($voucher,JSON_UNESCAPED_UNICODE),
 	"items"			=> json_encode($items,JSON_UNESCAPED_UNICODE)
 );
-//print_r($data);print_r($postMethodLines);print_r($resultMY);die();
+print_r($data);print_r($postMethodLines);print_r($resultMY);die();
 
 // sending user to pay and view details \\
 if( insertDB("orders2",$data) ){
