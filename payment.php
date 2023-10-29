@@ -166,7 +166,7 @@ $data = array(
 	"voucher"		=> json_encode($voucher,JSON_UNESCAPED_UNICODE),
 	"items"			=> json_encode($items,JSON_UNESCAPED_UNICODE)
 );
-print_r($data);print_r($postMethodLines);print_r($resultMY);die();
+//print_r($data);print_r($postMethodLines);print_r($resultMY);die();
 
 // sending user to pay and view details \\
 if( insertDB("orders2",$data) ){
