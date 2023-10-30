@@ -115,6 +115,7 @@ if( $address["country"] == "KW" ){
 }elseif( $deliverySetting = selectDB("settings","`id` = '1'") ){
 	if( $deliverySetting[0]["shippingMethod"] != 0 ){
 		$address["shipping"] = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$address);
+		$totalPrice = numTo3Float((float)$price + (float)substr(getExtarsTotalDefault(),0,6));
 	}else{
 		$shippingPerPiece = selectDB("s_media","`id` = '2'");
 		if ( getCartItemsTotal() == 1 ){
@@ -122,15 +123,15 @@ if( $address["country"] == "KW" ){
 		}else{
 			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
 		}
+		$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
+    	$itemList[] = array(
+    		"ItemName" 		=> "International Delivery charges",
+    		"ProductName" 	=> "International Delivery charges",
+    		"Description" 	=> "International Delivery charges",
+    		"Quantity" 		=> 1,
+    		"UnitPrice" 	=> (float)$address["shipping"]
+    	);
 	}
-	$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
-	$itemList[] = array(
-		"ItemName" 		=> "International Delivery charges",
-		"ProductName" 	=> "International Delivery charges",
-		"Description" 	=> "International Delivery charges",
-		"Quantity" 		=> 1,
-		"UnitPrice" 	=> (float)$address["shipping"]
-	);
 }
 	
 $shippingInfo = array(
