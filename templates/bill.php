@@ -49,10 +49,10 @@ if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && 
 			$shoppingCharges = getInternationalShipping(getItemsForPayment($getCartId["cart"],$paymentAPIPrice),$_POST["address"]);
 		}else{
 			$shippingPerPiece = selectDB("s_media","`id` = '2'");
-			if ( getCartItemsTotal() == 1 ){
+			if ( getCartQuantity() == 1 ){
 				$shoppingCharges = $shippingPerPiece[0]["internationalDelivery"];
 			}else{
-				$shoppingCharges = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
+				$shoppingCharges = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartQuantity() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
 			}
 		}
 	}

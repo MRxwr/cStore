@@ -20,6 +20,16 @@ function getCartItemsTotal(){
 	}
 }
 
+function getCartQuantity(){
+	GLOBAL $_COOKIE,$cookieSession;
+	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
+	if ( $cart = selectDB("SUM(quantity) as totalQuan","`cartId` = '{$getCartId["cart"]}'") ){
+		return sizeof($cart[0]["totalQuan"]);
+	}else{
+		return 0;
+	}
+}
+
 function getCartPrice(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
