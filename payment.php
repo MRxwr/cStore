@@ -118,10 +118,10 @@ if( $address["country"] == "KW" ){
 		$totalPrice = numTo3Float((float)$price + (float)substr(getExtarsTotalDefault(),0,6));
 	}else{
 		$shippingPerPiece = selectDB("s_media","`id` = '2'");
-		if ( getCartItemsTotal() == 1 ){
+		if ( getCartQuantity() == 1 ){
 			$address["shipping"] = $shippingPerPiece[0]["internationalDelivery"];
 		}else{
-			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * (getCartItemsTotal() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
+			$address["shipping"] = ($shippingPerPiece[0]["internationalDelivery1"] * ( getCartQuantity() - 1 ) ) + $shippingPerPiece[0]["internationalDelivery"];
 		}
 		$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
     	$itemList[] = array(
