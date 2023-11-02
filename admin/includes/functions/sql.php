@@ -51,7 +51,7 @@ function selectDB2($select, $table, $where){
     $where = str_replace($check, "", $where);
     $sql = "SELECT {$select} FROM `{$table}`";
     if (!empty($where)) {
-        $sql .= " WHERE {$where}";
+        echo $sql .= " WHERE {$where}";
     }
     if ($stmt = $dbconnect->prepare($sql)) {
         $stmt->execute();
