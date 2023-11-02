@@ -27,7 +27,7 @@ if ( getCartItemsTotal() < 1 ){
 <div class="calc-text-box d-flex justify-content-between">
     <span class="calc-text bold"><?php echo $totalPriceText ?></span>
     <span class="calc-text bold totalSpan">
-    <?php echo getCartPriceTotal() . " - " . getCartQuantity()?>
+    <?php echo getCartPriceTotal() ?>
     </span>
 </div>
 
