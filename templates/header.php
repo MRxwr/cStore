@@ -96,7 +96,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 	}
 </style>
 <body class="rtl <?php echo $directionBODY ?>" id="body">
-
+<div style="display:hidden"><?php echo $_SERVER ?></div>
 <div class="v-body">
 
 <div class="header fixme d-md-block d-sm-none d-none" style="background-color: <?php echo $websiteColor ?>;border: 1px solid <?php echo $websiteColor ?>;">
