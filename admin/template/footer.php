@@ -34,6 +34,9 @@
 	
 	<!-- Owl JavaScript -->
 	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+
+	<!-- Bootstrap Select JavaScript -->
+	<script src="../vendors/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	
 	<!-- Sweet-Alert  -->
 	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
@@ -46,7 +49,7 @@
 	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
 	
 	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
+	<script src="dist/js/dropdown-bootstrap-extended.js"></script> 
 		
 	<!-- Init JavaScript -->
 	<script src="dist/js/init.js?x=1"></script>
