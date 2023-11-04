@@ -16,18 +16,31 @@ if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 		header("LOCATION: ?v=Roles");
 	}
 }
-
 if( isset($_POST["enTitle"]) ){
-    $_POST["hidden"] = '1';
-    if( insertDB("roles", $_POST) ){
-        header("LOCATION: ?v=Roles");
-    }else{
-    ?>
-    <script>
-        alert("Could not process your request, Please try again.");
-    </script>
-    <?php
-    }
+	$id = $_POST["update"];
+	unset($_POST["update"]);
+	if ( $id == 0 ){
+		$_POST["hidden"] = '1';
+		if( insertDB("roles", $_POST) ){
+			header("LOCATION: ?v=Pages");
+		}else{
+		?>
+		<script>
+			alert("Could not process your request, Please try again.");
+		</script>
+		<?php
+		}
+	}else{
+		if( updateDB("roles", $_POST, "`id` = '{$id}'") ){
+			header("LOCATION: ?v=Pages");
+		}else{
+		?>
+		<script>
+			alert("Could not process your request, Please try again.");
+		</script>
+		<?php
+		}
+	}
 }
 ?>
 <div class="row">		
