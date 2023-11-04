@@ -100,7 +100,7 @@ while ( $row = $result->fetch_assoc() ){
 		<td><?php echo $row["date"] ?></td>
 		<td class="txt-dark"><?php echo $row["orderId"] ?></td>
 		<td><?php echo $voucher["voucher"] ?></td>
-		<td><?php echo numTo3Float($row["price"]+$address["shipping"]) ?></td>
+		<td><?php echo numTo3Float($row["price"]+$address["shipping"]) . $defaultCurr ?></td>
 		<td>
 			<?php if ( $row["paymentMethod"] == 1 ) {echo "<b style='color:darkblue'>KNET</b>"; } elseif($row["paymentMethod"] == 3) { echo "<b style='color:darkgreen'>CASH</b>";; } else { echo "<b style='color:darkred'>VISA/MASTER</b>";} ?>
 		</td>
