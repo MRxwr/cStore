@@ -1,4 +1,17 @@
 <?php
+// search for file name inside a folder \\
+function searchFile($path, $fileName) {
+	if ($handle = opendir($path)) {
+		while (false !== ($entry = readdir($handle))) {
+			if ($entry == $fileName) {
+				closedir($handle);
+				return $entry;
+			}
+		}
+		closedir($handle);
+	}
+	return false;
+}
 // general \\
 function direction($valEn,$valAr){
 	GLOBAL $directionHTML;
