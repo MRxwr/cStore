@@ -2,7 +2,7 @@
 			<div class="mobile-only-brand pull-left">
 				<div class="nav-header pull-left">
 					<div class="logo-wrap">
-						<a href="index.php" style="white-space: nowrap;">
+						<a href="?v=Home" style="white-space: nowrap;">
 							<img class="brand-img" src="../logos/<?php echo $settingslogo ?>" alt="brand" style="width:25px;height:25px"/>
 							<span class="brand-text"><?php echo $settingsTitle ?></span>
 						</a>
