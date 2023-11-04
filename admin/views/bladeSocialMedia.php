@@ -25,7 +25,7 @@ $email = $sMedia[0]["email"];
 <div class="row">
 <div class="col-sm-12 col-xs-12">
 <div class="form-wrap">
-<form action="?update=1" method="POST">
+<form action="?v=<?php echo $_GET["v"] ?>&update=1" method="POST">
 <div class="form-body">
 <h6 class="txt-dark capitalize-font">
 <i class="zmdi zmdi-account mr-10"></i><?php echo $sMediaText ?>
