@@ -68,7 +68,7 @@ require ("payment.php");
 		<div class="la-anim-1"></div>
 	</div>
 	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
+    <div class="wrapper  theme-6-active pimary-color-green">
 		<!-- Top Menu Items -->
 		<?php require ("template/navbar.php") ?>
 		<!-- /Top Menu Items -->
