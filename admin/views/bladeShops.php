@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
-
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('shops',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: shops.php");
+		header("LOCATION: ?v=Shops");
 	}
 }
 
@@ -14,7 +10,7 @@ if( isset($_POST["enTitle"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if( insertDB("shops", $_POST) ){
-			header("LOCATION: shops.php");
+			header("LOCATION: ?v=Shops");
 		}else{
 		?>
 		<script>
@@ -24,7 +20,7 @@ if( isset($_POST["enTitle"]) ){
 		}
 	}else{
 		if( updateDB("shops", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: shops.php");
+			header("LOCATION: ?v=Shops");
 		}else{
 		?>
 		<script>
@@ -35,39 +31,7 @@ if( isset($_POST["enTitle"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">			
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -136,7 +100,7 @@ if( isset($_POST["enTitle"]) ){
 				<a id="<?php echo $shops[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 				</a>
 
-				<a href="?delId=<?php echo $shops[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+				<a href="<?php echo "?v={$_GET["v"]}&delId={$shops[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
 				</a>
 				
 				</td>
@@ -154,24 +118,7 @@ if( isset($_POST["enTitle"]) ){
 </div>
 </div>
 </div>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
+</div>
 	<script>
 		$(document).on("click",".edit", function(){
 			var id = $(this).attr("id");
@@ -182,34 +129,3 @@ if( isset($_POST["enTitle"]) ){
 			$("input[name=update]").val(id);
 		})
 	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
