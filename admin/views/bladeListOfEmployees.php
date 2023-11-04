@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
 	if( updateDB('employees',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
-		header("LOCATION: listOfEmployees.php");
+		header("LOCATION: ?v=ListOfEmployees");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
 	if( updateDB('employees',array('hidden'=> '0'),"`id` = '{$_GET["show"]}'") ){
-		header("LOCATION: listOfEmployees.php");
+		header("LOCATION: ?v=ListOfEmployees");
 	}
 }
 
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('employees',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: listOfEmployees.php");
+		header("LOCATION: ?v=ListOfEmployees");
 	}
 }
 
@@ -26,7 +23,7 @@ if( isset($_POST["fullName"]) ){
 	if ( $id == 0 ){
 		$_POST["password"] = sha1($_POST["password"]);
 		if( insertDB("employees", $_POST) ){
-			header("LOCATION: listOfEmployees.php");
+			header("LOCATION: ?v=ListOfEmployees");
 		}else{
 		?>
 		<script>
@@ -42,7 +39,7 @@ if( isset($_POST["fullName"]) ){
 			$_POST["password"] = $password[0]["password"];
 		}
 		if( updateDB("employees", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: listOfEmployees.php");
+			header("LOCATION: ?v=ListOfEmployees");
 		}else{
 		?>
 		<script>
@@ -53,39 +50,7 @@ if( isset($_POST["fullName"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">		
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -189,11 +154,11 @@ if( isset($_POST["fullName"]) ){
 				$counter = $i + 1;
 				if ( $employees[$i]["hidden"] == 2 ){
 					$icon = "fa fa-unlock";
-					$link = "?show={$employees[$i]["id"]}";
+					$link = "?v={$_GET["v"]}&show={$employees[$i]["id"]}";
 					$hide = direction("Unlock","فتح الحساب");
 				}else{
 					$icon = "fa fa-lock";
-					$link = "?hide={$employees[$i]["id"]}";
+					$link = "?v={$_GET["v"]}&hide={$employees[$i]["id"]}";
 					$hide = direction("Lock","قفل الحساب");
 				}
 				
@@ -226,11 +191,11 @@ if( isset($_POST["fullName"]) ){
 				<td><?php echo $shop ?></td>
 				<td class="text-nowrap">
 				
-				<a id="<?php echo $employees[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
+				<a id="<?php echo $employees[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 				</a>
 				<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
 				</a>
-				<a href="?delId=<?php echo $employees[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+				<a href="<?php echo "?v={$_GET["v"]}&delId={$employees[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="<?php echo direction("Delete","حذف") ?>"><i class="fa fa-close text-danger"></i>
 				</a>
 				<div style="display:none">
 					<label id="type<?php echo $employees[$i]["id"]?>"><?php echo $employees[$i]["empType"] ?></label>
@@ -250,71 +215,23 @@ if( isset($_POST["fullName"]) ){
 </div>
 </div>
 </div>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			var email = $("#email"+id).html();
-			var name = $("#name"+id).html();
-			var mobile = $("#mobile"+id).html();
-			var type = $("#type"+id).html();
-			var shop = $("#shop"+id).html();
-			var logo = $("#logo"+id).html();
-			$("input[name=password]").prop("required",false);
-			$("input[name=email]").val(email);
-			$("input[name=phone]").val(mobile);
-			$("input[name=update]").val(id);
-			$("input[name=fullName]").val(name);
-			$("input[name=fullName]").focus();
-			$("select[name=empType]").val(type);
-			$("select[name=shopId]").val(shop);
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		var email = $("#email"+id).html();
+		var name = $("#name"+id).html();
+		var mobile = $("#mobile"+id).html();
+		var type = $("#type"+id).html();
+		var shop = $("#shop"+id).html();
+		var logo = $("#logo"+id).html();
+		$("input[name=password]").prop("required",false);
+		$("input[name=email]").val(email);
+		$("input[name=phone]").val(mobile);
+		$("input[name=update]").val(id);
+		$("input[name=fullName]").val(name);
+		$("input[name=fullName]").focus();
+		$("select[name=empType]").val(type);
+		$("select[name=shopId]").val(shop);
+	})
+</script>
