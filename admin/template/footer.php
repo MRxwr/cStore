@@ -15,6 +15,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	
+	<!-- Data table JavaScript -->
+	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="dist/js/productorders-data.js"></script>
+	
 	<!-- Slimscroll JavaScript -->
 	<script src="dist/js/jquery.slimscroll.js"></script>
 	
