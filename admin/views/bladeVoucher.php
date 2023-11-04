@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
-
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('vouchers',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: voucher.php");
+		header("LOCATION: ?v=Voucher");
 	}
 }
 
 if( isset($_POST["items"]) && !empty($_POST["items"]) ){
 	if( updateDB('vouchers',array('items'=> json_encode($_POST["items"])),"`id` = '{$_POST["id"]}'") ){
-		header("LOCATION: voucher.php");
+		header("LOCATION: ?v=Voucher");
 	}
 }
 
@@ -20,7 +16,7 @@ if( isset($_POST["code"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if( insertDB("vouchers", $_POST) ){
-			header("LOCATION: voucher.php");
+			header("LOCATION: ?v=Voucher");
 		}else{
 		?>
 		<script>
@@ -33,7 +29,7 @@ if( isset($_POST["code"]) ){
 			$_POST["items"] = "";
 		}
 		if( updateDB("vouchers", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: voucher.php");
+			header("LOCATION: ?v=Voucher");
 		}else{
 		?>
 		<script>
@@ -44,39 +40,7 @@ if( isset($_POST["code"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">		
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -192,15 +156,15 @@ if( isset($_POST["code"]) ){
 				<?php 
 				if( $vouchers[$i]["type"] != 1 ){
 					?>
-						<a href="voucherItems.php?id=<?php echo $vouchers[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Items" class="mr-25"><i class="fa fa-list text-primary "></i>
+						<a href="?v=VoucherItems&id=<?php echo $vouchers[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Items" class="mr-25"><i class="fa fa-list text-primary "></i>
 						</a>
 					<?php
 				}
 				?>
 				
-				<a id="<?php echo $vouchers[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
+				<a id="<?php echo $vouchers[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 				</a>
-				<a href="?delId=<?php echo $vouchers[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+				<a href="<?php echo "?v={$_GET["v"]}&delId={$vouchers[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="<?php echo direction("Delete","حذف") ?>"><i class="fa fa-close text-danger"></i>
 				</a>			
 				</td>
 				</tr>
@@ -217,70 +181,22 @@ if( isset($_POST["code"]) ){
 </div>
 </div>
 </div>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			$("input[name=update]").val(id);
-			var code = $("#code"+id).html();
-			var type = $(".type"+id).attr("id");
-			var dType = $(".dType"+id).attr("id");
-			var discount = $("#discount"+id).html();
-			var sDate = $("#sDate"+id).html();
-			var eDate = $("#eDate"+id).html();
-			$("input[name=code]").val(code);
-			$("select[name=type]").val(type);
-			$("select[name=discountType]").val(dType);
-			$("input[name=discount]").val(discount);
-			$("input[name=startDate]").val(sDate);
-			$("input[name=endDate]").val(eDate);
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		$("input[name=update]").val(id);
+		var code = $("#code"+id).html();
+		var type = $(".type"+id).attr("id");
+		var dType = $(".dType"+id).attr("id");
+		var discount = $("#discount"+id).html();
+		var sDate = $("#sDate"+id).html();
+		var eDate = $("#eDate"+id).html();
+		$("input[name=code]").val(code);
+		$("select[name=type]").val(type);
+		$("select[name=discountType]").val(dType);
+		$("input[name=discount]").val(discount);
+		$("input[name=startDate]").val(sDate);
+		$("input[name=endDate]").val(eDate);
+	})
+</script>
