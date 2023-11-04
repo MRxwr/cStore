@@ -22,7 +22,7 @@ if( isset($_POST["enTitle"]) ){
 	if ( $id == 0 ){
 		$_POST["hidden"] = '1';
 		if( insertDB("roles", $_POST) ){
-			header("LOCATION: ?v=Pages");
+			header("LOCATION: ?v=Roles");
 		}else{
 		?>
 		<script>
@@ -32,7 +32,7 @@ if( isset($_POST["enTitle"]) ){
 		}
 	}else{
 		if( updateDB("roles", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: ?v=Pages");
+			header("LOCATION: ?v=Roles");
 		}else{
 		?>
 		<script>
