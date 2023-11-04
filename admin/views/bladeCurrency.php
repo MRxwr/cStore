@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
 if( $currList = getCurr() ){
 	foreach( $currList as $key => $value ){
 		updateDB("currency",array("realValue" => (string)$value), "`short` = '%{$key}%'");
@@ -10,13 +7,13 @@ if( $currList = getCurr() ){
 
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
 	if( updateDB('currency',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
-		header("LOCATION: currency.php");
+		header("LOCATION: ?v=Currency");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
 	if( updateDB('currency',array('hidden'=> '1'),"`id` = '{$_GET["show"]}'") ){
-		header("LOCATION: currency.php");
+		header("LOCATION: ?v=Currency");
 	}
 }
 
@@ -24,7 +21,7 @@ if( isset($_POST["updateRank"]) ){
 	for( $i = 0; $i < sizeof($_POST["rank"]); $i++){
 		updateDB("currency",array("rank"=>$_POST["rank"][$i]),"`id` = '{$_POST["id"][$i]}'");
 	}
-	header("LOCATION: currency.php");
+	header("LOCATION: ?v=Currency");
 }
 
 if( isset($_POST["country"]) ){
@@ -32,7 +29,7 @@ if( isset($_POST["country"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if( insertDB("currency", $_POST) ){
-			header("LOCATION: currency.php");
+			header("LOCATION: ?v=Currency");
 		}else{
 		?>
 		<script>
@@ -42,7 +39,7 @@ if( isset($_POST["country"]) ){
 		}
 	}else{
 		if( updateDB("currency", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: currency.php");
+			header("LOCATION: ?v=Currency");
 		}else{
 		?>
 		<script>
@@ -53,39 +50,7 @@ if( isset($_POST["country"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">		
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -180,11 +145,11 @@ if( isset($_POST["country"]) ){
 		$counter = $i + 1;
 		if ( $categories[$i]["hidden"] == 2 ){
 		$icon = "fa fa-eye";
-		$link = "?show={$categories[$i]["id"]}";
+		$link = "?v={$_GET["v"]}&show={$categories[$i]["id"]}";
 		$hide = "Show";
 		}else{
 		$icon = "fa fa-eye-slash";
-		$link = "?hide={$categories[$i]["id"]}";
+		$link = "?v={$_GET["v"]}&hide={$categories[$i]["id"]}";
 		$hide = "Hide";
 		}
 		?>
@@ -204,7 +169,7 @@ if( isset($_POST["country"]) ){
 		</a>
 		<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
 		</a>
-		<a href="?delId=<?php echo $categories[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+		<a href="<?php echo "?v={$_GET["v"]}&delId={$categories[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
 		</a>
 		<div style="display:none"><label id="hidden<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["hidden"] ?></label></div>
 		</td>
@@ -223,24 +188,7 @@ if( isset($_POST["country"]) ){
 </div>
 </div>
 </form>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
+</div>
 	<script>
 		$(document).on("click",".edit", function(){
 			var id = $(this).attr("id");
@@ -260,34 +208,3 @@ if( isset($_POST["country"]) ){
 			$("select[name=hidden]").val(hidden);
 		})
 	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
