@@ -1,13 +1,13 @@
 <?php 
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('areas',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: areas.php");
+		header("LOCATION: ?v=Areas");
 	}
 }
 
 if( isset($_POST["setDefaultPrice"]) && !empty($_POST["setDefaultPrice"]) ){
 	if( updateDB('areas',array('charges'=> $_POST["setDefaultPrice"]),"`id` != '0'") ){
-		header("LOCATION: areas.php");
+		header("LOCATION: ?v=Areas");
 	}
 }
 
@@ -16,7 +16,7 @@ if( isset($_POST["enTitle"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if( insertDB("areas", $_POST) ){
-			header("LOCATION: areas.php");
+			header("LOCATION: ?v=Areas");
 		}else{
 		?>
 		<script>
@@ -26,7 +26,7 @@ if( isset($_POST["enTitle"]) ){
 		}
 	}else{
 		if( updateDB("areas", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: areas.php");
+			header("LOCATION: ?v=Areas");
 		}else{
 		?>
 		<script>
