@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
 	if( updateDB('categories',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
-		header("LOCATION: categories.php");
+		header("LOCATION: ?v=Categories");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
 	if( updateDB('categories',array('hidden'=> '1'),"`id` = '{$_GET["show"]}'") ){
-		header("LOCATION: categories.php");
+		header("LOCATION: ?v=Categories");
 	}
 }
 
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('categories',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: categories.php");
+		header("LOCATION: ?v=Categories");
 	}
 }
 
@@ -24,7 +21,7 @@ if( isset($_POST["updateRank"]) ){
 	for( $i = 0; $i < sizeof($_POST["rank"]); $i++){
 		updateDB("categories",array("rank"=>$_POST["rank"][$i]),"`id` = '{$_POST["id"][$i]}'");
 	}
-	header("LOCATION: categories.php");
+	header("LOCATION: ?v=Categories");
 }
 
 if( isset($_POST["arTitle"]) ){
@@ -65,7 +62,7 @@ if( isset($_POST["arTitle"]) ){
 		
 		
 		if( insertDB("categories", $_POST) ){
-			header("LOCATION: categories.php");
+			header("LOCATION: ?v=Categories");
 		}else{
 		?>
 		<script>
@@ -111,7 +108,7 @@ if( isset($_POST["arTitle"]) ){
 		}
 		
 		if( updateDB("categories", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: categories.php");
+			header("LOCATION: ?v=Categories");
 		}else{
 		?>
 		<script>
@@ -122,39 +119,7 @@ if( isset($_POST["arTitle"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -248,41 +213,41 @@ if( isset($_POST["arTitle"]) ){
 		<tbody>
 		<?php 
 		if( $categories = selectDB("categories","`status` = '0' ORDER BY `rank` ASC") ){
-		for( $i = 0; $i < sizeof($categories); $i++ ){
-		$counter = $i + 1;
-		if ( $categories[$i]["hidden"] == 2 ){
-		$icon = "fa fa-eye";
-		$link = "?show={$categories[$i]["id"]}";
-		$hide = "Show";
-		}else{
-		$icon = "fa fa-eye-slash";
-		$link = "?hide={$categories[$i]["id"]}";
-		$hide = "Hide";
-		}
-		?>
-		<tr>
-		<td>
-		<input name="rank[]" class="form-control" type="number" value="<?php echo $counter ?>">
-		<input name="id[]" class="form-control" type="hidden" value="<?php echo $categories[$i]["id"] ?>">
-		</td>
-		<td id="enTitle<?php echo $categories[$i]["id"]?>" ><?php echo $categories[$i]["enTitle"] ?></td>
-		<td id="arTitle<?php echo $categories[$i]["id"]?>" ><?php echo $categories[$i]["arTitle"] ?></td>
-		<td class="text-nowrap">
-		
-		<a id="<?php echo $categories[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
-		</a>
-		<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
-		</a>
-		<a href="?delId=<?php echo $categories[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
-		</a>
-		<div style="display:none"><label id="hidden<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["hidden"] ?></label></div>
-		<div style="display:none"><label id="logo<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["imageurl"] ?></label></div>
-		<div style="display:none"><label id="header<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["header"] ?></label></div>
-		
-		</td>
-		</tr>
-		<?php
-		}
+			for( $i = 0; $i < sizeof($categories); $i++ ){
+				$counter = $i + 1;
+			if ( $categories[$i]["hidden"] == 2 ){
+				$icon = "fa fa-eye";
+				$link = "?v={$_GET["v"]}&show={$categories[$i]["id"]}";
+				$hide = direction("Show","إظهار");
+			}else{
+				$icon = "fa fa-eye-slash";
+				$link = "?v={$_GET["v"]}&hide={$categories[$i]["id"]}";
+				$hide = direction("Hide","إخفاء");
+			}
+			?>
+			<tr>
+			<td>
+			<input name="rank[]" class="form-control" type="number" value="<?php echo $counter ?>">
+			<input name="id[]" class="form-control" type="hidden" value="<?php echo $categories[$i]["id"] ?>">
+			</td>
+			<td id="enTitle<?php echo $categories[$i]["id"]?>" ><?php echo $categories[$i]["enTitle"] ?></td>
+			<td id="arTitle<?php echo $categories[$i]["id"]?>" ><?php echo $categories[$i]["arTitle"] ?></td>
+			<td class="text-nowrap">
+			
+			<a id="<?php echo $categories[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
+			</a>
+			<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
+			</a>
+			<a href="<?php echo "?v={$_GET["v"]}&delId={$categories[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="<?php echo direction("Delete","حذف") ?>"><i class="fa fa-close text-danger"></i>
+			</a>
+			<div style="display:none"><label id="hidden<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["hidden"] ?></label></div>
+			<div style="display:none"><label id="logo<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["imageurl"] ?></label></div>
+			<div style="display:none"><label id="header<?php echo $categories[$i]["id"]?>"><?php echo $categories[$i]["header"] ?></label></div>
+			
+			</td>
+			</tr>
+			<?php
+			}
 		}
 		?>
 		</tbody>
@@ -295,70 +260,22 @@ if( isset($_POST["arTitle"]) ){
 </div>
 </div>
 </form>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			var arTitle = $("#arTitle"+id).html();
-			var enTitle = $("#enTitle"+id).html();
-			var hidden = $("#hidden"+id).html();
-			var logo = $("#logo"+id).html();
-			var header = $("#header"+id).html();
-			$("input[type=file]").prop("required",false);
-			$("input[name=arTitle]").val(arTitle).focus();
-			$("input[name=update]").val(id);
-			$("input[name=enTitle]").val(enTitle);
-			$("select[name=hidden]").val(hidden);
-			$("#headerImg").attr("src","../logos/"+header);
-			$("#logoImg").attr("src","../logos/"+logo);
-			$("#images").attr("style","margin-top:10px;display:block");
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		var arTitle = $("#arTitle"+id).html();
+		var enTitle = $("#enTitle"+id).html();
+		var hidden = $("#hidden"+id).html();
+		var logo = $("#logo"+id).html();
+		var header = $("#header"+id).html();
+		$("input[type=file]").prop("required",false);
+		$("input[name=arTitle]").val(arTitle).focus();
+		$("input[name=update]").val(id);
+		$("input[name=enTitle]").val(enTitle);
+		$("select[name=hidden]").val(hidden);
+		$("#headerImg").attr("src","../logos/"+header);
+		$("#logoImg").attr("src","../logos/"+logo);
+		$("#images").attr("style","margin-top:10px;display:block");
+	})
+</script>
