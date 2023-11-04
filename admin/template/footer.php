@@ -18,6 +18,16 @@
 	<!-- Data table JavaScript -->
 	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="dist/js/productorders-data.js"></script>
+	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="../vendors/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="../vendors/bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script src="../vendors/bower_components/jszip/dist/jszip.min.js"></script>
+	<script src="../vendors/bower_components/pdfmake/build/pdfmake.min.js"></script>
+	<script src="../vendors/bower_components/pdfmake/build/vfs_fonts.js"></script>
+
+	<script src="../vendors/bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script src="../vendors/bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script src="dist/js/export-table-data.js"></script>
 
 	<!-- Slimscroll JavaScript -->
 	<script src="dist/js/jquery.slimscroll.js"></script>
@@ -28,7 +38,10 @@
 	<!-- Sweet-Alert  -->
 	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="dist/js/sweetalert-data.js"></script>
-		
+	
+	<!-- Bootstrap Datetimepicker JavaScript -->
+	<script type="text/javascript" src="../vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
 	<!-- Switchery JavaScript -->
 	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
 	
