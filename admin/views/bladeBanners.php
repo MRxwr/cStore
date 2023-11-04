@@ -167,7 +167,7 @@ if( isset($_POST["title"]) ){
 		<th><?php echo direction("Title","العنوان") ?></th>
 		<th><?php echo direction("Link","الرابط") ?></th>
 		<th><?php echo direction("Banner","الصورة") ?></th>
-		<th class="text-nowrap"><?php echo direction("الخيارات","Actions") ?></th>
+		<th class="text-nowrap"><?php echo direction("Actions","الخيارات") ?></th>
 		</tr>
 		</thead>
 		
@@ -177,13 +177,13 @@ if( isset($_POST["title"]) ){
 		for( $i = 0; $i < sizeof($banners); $i++ ){
 		$counter = $i + 1;
 		if ( $banners[$i]["hidden"] == 2 ){
-		$icon = "fa fa-eye";
-		$link = "?v={$_GET["v"]}&show={$banners[$i]["id"]}";
-		$hide = "Show";
+			$icon = "fa fa-eye";
+			$link = "?v={$_GET["v"]}&show={$banners[$i]["id"]}";
+			$hide = direction("Show","إظهار");
 		}else{
-		$icon = "fa fa-eye-slash";
-		$link = "?v={$_GET["v"]}&hide={$banners[$i]["id"]}";
-		$hide = "Hide";
+			$icon = "fa fa-eye-slash";
+			$link = "?v={$_GET["v"]}&hide={$banners[$i]["id"]}";
+			$hide = direction("Hide","إخفاء");
 		}
 		?>
 		<tr>
@@ -196,11 +196,11 @@ if( isset($_POST["title"]) ){
 		<td><img src="../logos/<?php echo $banners[$i]["image"] ?>" style="width:150px"></td>
 		<td class="text-nowrap">
 		
-		<a id="<?php echo $banners[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i>
+		<a id="<?php echo $banners[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 		</a>
 		<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
 		</a>
-		<a href="<?php echo "?v={$_GET["v"]}&delId={$banners[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+		<a href="<?php echo "?v={$_GET["v"]}&delId={$banners[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="<?php echo direction("Delete","حذف") ?>"><i class="fa fa-close text-danger"></i>
 		</a>
 		<div style="display:none"><label id="hidden<?php echo $banners[$i]["id"]?>"><?php echo $banners[$i]["hidden"] ?></label></div>
 		<div style="display:none"><label id="logo<?php echo $banners[$i]["id"]?>"><?php echo $banners[$i]["image"] ?></label></div>
