@@ -65,12 +65,12 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 			}
 			echo "<td>
 					<a href='?v=Order&orderId={$orders[$i]["orderId"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip' target='_blank'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='&orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=2' class='btn btn-info btn-circle' title='".direction("Preparing","جاري التجهيز")."' data-toggle='tooltip'><i class='fa fa-clock-o' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=3' class='btn btn-warning btn-circle' title='".direction("On Delivery","جاري التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=4' class='btn btn-success btn-circle' title='".direction("Delivered","تم التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=5' class='btn btn-danger btn-circle' title='".direction("Cancel","ملغية")."' data-toggle='tooltip'><i class='fa fa-times' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=6' class='btn btn-default btn-circle' title='".direction("Return","مسترجع")."' data-toggle='tooltip' ><i class='fa fa-retweet' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=2' class='btn btn-info btn-circle' title='".direction("Preparing","جاري التجهيز")."' data-toggle='tooltip'><i class='fa fa-clock-o' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=3' class='btn btn-warning btn-circle' title='".direction("On Delivery","جاري التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=4' class='btn btn-success btn-circle' title='".direction("Delivered","تم التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=5' class='btn btn-danger btn-circle' title='".direction("Cancel","ملغية")."' data-toggle='tooltip'><i class='fa fa-times' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=6' class='btn btn-default btn-circle' title='".direction("Return","مسترجع")."' data-toggle='tooltip' ><i class='fa fa-retweet' style='font-size: 27px;margin-top: 5px;'></i></a>
 					<button class='btn btn-primary btn-icon-anim btn-circle printNow' title='".direction("Print","طباعة")."' data-toggle='tooltip' id='{$orders[$i]["orderId"]}'>
 					<i class='fa fa-print' style='font-size: 27px;margin-top: 5px;'></i>
 					</button>
