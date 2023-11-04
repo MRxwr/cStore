@@ -1,9 +1,8 @@
 <?php
 header ("Refresh:180");
-require ("includes/config.php");
 if( isset($_GET["status"]) && !empty($_GET["status"]) && isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 	updateDB("orders2",array("status" => "{$_GET["status"]}"),"`orderId` = '{$_GET["orderId"]}'");
-	header("LOCATION: product-orders.php");
+	header("LOCATION: ?v=Invoices");
 }
 $array = [1,2,3,4,5,6];
 if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
@@ -15,6 +14,12 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
+<div class="panel-heading">
+<div class="pull-left">
+<h6 class="panel-title txt-dark"><?php echo direction("List of Invoices","قائمة الطلبات") ?></h6>
+</div>
+<div class="clearfix"></div>
+</div>
 <div class="panel-wrapper collapse in">
 <div class="panel-body row">
 <div class="table-wrap">
@@ -59,8 +64,8 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 				}
 			}
 			echo "<td>
-					<a href='?info=view&orderId={$orders[$i]["orderId"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='?v=Order&orderId={$orders[$i]["orderId"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip' taget='_blank'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
+					<a href='&orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
 					<a href='?orderId={$orders[$i]["orderId"]}&status=2' class='btn btn-info btn-circle' title='".direction("Preparing","جاري التجهيز")."' data-toggle='tooltip'><i class='fa fa-clock-o' style='font-size: 27px;margin-top: 5px;'></i></a>
 					<a href='?orderId={$orders[$i]["orderId"]}&status=3' class='btn btn-warning btn-circle' title='".direction("On Delivery","جاري التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
 					<a href='?orderId={$orders[$i]["orderId"]}&status=4' class='btn btn-success btn-circle' title='".direction("Delivered","تم التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
@@ -102,7 +107,28 @@ if ( $result->num_rows > 0 ){
     </script>
     <?php
 }
-
 ?>
 
-<!-- printable page -->
+<script>
+$(function(){
+	$(document).on('click','.takeMeToPrinter',function(e){
+		w = window.open();
+		$('.takeMeToPrinter').hide();
+		w.document.write($('.printBill').html());
+		w.print();
+		w.close();
+		$('.takeMeToPrinter').show();
+	});
+})
+
+$(function(){
+	$(document).on('click','.printNow',function(e){
+		var printId = $(this).attr("id");
+		var url = '<?php echo $settingsWebsite ?>';
+		$("<iframe>")
+        .hide()
+        .attr("src", url+"/admin/print.php?info=view&orderId="+printId)
+        .appendTo("body");
+	});
+})
+</script>
