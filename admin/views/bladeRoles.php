@@ -118,7 +118,7 @@ if( isset($_POST["enTitle"]) ){
 		<td id="arTitle<?php echo $roles[$i]["id"]?>" ><?php echo $roles[$i]["arTitle"] ?></td>
 		<td class="text-nowrap">
 		
-		<a href="rolesEdit?id=<?php echo $roles[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-list text-inverse m-r-10"></i>
+		<a href="?v=RolesEdit&id=<?php echo $roles[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-list text-inverse m-r-10"></i>
 		</a>
 		<a id="<?php echo $roles[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
 		</a>
