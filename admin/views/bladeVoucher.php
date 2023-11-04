@@ -150,8 +150,8 @@ if( isset($_POST["code"]) ){
 				<td class="type<?php echo $vouchers[$i]["id"]?>" id="<?php echo $vouchers[$i]["type"] ?>" ><?php echo $type ?></td>
 				<td class="dType<?php echo $vouchers[$i]["id"]?>" id="<?php echo $vouchers[$i]["discountType"] ?>"><?php echo $dType ?></td>
 				<td id="discount<?php echo $vouchers[$i]["id"]?>" ><?php echo $vouchers[$i]["discount"] ?></td>
-				<td id="sDate<?php echo $vouchers[$i]["id"]?>" ><?php echo $vouchers[$i]["startDate"] ?></td>
-				<td id="eDate<?php echo $vouchers[$i]["id"]?>" ><?php echo $vouchers[$i]["endDate"] ?></td>
+				<td id="sDate<?php echo $vouchers[$i]["id"]?>" ><?php echo substr($vouchers[$i]["startDate"],0,10) ?></td>
+				<td id="eDate<?php echo $vouchers[$i]["id"]?>" ><?php echo substr($vouchers[$i]["endDate"],0,10)  ?></td>
 				<td class="text-nowrap">
 				<?php 
 				if( $vouchers[$i]["type"] != 1 ){
