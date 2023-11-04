@@ -84,7 +84,7 @@ input {
 	</div>	
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 	<div class="form-group">
 	<label class="control-label mb-10"><?php echo direction("Status","الحالة") ?></label>
 	<select class="selectpicker" name="status" data-style="form-control btn-default btn-outline">
@@ -100,7 +100,7 @@ input {
 	</div>	
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 	<div class="form-group">
 	<label class="control-label mb-10"><?php echo direction("Payment Method","طريقة الدفع") ?></label>
 	<select class="selectpicker" name="pMethod" data-style="form-control btn-default btn-outline">
@@ -112,7 +112,7 @@ input {
 	</div>	
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-6">
 	<div class="form-group">
 	<label class="control-label mb-10">Select Voucher</label>
 	<select class="selectpicker" name="voucher" data-style="form-control btn-default btn-outline">
