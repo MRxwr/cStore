@@ -2,7 +2,7 @@
 	<footer class="footer container-fluid pl-30 pr-30">
 		<div class="row">
 			<div class="col-sm-12">
-				<p>2020 &copy; Create-KW - E-Commerce System</p>
+				<p>2020 &copy; Createkuwait.com - E-Commerce System</p>
 			</div>
 		</div>
 	</footer>
@@ -18,7 +18,7 @@
 	<!-- Data table JavaScript -->
 	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 	<script src="dist/js/productorders-data.js"></script>
-	
+
 	<!-- Slimscroll JavaScript -->
 	<script src="dist/js/jquery.slimscroll.js"></script>
 	
