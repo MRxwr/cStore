@@ -1,5 +1,4 @@
 <?php
-require("template/header.php");
 if ( isset($_GET['idon']) ){
 	updateDB("cities",array("status"=>"1"),"`CountryCode` LIKE '{$_GET['idon']}'");
 	header("LOCATION: ?v=Countires");
