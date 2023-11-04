@@ -2,12 +2,12 @@
 if($role = selectDB("roles","`id` = '{$_GET["id"]}'") ){
 
 }else{
-    header("LOCATION: roles.php");
+    header("LOCATION: ?v=Roles");
 }
 if( isset($_POST["update"]) ){
     $pages = json_encode($_POST["pages"]);
     if( updateDB("roles", array("pages" => $pages), "`id` = '{$_POST["update"]}'") ){
-        header("LOCATION: roles.php");
+        header("LOCATION: ?v=Roles");
     }else{
     ?>
     <script>
