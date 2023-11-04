@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
 	if( updateDB('p_methods',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
-		header("LOCATION: paymentMethods.php");
+		header("LOCATION: ?v=PaymentMethods");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
 	if( updateDB('p_methods',array('hidden'=> '1'),"`id` = '{$_GET["show"]}'") ){
-		header("LOCATION: paymentMethods.php");
+		header("LOCATION: ?v=PaymentMethods");
 	}
 }
 
@@ -18,7 +15,7 @@ if( isset($_POST["updateRank"]) ){
 	for( $i = 0; $i < sizeof($_POST["rank"]); $i++){
 		updateDB("p_methods",array("rank"=>$_POST["rank"][$i]),"`id` = '{$_POST["id"][$i]}'");
 	}
-	header("LOCATION: paymentMethods.php");
+	header("LOCATION: ?v=PaymentMethods");
 }
 
 if( isset($_POST["arTitle"]) ){
@@ -34,7 +31,7 @@ if( isset($_POST["arTitle"]) ){
 			$_POST["icon"] = "";
 		}
 		if( insertDB("p_methods", $_POST) ){
-			header("LOCATION: paymentMethods.php");
+			header("LOCATION: ?v=PaymentMethods");
 		}else{
 		?>
 		<script>
@@ -53,7 +50,7 @@ if( isset($_POST["arTitle"]) ){
 			$_POST["icon"] = $icon[0]["icon"];
 		}
 		if( updateDB("p_methods", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: paymentMethods.php");
+			header("LOCATION: ?v=PaymentMethods");
 		}else{
 		?>
 		<script>
@@ -64,39 +61,7 @@ if( isset($_POST["arTitle"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">			
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -186,12 +151,12 @@ if( isset($_POST["arTitle"]) ){
 		    $hidden = $pMehtods[$i]["hidden"] == "1" ? direction("Active","مفعل") : direction("Disabled","معطل");
             if ( $pMehtods[$i]["hidden"] == 2 ){
                 $icon = "fa fa-eye";
-                $link = "?show={$pMehtods[$i]["id"]}";
-                $hide = "Show";
+                $link = "?v={$_GET["v"]}&show={$pMehtods[$i]["id"]}";
+                $hide = direction("Show","إظهار");
             }else{
                 $icon = "fa fa-eye-slash";
-                $link = "?hide={$pMehtods[$i]["id"]}";
-                $hide = "Hide";
+                $link = "?v={$_GET["v"]}&hide={$pMehtods[$i]["id"]}";
+                $hide = direction("Hide","إخفاء");
             }
 		?>
 		<tr>
@@ -225,67 +190,19 @@ if( isset($_POST["arTitle"]) ){
 </div>
 </div>
 </form>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			var arTitle = $("#arTitle"+id).html();
-			var enTitle = $("#enTitle"+id).html();
-			var hidden = $("#hiddenText"+id).html();
-			var payId = $("#payId"+id).html();
-			$("input[name=arTitle]").val(arTitle).focus();
-			$("input[name=update]").val(id);
-			$("input[name=enTitle]").val(enTitle);
-			$("input[name=paymentId]").val(payId);
-			$("select[name=hidden]").val(hidden);
-			$("input[name=icon]").removeAttr('required');
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		var arTitle = $("#arTitle"+id).html();
+		var enTitle = $("#enTitle"+id).html();
+		var hidden = $("#hiddenText"+id).html();
+		var payId = $("#payId"+id).html();
+		$("input[name=arTitle]").val(arTitle).focus();
+		$("input[name=update]").val(id);
+		$("input[name=enTitle]").val(enTitle);
+		$("input[name=paymentId]").val(payId);
+		$("select[name=hidden]").val(hidden);
+		$("input[name=icon]").removeAttr('required');
+	})
+</script>
