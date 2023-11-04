@@ -1,3 +1,10 @@
+<?php
+if( $settings = selectDB("settings","`id` = '1'") ){
+	$defaultCurr = $settings[0]["currency"];
+}else{
+	$defaultCurr = "";
+}
+?>
 <div class="row heading-bg">
 	<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 		<h5 class="txt-dark">Reports</h5>
@@ -236,7 +243,7 @@ $totalIntInvoices = 0;
 		<td class="txt-dark"><?php echo $info["phone"] ?></td>
 		<td><?php echo $voucher["voucher"] ?></td>
 		<td><?php echo $voucher["percentage"] ?>%</td>
-		<td><?php echo $address["shipping"] ?>KD</td>
+		<td><?php echo $address["shipping"] . $defaultCurr?></td>
 		<td><?php
 		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orderIds[$i]["paymentMethod"]}'") ){
 			echo $method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
@@ -244,9 +251,9 @@ $totalIntInvoices = 0;
 			echo $method = "";
 		}
 		?></td>
-		<td><?php echo numTo3Float($profit) ?>KD</td>
-		<td><?php echo numTo3Float(array_sum($cost)) ?>KD</td>
-		<td><?php echo numTo3Float($orderIds[$i]["price"]) ?>KD</td>
+		<td><?php echo numTo3Float($profit) . $defaultCurr?></td>
+		<td><?php echo numTo3Float(array_sum($cost)) . $defaultCurr?></td>
+		<td><?php echo numTo3Float($orderIds[$i]["price"]) . $defaultCurr?></td>
 		<td><?php echo $statusText[$orderIds[$i]["status"]] ?></td>
 	</tr>
 	<?php
@@ -286,11 +293,11 @@ $totalIntInvoices = 0;
 </thead>
 <tbody>
 	<tr>
-		<td><?php echo numTo3Float(array_sum($totalPrice)+array_sum($totalShipping)+array_sum($totalDelivery)) ?>KD</td>
-		<td><?php echo numTo3Float(array_sum($totalDelivery)) ?>KD</td>
-		<td><?php echo numTo3Float(array_sum($totalShipping)) ?>KD</td>
-		<td><?php echo numTo3Float(array_sum($totalCost)) ?>KD</td>
-		<td><?php echo numTo3Float(array_sum($totalProfit)) ?>KD</td>
+		<td><?php echo numTo3Float(array_sum($totalPrice)+array_sum($totalShipping)+array_sum($totalDelivery)) . $defaultCurr?></td>
+		<td><?php echo numTo3Float(array_sum($totalDelivery)) . $defaultCurr?></td>
+		<td><?php echo numTo3Float(array_sum($totalShipping)) . $defaultCurr?></td>
+		<td><?php echo numTo3Float(array_sum($totalCost)) . $defaultCurr?></td>
+		<td><?php echo numTo3Float(array_sum($totalProfit)) . $defaultCurr?></td>
 		<td><?php echo $totalKwInvoices ?></td>
 		<td><?php echo $totalIntInvoices ?></td>
 	</tr>
