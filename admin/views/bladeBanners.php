@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
 	if( updateDB('banner',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
-		header("LOCATION: banners.php");
+		header("LOCATION: ?v=Banners");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
 	if( updateDB('banner',array('hidden'=> '1'),"`id` = '{$_GET["show"]}'") ){
-		header("LOCATION: banners.php");
+		header("LOCATION: ?v=Banners");
 	}
 }
 
 if( isset($_GET["delId"]) && !empty($_GET["delId"]) ){
 	if( updateDB('banner',array('status'=> '1'),"`id` = '{$_GET["delId"]}'") ){
-		header("LOCATION: banners.php");
+		header("LOCATION: ?v=Banners");
 	}
 }
 
@@ -24,7 +21,7 @@ if( isset($_POST["updateRank"]) ){
 	for( $i = 0; $i < sizeof($_POST["rank"]); $i++){
 		updateDB("banner",array("rank"=>$_POST["rank"][$i]),"`id` = '{$_POST["id"][$i]}'");
 	}
-	header("LOCATION: banners.php");
+	header("LOCATION: ?v=Banners");
 }
 
 if( isset($_POST["title"]) ){
@@ -48,7 +45,7 @@ if( isset($_POST["title"]) ){
         }
 		
 		if( insertDB("banner", $_POST) ){
-			header("LOCATION: banners.php");
+			header("LOCATION: ?v=Banners");
 		}else{
 		?>
 		<script>
@@ -78,7 +75,7 @@ if( isset($_POST["title"]) ){
 
 		
 		if( updateDB("banner", $_POST, "`id` = '{$id}'") ){
-			header("LOCATION: banners.php");
+			header("LOCATION: ?v=Banners");
 		}else{
 		?>
 		<script>
@@ -89,39 +86,7 @@ if( isset($_POST["title"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">			
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -213,11 +178,11 @@ if( isset($_POST["title"]) ){
 		$counter = $i + 1;
 		if ( $banners[$i]["hidden"] == 2 ){
 		$icon = "fa fa-eye";
-		$link = "?show={$banners[$i]["id"]}";
+		$link = "?v={$_GET["v"]}&show={$banners[$i]["id"]}";
 		$hide = "Show";
 		}else{
 		$icon = "fa fa-eye-slash";
-		$link = "?hide={$banners[$i]["id"]}";
+		$link = "?v={$_GET["v"]}&hide={$banners[$i]["id"]}";
 		$hide = "Hide";
 		}
 		?>
@@ -235,7 +200,7 @@ if( isset($_POST["title"]) ){
 		</a>
 		<a href="<?php echo $link ?>" class="mr-25" data-toggle="tooltip" data-original-title="<?php echo $hide ?>"> <i class="<?php echo $icon ?> text-inverse m-r-10"></i>
 		</a>
-		<a href="?delId=<?php echo $banners[$i]["id"] ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
+		<a href="<?php echo "?v={$_GET["v"]}&delId={$banners[$i]["id"]}" ?>" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-close text-danger"></i>
 		</a>
 		<div style="display:none"><label id="hidden<?php echo $banners[$i]["id"]?>"><?php echo $banners[$i]["hidden"] ?></label></div>
 		<div style="display:none"><label id="logo<?php echo $banners[$i]["id"]?>"><?php echo $banners[$i]["image"] ?></label></div>
@@ -257,68 +222,20 @@ if( isset($_POST["title"]) ){
 </div>
 </div>
 </form>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			var link = $("#link"+id).html();
-			var title = $("#title"+id).html();
-			var hidden = $("#hidden"+id).html();
-			var logo = $("#logo"+id).html();
-			$("input[type=file]").prop("required",false);
-			$("input[name=link]").val(link);
-			$("input[name=update]").val(id);
-			$("input[name=title]").val(title);
-			$("select[name=hidden]").val(hidden);
-			$("#logoImg").attr("src","../logos/"+logo);
-			$("#images").attr("style","margin-top:10px;display:block");
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		var link = $("#link"+id).html();
+		var title = $("#title"+id).html();
+		var hidden = $("#hidden"+id).html();
+		var logo = $("#logo"+id).html();
+		$("input[type=file]").prop("required",false);
+		$("input[name=link]").val(link);
+		$("input[name=update]").val(id);
+		$("input[name=title]").val(title);
+		$("select[name=hidden]").val(hidden);
+		$("#logoImg").attr("src","../logos/"+logo);
+		$("#images").attr("style","margin-top:10px;display:block");
+	})
+</script>
