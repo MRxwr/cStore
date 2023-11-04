@@ -1,52 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
-require("template/header.php");
-?>
-
-	<body>
-		<!--Preloader-->
-		<div class="preloader-it">
-			<div class="la-anim-1"></div>
-		</div>
-		<!--/Preloader-->
-		<div class="wrapper  theme-1-active pimary-color-green">
-			
-			<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-			
-			<!-- Right Sidebar Backdrop -->
-			<div class="right-sidebar-backdrop"></div>
-			<!-- /Right Sidebar Backdrop -->
-			
-			<!-- Main Content -->
-			<div class="page-wrapper">
-				<div class="container-fluid">
-					<!-- Title -->
-					<div class="row heading-bg">
-						<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-						  <h5 class="txt-dark"><?php echo direction("Purchases","المشتريات") ?></h5>
-						</div>
-					</div>
-					<!-- /Title -->
-					
-					<!-- Row -->
-					<?php
 if ( isset($_POST["title"]) AND !empty($_POST["title"]) ){
     insertDB('purchases',$_POST);
-	header ("LOCATION: purchases");
+	header ("LOCATION: ?v=Purchases");
 }
-
 if ( isset($_GET["delId"]) AND !empty($_GET["delId"]) ){
     updateDB('purchases',array('status'=>1),"`id` = {$_GET["delId"]}");
-	header ("LOCATION: purchases");
+	header ("LOCATION: ?v=Purchases");
 }
 ?>
+<div class="row heading-bg">
+	<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+		<h5 class="txt-dark"><?php echo direction("Purchases","المشتريات") ?></h5>
+	</div>
+</div>
 <div class="row">
 <div class="col-md-12">
 <div class="panel panel-default card-view">
@@ -244,68 +210,26 @@ if ( isset($_GET["delId"]) AND !empty($_GET["delId"]) ){
 </div>
 </div>
 </div>
-					<!-- /Row -->
-
-				</div>
-				
-				<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-				
-			</div>
-			<!-- /Main Content -->
-		
-		</div>
-		<!-- /#wrapper -->
-		
-		<!-- JavaScript -->
-		
-		<!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-		
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-		<script>
-        	 $(document).ready(function(){
-               $('#myAjaxTable').DataTable({
-                  'processing': true,
-                  'serverSide': true,
-                  'serverMethod': 'post',
-                  'order': [[0, 'desc']],
-                  'ajax': {
-                      'url':'template/ajax/purchaseAjax.php'
-                  },
-                  'columns': [
-                     { data: 'sl'},
-                     { data: 'date'},
-                     { data: 'ref'},
-                     { data: 'title'},
-                     { data: 'details'},
-                     { data: 'type'},
-                     { data: 'total'},
-                     { data: 'action' }
-                  ]
-               });
-            });
-		</script>
-	</body>
-</html>
+<script>
+		$(document).ready(function(){
+		$('#myAjaxTable').DataTable({
+			'processing': true,
+			'serverSide': true,
+			'serverMethod': 'post',
+			'order': [[0, 'desc']],
+			'ajax': {
+				'url':'template/ajax/purchaseAjax.php'
+			},
+			'columns': [
+				{ data: 'sl'},
+				{ data: 'date'},
+				{ data: 'ref'},
+				{ data: 'title'},
+				{ data: 'details'},
+				{ data: 'type'},
+				{ data: 'total'},
+				{ data: 'action' }
+			]
+		});
+	});
+</script>
