@@ -134,7 +134,7 @@ while ( $row = $result->fetch_assoc() ){
 			?>
 		</td>
 		<td>
-			<a href="product-orders.php?info=view&orderId=<?php echo $orederID ?>">
+			<a href="?v=Order&orderId=<?php echo $orederID ?>">
 			<button class="btn btn-info btn-rounded"><?php echo $Details ?>
 			</button>
 		</td>
