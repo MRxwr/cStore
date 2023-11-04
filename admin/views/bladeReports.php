@@ -243,7 +243,7 @@ $totalIntInvoices = 0;
 		<td class="txt-dark"><?php echo $info["phone"] ?></td>
 		<td><?php echo $voucher["voucher"] ?></td>
 		<td><?php echo $voucher["percentage"] ?>%</td>
-		<td><?php echo $address["shipping"] . $defaultCurr?></td>
+		<td><?php echo numTo3Float($address["shipping"]) . $defaultCurr?></td>
 		<td><?php
 		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orderIds[$i]["paymentMethod"]}'") ){
 			echo $method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
