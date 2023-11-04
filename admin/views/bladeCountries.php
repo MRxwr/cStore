@@ -1,10 +1,10 @@
 <?php
 if ( isset($_GET['idon']) ){
 	updateDB("cities",array("status"=>"1"),"`CountryCode` LIKE '{$_GET['idon']}'");
-	header("LOCATION: ?v=Countires");
+	header("LOCATION: ?v=Countries");
 }elseif ( isset($_GET['idoff']) ){
 	updateDB("cities",array("status"=>"0"),"`CountryCode` LIKE '{$_GET['idoff']}'");
-	header("LOCATION: ?v=Countires");
+	header("LOCATION: ?v=Countries");
 }
 ?>
 <div class="row">
