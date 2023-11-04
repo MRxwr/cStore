@@ -63,6 +63,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 					echo "<td class='bg-{$statusBgColor[$y]}' style='font-weight:700; color:black'>{$statusText[$y]}</td>";
 				}
 			}
+			$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
 			echo "<td>
 					<a href='?v=Order&orderId={$orders[$i]["orderId"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip' target='_blank'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
 					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
