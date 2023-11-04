@@ -1,6 +1,7 @@
 <?php 
 if ( isset($_GET["update"]) AND $_GET["update"] = 1 && updateDB("s_media",$_POST,"`id` = '1'") ){
 	$sMedia = selectDB("s_media","`id` = '1'");
+	header("LOCATION: ?v={$_GET["v"]}");die();
 }else{
 	$sMedia = selectDB("s_media","`id` = '1'");
 }
