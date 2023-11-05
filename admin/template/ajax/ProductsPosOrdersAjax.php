@@ -44,7 +44,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         $statusColor = ["info","primary","success","warning","default","danger"];
         for( $i = 0; $i < sizeof($updateStatus); $i++){
             if( $row["status"] == $updateStatus[$i] ){
-                $status = "<span class='label label-default font-weight-100'>{$statusText[$i]}</span>";
+                $status = "<span class='label label-{$statusColor[$i]} font-weight-100'>{$statusText[$i]}</span>";
             }
         }
     $action .='<button class="btn btn-primary btn-icon-anim btn-circle printNow" onclick="printNow(this.id)" title="Print" data-toggle="tooltip" id="'.$orederID.'">
