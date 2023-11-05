@@ -7,7 +7,7 @@ if( isset($_GET["delId"]) ){
 	$variants["enTitle"] = array_values($variants["enTitle"]);
 	$variants["arTitle"] = array_values($variants["arTitle"]);
 	if( updateDB('extras',array('variants'=> json_encode($variants, JSON_UNESCAPED_UNICODE) ),"`id` = '{$_GET["id"]}'") ){
-		header("LOCATION: ?v=ExtraVariants?id={$_GET["id"]}");
+		header("LOCATION: ?v=ExtraVariants&id={$_GET["id"]}");
 	}
 }
 
@@ -29,7 +29,7 @@ if( isset($_POST["enTitle"]) ){
 	}
 	$variants = json_encode($variants, JSON_UNESCAPED_UNICODE);
 	if( updateDB("extras", array("variants" => $variants ), "`id` = '{$id}'") ){
-		header("LOCATION: ?v=ExtraVariants?id={$id}");
+		header("LOCATION: ?v=ExtraVariants&id={$id}");
 	}else{
 	?>
 	<script>
