@@ -26,7 +26,6 @@ if ( isset($_POST["subId"]) ){
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-default card-view">
-			<div class="panel-wrapper collapse in">
 			<div class="panel-heading">
 			<div class="pull-left">
 				<h6 class="panel-title txt-dark"><?php echo direction("Products List","قائمة المنتجات") ?></h6>
@@ -34,6 +33,7 @@ if ( isset($_POST["subId"]) ){
 			</div>
 				<div class="clearfix"></div>
 			</div>
+			<div class="panel-wrapper collapse in">
 			<div class="panel-body row">
 			<div class="table-wrap">
 			<div class="table-responsive">
