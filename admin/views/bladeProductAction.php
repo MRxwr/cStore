@@ -99,7 +99,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 		for( $i = 0; $i < sizeof($extras); $i++ ){
 			$checked = "";
 			$title = direction($extras[$i]["enTitle"],$extras[$i]["arTitle"]);
-			$productExtras = (isset($product["extras"]) && !empty($product["extras"]) ) ? json_decode($product["extras"],true): array() ;
+			$productExtras = (isset($product["extras"]) && json_decode($product["extras"],true) ) ? json_decode($product["extras"],true): array() ;
 			if( in_array($extras[$i]["id"],$productExtras) ){
 				$checked = "checked";
 			}
