@@ -58,7 +58,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         
 if ( $row["type"] == 0 ){
 
-	$action .='<a href="attributes_products.php?id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.$codesText.'"><i class="fa fa-sitemap"></i></a>';
+	$action .='<a href="?v=AttributesProducts&id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.$codesText.'"><i class="fa fa-sitemap"></i></a>';
 }
 if ( $row["collection"] == 1 ){
 
