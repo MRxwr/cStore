@@ -74,7 +74,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $action .='<a href="?v=PosOrder&id='.$orederID.'">
         <button class="btn btn-info btn-rounded">'.'البيانات'.'
         </button>
-        </a>';
+        </a>'; 
         
         if ( $row["status"] != 1 AND $row["status"] != 4 AND $row["status"] != 5 AND $row["status"] != 6 )
         {
