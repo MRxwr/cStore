@@ -18,6 +18,9 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 			$sku = $row["sku"];
 		}
 	}
+	$actionLink = "includes/products/edit.php?id={$_GET["id"]}";
+}else{
+	$actionLink = "includes/products/add.php";
 }
 ?>
 <div class="row">
@@ -26,7 +29,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 <div class="panel-wrapper collapse in">
 <div class="panel-body">
 <div class="form-wrap">
-<form action="includes/products/edit.php?id=<?php echo $_GET["id"] ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php echo $actionLink ?>" method="POST" enctype="multipart/form-data">
 <input name="onlineQuantity" type="hidden" class="form-control" value="<?php echo $onlineQuantity ?>">
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-info-outline mr-10"></i><?php echo $about_product ?></h6>
 <hr class="light-grey-hr"/>

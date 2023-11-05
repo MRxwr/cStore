@@ -108,8 +108,6 @@ if( $product[0]["type"] == 1 ){
 	$newId = selectDB("attributes_products","`productId` = '{$id}'");
 	updateDB("cart",array("subId" => $newId[0]["id"]),"`subId` = '{$oldId[0]["id"]}'");
 }
-
-
-header("LOCATION: ../../product.php");
+header("LOCATION: ../../index.php?v=Product");
 
 ?>

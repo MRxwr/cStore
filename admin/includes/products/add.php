@@ -87,7 +87,7 @@ while ( $i < sizeof($_FILES['logo']['tmp_name']) ){
 	}
 	$i++;
 }
-header("LOCATION: ../../product.php");
+header("LOCATION: ../../index.php?v=Product");
 
 //ALTER TABLE phrases AUTO_INCREMENT = 1
 
