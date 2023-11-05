@@ -36,7 +36,7 @@ if( isset($_POST["checked"]) ){
 	</thead>
 	<tbody>
 	<?php 
-	$sql= "SELECT * FROM categories WHERE `hidden` != '1'";
+	$sql= "SELECT * FROM categories WHERE `hidden` = '1' AND `status` = '0'";
 	$result = $dbconnect->query($sql);
 	$i = 1;
 	while ( $row = $result->fetch_assoc() ){
