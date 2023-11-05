@@ -22,17 +22,18 @@ if ( isset($_POST["subId"]) ){
 }
 
 ?>
-<div class="row heading-bg">
-<a href="add-products.php?act=add"><button class="btn  btn-primary btn-rounded"><?php echo $Add_Product ?></button></a>
-	<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-		<h5 class="txt-dark"><?php echo $Products ?></h5>
-	</div>
-</div>
 <form action="" method="POST" enctype="multipart/form-data">
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="panel panel-default card-view">
 			<div class="panel-wrapper collapse in">
+			<div class="panel-heading">
+			<div class="pull-left">
+				<h6 class="panel-title txt-dark"><?php echo direction("Products List","قائمة المنتجات") ?></h6>
+				<a href="add-products.php?act=add"><button class="btn  btn-primary btn-rounded"><?php echo $Add_Product ?></button></a>
+			</div>
+				<div class="clearfix"></div>
+			</div>
 			<div class="panel-body row">
 			<div class="table-wrap">
 			<div class="table-responsive">
