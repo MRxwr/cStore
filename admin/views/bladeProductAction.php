@@ -23,6 +23,10 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 }else{
 	$actionLink = "includes/products/add.php";
 	$typeDisabled = "";
+	$price = 0;
+	$cost = 0;
+	$quantity = 0;
+	$sku = 0;
 }
 ?>
 <div class="row">
