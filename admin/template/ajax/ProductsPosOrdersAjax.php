@@ -71,14 +71,14 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $action .='<button class="btn btn-primary btn-icon-anim btn-circle printNow" onclick="printNow(this.id)" title="Print" data-toggle="tooltip" id="'.$orederID.'">
         <i class="fa fa-print"></i>
         </button>';
-    $action .='<a href="?info=view&id='.$orederID.'">
+    $action .='<a href="?v=PosOrder&id='.$orederID.'">
         <button class="btn btn-info btn-rounded">'.'البيانات'.'
         </button>
         </a>';
         
         if ( $row["status"] != 1 AND $row["status"] != 4 AND $row["status"] != 5 AND $row["status"] != 6 )
         {
-        $action .='<a href="?status=success&id='.$orederID.'">
+        $action .='<a href="?v=PosInvoices&status=success&id='.$orederID.'">
         <button class="btn btn-primary btn-icon-anim btn-circle" title="Paid" data-toggle="tooltip">
         <i class="fa fa-money"></i>
         </button>
@@ -87,7 +87,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         }
         if ( $row["status"] != 2 )
         {
-        $action .='<a href="?status=failed&id='.$orederID.'">
+        $action .='<a href="?v=PosInvoices&status=failed&id='.$orederID.'">
         <button class="btn btn-danger btn-icon-anim btn-circle" title="Cancel" data-toggle="tooltip">
         <i class="fa fa-times"></i>
         </button>
@@ -97,7 +97,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         if ( $row["status"] == 1 )
         {
         
-        $action .='<a href="?status=preparing&id='.$orederID.'">
+        $action .='<a href="?v=PosInvoices&status=preparing&id='.$orederID.'">
         <button class="btn btn-default btn-icon-anim btn-circle" title="Preparing" data-toggle="tooltip">
         <i class="pe-7s-clock" style="font-size:25px"></i>
         </button>
@@ -106,7 +106,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         
         if ( $row["status"] != 5 AND $row["status"] != 4 AND $row["status"] != 3)
         {
-        $action .='<a href="?status=onDelivery&id='.$orederID.'">
+        $action .='<a href="?v=PosInvoices&status=onDelivery&id='.$orederID.'">
         <button class="btn btn-warning btn-icon-anim btn-circle" title="On Delivery" data-toggle="tooltip">
         <i class="fa fa-car"></i>
         </button>
@@ -116,7 +116,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         if ( $row["status"] != 4 AND $row["status"] != 3)
         {
         
-        $action .='<a href="?status=delivered&id='.$orederID.'">
+        $action .='<a href="?v=PosInvoices&status=delivered&id='.$orederID.'">
         <button class="btn btn-success btn-icon-anim btn-circle" title="Delivered" data-toggle="tooltip">
         <i class="fa fa-car"></i>
         </button>

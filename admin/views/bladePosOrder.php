@@ -4,8 +4,6 @@ td{
 }
 </style>
 <?php
-require ("includes/config.php");
-
 $id = $_GET["id"];
 
 $sql = "SELECT *
@@ -345,31 +343,8 @@ if(!empty($reason)){
 </address>
 </div>
 </div>
-<?php
-/*
-<table style="width:100%;position: absolute;
-    bottom: 0px;">
-<tr class="row text-center" style="display:flex;justify-content: space-between;bottom:0px;">
 
-    <td class="col" style="text-align:center">
-        <img src="https://i.imgur.com/dEBbuF6.png" style="width:10px;height:10px"> +96599696665
-    </td>
-    <td class="col" style="text-align:center">
-        <img src="https://i.imgur.com/azY1RCs.png" style="width:10px;height:10px"> Rich_kw
-    </td>
-    <td class="col" style="text-align:center">
-        <img src="https://i.imgur.com/1sMHvsQ.png" style="width:10px;height:10px"> Rich_kuw
-    </td>
-
-</tr>
-</table>
-<?php
-*/
-?>
 <div class="button-list pull-right">
-<!--<button type="submit" class="btn btn-success mr-10">
-Proceed to payment 
-</button>-->
 <button type="button" class="btn btn-primary btn-outline btn-icon left-icon takeMeToPrinter"> 
 <i class="fa fa-print"></i><span> Print</span>
 </button>
@@ -381,3 +356,17 @@ Proceed to payment
 </div>
 </div>
 </div>
+
+<script>
+$(function(){
+	$(document).on('click','.takeMeToPrinter',function(e){
+		e.preventDefault();
+		w = window.open();
+		$('.takeMeToPrinter').hide();
+		w.document.write($('.printBill').html());
+		w.print();
+		w.close();
+		$('.takeMeToPrinter').show();
+	});
+})
+</script>

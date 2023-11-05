@@ -220,18 +220,6 @@ if ( isset($_GET["status"]) )
 	<script src="dist/js/init.js"></script>
 <script>
 $(function(){
-	$(document).on('click','.takeMeToPrinter',function(e){
-		e.preventDefault();
-		w = window.open();
-		$('.takeMeToPrinter').hide();
-		w.document.write($('.printBill').html());
-		w.print();
-		w.close();
-		$('.takeMeToPrinter').show();
-	});
-})
-
-$(function(){
 	$(document).on('click','.printNow',function(e){
 		e.preventDefault();
 		var printId = $(this).attr('id');
@@ -242,9 +230,7 @@ $(function(){
         .appendTo("body");
 	});
 })
-</script>
- <script>
-        	 $(document).ready(function(){
+$(document).ready(function(){
                $('#myAjaxTable').DataTable({
                   'processing': true,
                   'serverSide': true,

@@ -49,7 +49,7 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
         }
         
         
-         $action .='<a href="?info=view&id='.$orederID.'"><button class="btn btn-info btn-rounded">'. $Details.'</button></a>';
+         $action .='<a href="?v=PosOrder&&id='.$orederID.'"><button class="btn btn-info btn-rounded">'. $Details.'</button></a>';
 
             if ( $row["status"] != 1 )
             {
