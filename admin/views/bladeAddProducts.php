@@ -7,7 +7,6 @@
 
 <!-- Row -->
 <?php
-var_dump($_GET["act"]);die();
 if ( isset($_GET["act"]) ){
 	if ( $_GET["act"] == "add" ){
 		require ("template/products/add.php");
