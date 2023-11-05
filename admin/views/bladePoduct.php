@@ -28,8 +28,14 @@ if ( isset($_POST["subId"]) ){
 			<div class="panel panel-default card-view">
 			<div class="panel-heading">
 			<div class="pull-left">
-				<h6 class="panel-title txt-dark"><?php echo direction("Products List","قائمة المنتجات") ?></h6>
-				<a href="add-products.php?act=add"><button class="btn  btn-primary btn-rounded"><?php echo $Add_Product ?></button></a>
+				<div class="row">
+					<div class="col-6">
+					<h6 class="panel-title txt-dark"><?php echo direction("Products List","قائمة المنتجات") ?></h6>
+					</div>
+					<div class="col-6">
+					<a href="add-products.php?act=add"><button class="btn  btn-primary btn-rounded"><?php echo $Add_Product ?></button></a>
+					</div>
+				</div>
 			</div>
 				<div class="clearfix"></div>
 			</div>
