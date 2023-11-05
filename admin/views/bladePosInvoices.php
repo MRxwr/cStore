@@ -4,7 +4,7 @@ if ( isset($_GET["status"]) )
 	$id = $_GET["id"];
 	if ( $_GET["status"] == "returned")
 	{
-		$sql = "UPDATE `posOrders` SET `status`='3' WHERE `orderId` LIKE '".$id."'";
+		$sql = "UPDATE `posorders` SET `status`='3' WHERE `orderId` LIKE '".$id."'";
 		$result = $dbconnect->query($sql);
 		
 		$sql = "SELECT `productId`,`quantity` FROM `orders` WHERE `orderId` LIKE '".$id."'";
@@ -39,7 +39,7 @@ if ( isset($_GET["status"]) )
 	elseif ( $_GET["status"] == "success")
 	{
 		$sql = "SELECT `productId`,`quantity`,`location`, `status`
-				FROM `posOrders` 
+				FROM `posorders` 
 				WHERE `orderId` LIKE '".$id."'
 				";
 		$result = $dbconnect->query($sql);
@@ -73,7 +73,7 @@ if ( isset($_GET["status"]) )
 			}
 		}
 		$sql = "UPDATE 
-				`posOrders` 
+				`posorders` 
 				SET 
 				`status`='1' 
 				WHERE 
@@ -83,52 +83,52 @@ if ( isset($_GET["status"]) )
 	}
 	elseif ( $_GET["status"] == "delivered")
 	{
-		$sql = "UPDATE `posOrders` 
+		$sql = "UPDATE `posorders` 
 				SET `status`='4' 
 				WHERE `orderId` LIKE '".$id."'";
 		$result = $dbconnect->query($sql);
 		
 		$sql = "SELECT `productId`,`quantity`,`location` 
-				FROM `posOrders` 
+				FROM `posorders` 
 				WHERE `orderId` LIKE '".$id."'
 				";
 		$result = $dbconnect->query($sql);
 	}
 	elseif ( $_GET["status"] == "onDelivery")
 	{
-		$sql = "UPDATE `posOrders` 
+		$sql = "UPDATE `posorders` 
 				SET `status`='5' 
 				WHERE `orderId` LIKE '".$id."'";
 		$result = $dbconnect->query($sql);
 		
 		$sql = "SELECT `productId`,`quantity`,`location` 
-				FROM `posOrders` 
+				FROM `posorders` 
 				WHERE `orderId` LIKE '".$id."'
 				";
 		$result = $dbconnect->query($sql);
 	}
 	elseif ( $_GET["status"] == "preparing")
 	{
-		$sql = "UPDATE `posOrders` 
+		$sql = "UPDATE `posorders` 
 				SET `status`='6' 
 				WHERE `orderId` LIKE '".$id."'";
 		$result = $dbconnect->query($sql);
 		
 		$sql = "SELECT `productId`,`quantity`,`location` 
-				FROM `posOrders` 
+				FROM `posorders` 
 				WHERE `orderId` LIKE '".$id."'
 				";
 		$result = $dbconnect->query($sql);
 	}
 	elseif ( $_GET["status"] == "failed")
 	{
-		$sql = "UPDATE `posOrders` 
+		$sql = "UPDATE `posorders` 
 				SET `status`='2' 
 				WHERE `orderId` LIKE '".$id."'";
 		$result = $dbconnect->query($sql);
 		
 		$sql = "SELECT `productId`,`quantity`,`location` 
-				FROM `posOrders` 
+				FROM `posorders` 
 				WHERE `orderId` LIKE '".$id."'
 				";
 		$result = $dbconnect->query($sql);
