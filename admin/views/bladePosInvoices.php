@@ -1,3 +1,141 @@
+<?php
+if ( isset($_GET["status"]) )
+{
+	$id = $_GET["id"];
+	if ( $_GET["status"] == "returned")
+	{
+		$sql = "UPDATE `posOrders` SET `status`='3' WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		
+		$sql = "SELECT `productId`,`quantity` FROM `orders` WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		while ( $row = $result->fetch_assoc() )
+		{
+			$products[] = $row["productId"];
+			$quantities[] = $row["quantity"];
+		}
+		
+		$i = 0;
+		while ( $i < sizeof($products) )
+		{
+			$sql = "SELECT `storeQuantity` 
+					FROM `products` 
+					WHERE `id` LIKE '".$products[$i]."'
+					";
+			$result = $dbconnect->query($sql);
+			$row = $result->fetch_assoc();
+			$ReturnQuantity = $row["storeQuantity"] + $quantities[$i] ;
+			
+			$sql = "UPDATE `products` 
+					SET `storeQuantity`='".$ReturnQuantity."' 
+					WHERE `id` LIKE '".$products[$i]."'
+					";
+			$result = $dbconnect->query($sql);
+			
+			$i++;
+		}
+		
+	}
+	elseif ( $_GET["status"] == "success")
+	{
+		$sql = "SELECT `productId`,`quantity`,`location`, `status`
+				FROM `posOrders` 
+				WHERE `orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+		while ( $row = $result->fetch_assoc() )
+		{
+			$products[] = $row["productId"];
+			$quantities[] = $row["quantity"];
+			$location[] = $row["location"];
+		}
+		
+		if ( $row["status"] = 3 )
+		{
+			$i = 0;
+			while ( $i < sizeof($products) )
+			{
+				$sql = "SELECT `storeQuantity`, `onlineQuantity`
+						FROM `products` 
+						WHERE `id` LIKE '".$products[$i]."'
+						";
+				$result = $dbconnect->query($sql);
+				$row = $result->fetch_assoc();
+				$ReturnQuantity = $row["storeQuantity"] - $quantities[$i];
+				$sql = "UPDATE `products` 
+						SET 
+						`storeQuantity` = '".$ReturnQuantity."'
+						WHERE `id` LIKE '".$products[$i]."'
+						";
+				$result = $dbconnect->query($sql);
+				
+				$i++;
+			}
+		}
+		$sql = "UPDATE 
+				`posOrders` 
+				SET 
+				`status`='1' 
+				WHERE 
+				`orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+	}
+	elseif ( $_GET["status"] == "delivered")
+	{
+		$sql = "UPDATE `posOrders` 
+				SET `status`='4' 
+				WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		
+		$sql = "SELECT `productId`,`quantity`,`location` 
+				FROM `posOrders` 
+				WHERE `orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+	}
+	elseif ( $_GET["status"] == "onDelivery")
+	{
+		$sql = "UPDATE `posOrders` 
+				SET `status`='5' 
+				WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		
+		$sql = "SELECT `productId`,`quantity`,`location` 
+				FROM `posOrders` 
+				WHERE `orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+	}
+	elseif ( $_GET["status"] == "preparing")
+	{
+		$sql = "UPDATE `posOrders` 
+				SET `status`='6' 
+				WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		
+		$sql = "SELECT `productId`,`quantity`,`location` 
+				FROM `posOrders` 
+				WHERE `orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+	}
+	elseif ( $_GET["status"] == "failed")
+	{
+		$sql = "UPDATE `posOrders` 
+				SET `status`='2' 
+				WHERE `orderId` LIKE '".$id."'";
+		$result = $dbconnect->query($sql);
+		
+		$sql = "SELECT `productId`,`quantity`,`location` 
+				FROM `posOrders` 
+				WHERE `orderId` LIKE '".$id."'
+				";
+		$result = $dbconnect->query($sql);
+	}
+	
+}
+?>
 <div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
