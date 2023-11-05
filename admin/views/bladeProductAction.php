@@ -382,7 +382,7 @@ if ( isset($_GET["id"]) && $images = selectDB("images","`productId` = '{$_GET["i
 		</tr>
 		<tr>
 		<td class="btn btn-info btn-icon left-icon">
-		<a href="<?php echo "?v=ProductAction&id=". $id ."&imgdel" . "=" .$images[$i]["id"] ?>" target="" style="text-decoration:none;color:white"><?php echo $Delete ?></a>
+		<a href="<?php echo "?v=ProductAction&id={$_GET["id"]}&imgdel={$images[$i]["id"]}" ?>" target="" style="text-decoration:none;color:white"><?php echo $Delete ?></a>
 		</td>
 		</tr>
 		</table>
