@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
-require ("template/header.php");
-
 if( isset($_GET["delId"]) ){
 	$variants = selectDB("extras","`id` = '{$_GET["id"]}'");
 	$variants = json_decode($variants[0]["variants"],true);
@@ -11,7 +7,7 @@ if( isset($_GET["delId"]) ){
 	$variants["enTitle"] = array_values($variants["enTitle"]);
 	$variants["arTitle"] = array_values($variants["arTitle"]);
 	if( updateDB('extras',array('variants'=> json_encode($variants, JSON_UNESCAPED_UNICODE) ),"`id` = '{$_GET["id"]}'") ){
-		header("LOCATION: extraVariants.php?id={$_GET["id"]}");
+		header("LOCATION: ?v=ExtraVariants?id={$_GET["id"]}");
 	}
 }
 
@@ -33,7 +29,7 @@ if( isset($_POST["enTitle"]) ){
 	}
 	$variants = json_encode($variants, JSON_UNESCAPED_UNICODE);
 	if( updateDB("extras", array("variants" => $variants ), "`id` = '{$id}'") ){
-		header("LOCATION: extraVariants.php?id={$id}");
+		header("LOCATION: ?v=ExtraVariants?id={$id}");
 	}else{
 	?>
 	<script>
@@ -43,39 +39,7 @@ if( isset($_POST["enTitle"]) ){
 	}
 }
 ?>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
-    <div class="wrapper  theme-1-active pimary-color-green">
-		<!-- Top Menu Items -->
-		<?php require ("template/navbar.php") ?>
-		<!-- /Top Menu Items -->
-		
-		<!-- Left Sidebar Menu -->
-		<?php require("template/leftSideBar.php") ?>
-		<!-- /Left Sidebar Menu -->
-		
-		<!-- Right Sidebar Menu -->
-		<div class="fixed-sidebar-right">
-		</div>
-		<!-- /Right Sidebar Menu -->
-		
-		
-		
-		<!-- Right Sidebar Backdrop -->
-		<div class="right-sidebar-backdrop"></div>
-		<!-- /Right Sidebar Backdrop -->
-
-        <!-- Main Content -->
-		<div class="page-wrapper">
-            <div class="container-fluid pt-25">
-				<!-- Row -->
-				<div class="row">
-				
+<div class="row">		
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
@@ -149,7 +113,7 @@ if( isset($_POST["enTitle"]) ){
 					<td><?php echo $variants["enTitle"][$i] ?></td>
 					<td><?php echo $variants["arTitle"][$i] ?></td>
 					<td class="text-nowrap">
-						<a href="?id=<?php echo $_GET["id"] ?>&delId=<?php echo $i ?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Delete entry?')" ><i class="fa fa-close text-danger"></i>
+						<a href="<?php echo "?v={$_GET["v"]}&delId={$i}&id={$_GET["id"]}" ?>" data-toggle="tooltip" data-original-title="Delete" onclick="return confirm('Delete entry?')" ><i class="fa fa-close text-danger"></i>
 					</a>			
 					</td>
 					</tr>
@@ -167,66 +131,18 @@ if( isset($_POST["enTitle"]) ){
 </div>
 </div>
 </div>
-					<!-- /Bordered Table -->
-				
-				</div>
-				<!-- /Row -->
-			</div>
-			
-			<!-- Footer -->
-			<?php require("template/footer.php") ?>
-			<!-- /Footer -->
-			
-		</div>
-        <!-- /Main Content -->
-
-    </div>
-    <!-- /#wrapper -->
-	
-	<!-- JavaScript -->
-	
-	<script>
-		$(document).on("click",".edit", function(){
-			var id = $(this).attr("id");
-			var enTitle = $("#enTitle"+id).html();
-			var arTitle = $("#arTitle"+id).html();
-			$("input[name=arTitle]").val(arTitle);
-			$("input[name=enTitle]").val(enTitle);
-			$("input[name=update]").val(id);
-		})
-		$(document).on("click","#addOneMore", function(){
-			let divs = '<div class="col-md-6"><label><?php echo direction("English Title","العنوان بالإنجليزي") ?></label><input type="text" name="enTitle[]" class="form-control" required></div><div class="col-md-6"><label><?php echo direction("Arabic Title","العنوان بالعربي") ?></label><input type="text" name="arTitle[]" class="form-control" required></div>';
-			$("#addMore").append(divs);
-		})
-	</script>
-	
-    <!-- jQuery -->
-    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	
-	<!-- Data table JavaScript -->
-	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script src="dist/js/productorders-data.js"></script>
-	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
-	
-	<!-- Owl JavaScript -->
-	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
-	
-	<!-- Sweet-Alert  -->
-	<script src="../vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="dist/js/sweetalert-data.js"></script>
-		
-	<!-- Switchery JavaScript -->
-	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
-	
-	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
-		
-	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-</body>
-
-</html>
+</div>
+<script>
+	$(document).on("click",".edit", function(){
+		var id = $(this).attr("id");
+		var enTitle = $("#enTitle"+id).html();
+		var arTitle = $("#arTitle"+id).html();
+		$("input[name=arTitle]").val(arTitle);
+		$("input[name=enTitle]").val(enTitle);
+		$("input[name=update]").val(id);
+	})
+	$(document).on("click","#addOneMore", function(){
+		let divs = '<div class="col-md-6"><label><?php echo direction("English Title","العنوان بالإنجليزي") ?></label><input type="text" name="enTitle[]" class="form-control" required></div><div class="col-md-6"><label><?php echo direction("Arabic Title","العنوان بالعربي") ?></label><input type="text" name="arTitle[]" class="form-control" required></div>';
+		$("#addMore").append(divs);
+	})
+</script>
