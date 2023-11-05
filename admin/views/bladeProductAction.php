@@ -19,8 +19,10 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 		}
 	}
 	$actionLink = "includes/products/edit.php?id={$_GET["id"]}";
+	$typeDisabled = "disabled";
 }else{
 	$actionLink = "includes/products/add.php";
+	$typeDisabled = "";
 }
 ?>
 <div class="row">
@@ -38,7 +40,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 <div class="col-md-12">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Product Type","نوع المنتج")?></label>
-		<select name="type" class="form-control" disabled>
+		<select name="type" class="form-control" <?php echo $typeDisabled ?>>
 		<?php
 		$simpleText = direction("Simple","بسيط");
 		$variantText = direction("Variant","متغير");
