@@ -3,7 +3,7 @@ if( isset($_GET["status"]) && !empty(isset($_GET["status"])) ){
     $statusText = ["returned","success","delivered","onDelivery","preparing","failed"];
     $updateStatus = ["3","1","4","5","6","2"];
     for( $i = 0; $i < sizeof($updateStatus); $i++){
-        if( $_GET["status"] == $statusText[$i] ){
+        if( strtolower($_GET["status"]) == strtolower($statusText[$i]) ){
             $dataUpdate = array("status" => $updateStatus[$i]);
         }else{
             $dataUpdate = array("status" => 0);
