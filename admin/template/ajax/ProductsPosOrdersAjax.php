@@ -19,17 +19,17 @@ if($searchValue != ''){
 }
 
 ## Total number of records without filtering
- $sel = $dbconnect->query("select COUNT(*) as allcount from posorders  WHERE 1 AND ( `status` != 0 AND `status` != 2020) GROUP BY `orderId`  ");
+ $sel = $dbconnect->query("select COUNT(*) as allcount from posorders GROUP BY `orderId`");
 $records = mysqli_fetch_assoc($sel);
  $totalRecords = $records['allcount'];
 
 ## Total number of record with filtering
-$sel = $dbconnect->query("select COUNT(*) as allcount from posorders WHERE 1 ".$searchQuery." AND (`status` != 0 AND `status` != 2020) GROUP BY `orderId`");
+$sel = $dbconnect->query("select COUNT(*) as allcount from posorders WHERE 1 ".$searchQuery." GROUP BY `orderId`");
 $records = mysqli_fetch_assoc($sel);
 $totalRecordwithFilter = $records['allcount'];
 
 ## Fetch records
-$empQuery = "select * from posorders WHERE 1 ".$searchQuery." AND ( `status` != 0 AND `status` != 2020) GROUP BY `orderId` order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
+$empQuery = "select * from posorders WHERE 1 ".$searchQuery." GROUP BY `orderId` order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage;
 $empRecords =$dbconnect->query($empQuery);
 $data = array();
 
