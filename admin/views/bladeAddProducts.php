@@ -18,25 +18,3 @@ if ( isset($_GET["act"]) ){
 	}
 }
 ?>
-
-<script>
-$(function(){
-	$(".hideMeSoon").hide();
-	$("select[name=type]").on("change", function(){
-		var selectType = $(this).val();
-		if ( selectType == 1 ){
-			$(".hideMeSoon").show();
-		}else{
-			$(".hideMeSoon").hide();
-		}
-	});
-	
-	<?php
-	if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
-		if ( $type == 1 ){
-			?> $(".hideMeSoon").show();<?php
-		}
-	}
-	?>
-});
-</script>

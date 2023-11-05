@@ -33,7 +33,7 @@ if ( isset($_POST["subId"]) ){
 						<h6 class="panel-title txt-dark"><?php echo direction("Products List","قائمة المنتجات") ?></h6>
 					</div>
 					<div class="col-xs-6 text-right">
-						<a href="?v=AddProducts&act=add" class="btn  btn-primary"><?php echo $Add_Product ?></a>
+						<a href="?v=ProductAction" class="btn btn-primary"><?php echo $Add_Product ?></a>
 					</div>
 				</div>
 			</div>

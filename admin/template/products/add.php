@@ -1,6 +1,3 @@
-<?php
-include_once("includes/config.php");
-?>
 <div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
@@ -228,29 +225,6 @@ include_once("includes/config.php");
 
 <!--/span-->
 </div>
-<!--/row
-<div class="row">
-
-<!--/span-->
-
-<!--/span
-</div>-->
-<!--<div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="control-label mb-10"><?php echo $lengthText ?></label>
-<select name="length" class="form-control">
-<option value="0">YES</option>
-<option value="1">NO</option>
-</select>
-</div>
-</div>
-<div class="col-sm-6">
-<div class="form-group">
-<label class="control-label mb-10"><?php echo $Online_Quantity ?></label>
-</div>
-</div>
-</div>-->
 
 <div class="row">
 <div class="col-sm-4">

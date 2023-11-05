@@ -1,71 +1,23 @@
 <?php
-require ("includes/config.php");
-$id = $_GET["id"];
-$sql = "SELECT *
-		FROM `products`
-		WHERE
-		`id` = {$id}";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-$arTitle = $row["arTitle"];
-$enTitle = $row["enTitle"];
-$arDetails = $row["arDetails"];
-$enDetails = $row["enDetails"];
-$categoryId = $row["categoryId"];
-$price = $row["price"];
-$cost = $row["cost"];
-$videoLink = $row["video"];
-$storeQuantity = $row["storeQuantity"];
-$onlineQuantity = $row["onlineQuantity"];
-$discount = $row["discount"];
-$discountType = $row["discountType"];
-$weight = $row["weight"];
-$width = $row["width"];
-$height = $row["height"];
-$depth = $row["depth"];
-$length = $row["length"];
-$preorder = $row["preorder"];
-$oneTime = $row["oneTime"];
-$collection = $row["collection"];
-$giftCard = $row["giftCard"]; 
-$preorderText = $row["preorderText"];
-$preorderTextAr = $row["preorderTextAr"];
-$type = $row["type"];
-$isImage = $row["isImage"];
-$sizeChart = $row["sizeChart"];
-if( $productExtras = json_decode($row["extras"],true) ){
-	$productExtras = json_decode($row["extras"],true);
-}else{
-	$productExtras = array();
+if ( isset($_GET["imgdel"]) ){
+	deleteDB("images","`id` = '{$_GET["imgdel"]}'");
 }
-
-if ( $type == 1 ){
-	$sql = "SELECT *
-			FROM `attributes_products`
-			WHERE
-			`productId` = {$id}
-			AND
-			`hidden` LIKE '0'
-			ORDER BY `id` DESC
-			";
-	$result = $dbconnect->query($sql);
-	if( $result->num_rows > 0 ){
-		$row = $result->fetch_assoc();
-		$price = $row["price"];
-		$cost = $row["cost"];
-		$quantity = $row["quantity"];
-		$sku = $row["sku"];
-	}else{
-		$price = 0;
-		$cost = 0;
-		$quantity = 0;
-		$sku = 0;
-	}
-}else{
+if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products","`id` = {$_GET["id"]}") ){
+	$product = $product[0];
 	$price = 0;
 	$cost = 0;
 	$quantity = 0;
 	$sku = 0;
+	if ( $product["type"] == 1 ){
+		$productAttr = selectDB("attributes_products","`productId` = {$_GET["id"]} AND `hidden` LIKE '0' ORDER BY `id` DESC");
+		if( sizeof($productAttr) > 0 ){
+			$row = $productAttr[0];
+			$price = $row["price"];
+			$cost = $row["cost"];
+			$quantity = $row["quantity"];
+			$sku = $row["sku"];
+		}
+	}
 }
 ?>
 <div class="row">
@@ -74,7 +26,7 @@ if ( $type == 1 ){
 <div class="panel-wrapper collapse in">
 <div class="panel-body">
 <div class="form-wrap">
-<form action="includes/products/edit.php?id=<?php echo $id ?>" method="POST" enctype="multipart/form-data">
+<form action="includes/products/edit.php?id=<?php echo $_GET["id"] ?>" method="POST" enctype="multipart/form-data">
 <input name="onlineQuantity" type="hidden" class="form-control" value="<?php echo $onlineQuantity ?>">
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-info-outline mr-10"></i><?php echo $about_product ?></h6>
 <hr class="light-grey-hr"/>
@@ -82,13 +34,15 @@ if ( $type == 1 ){
 
 <div class="col-md-12">
 	<div class="form-group">
-		<label class="control-label mb-10">Product Type</label>
+		<label class="control-label mb-10"><?php echo direction("Product Type","نوع المنتج")?></label>
 		<select name="type" class="form-control" disabled>
 		<?php
-		if( $type == 1 ){
-			echo '<option value="1">Simple</option><option value="0">Variant</option>';
+		$simpleText = direction("Simple","بسيط");
+		$variantText = direction("Variant","متغير");
+		if( isset($product["type"]) && $product["type"] == 1 ){
+			echo "<option value='1'>{$simpleText}</option><option value='0'>{$variantText}</option>";
 		}else{
-			echo '<option value="0">Variant</option><option value="1">Simple</option>';
+			echo "<option value='0'>{$variantText}</option><option value='1'>{$simpleText}</option>";
 		}
 		?>
 		</select>
@@ -98,7 +52,7 @@ if ( $type == 1 ){
 <div class="col-md-6">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $English_Title ?></label>
-<input type="text" name="enTitle" class="form-control" value="<?php echo $enTitle ?>">
+<input type="text" name="enTitle" class="form-control" value="<?php echo $enTitle = (isset($product["enTitle"])) ? $product["enTitle"] : ""; ?>">
 </div>
 </div>
 
@@ -106,7 +60,7 @@ if ( $type == 1 ){
 <div class="col-md-6">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Arabic_Title ?></label>
-<input type="text" name="arTitle" class="form-control" value="<?php echo $arTitle ?>">
+<input type="text" name="arTitle" class="form-control" value="<?php echo $arTitle = (isset($product["arTitle"])) ? $product["arTitle"] : ""; ?>">
 </div>
 </div>
 
@@ -119,7 +73,7 @@ if ( $type == 1 ){
 		for( $i = 0; $i < sizeof($categories); $i++ ){
 			$checked = "";
 			$title = direction($categories[$i]["enTitle"],$categories[$i]["arTitle"]);
-			if( selectDB("category_products","`categoryId` = '{$categories[$i]["id"]}' AND `productId` = '{$_GET["id"]}'") ){
+			if( isset($_GET["id"]) && selectDB("category_products","`categoryId` = '{$categories[$i]["id"]}' AND `productId` = '{$_GET["id"]}'") ){
 				$checked = "checked";
 			}
 			echo "<div class='col-md-2'><input type='checkbox' name='categoryId[]' value='{$categories[$i]["id"]}' {$checked}> {$title}</div>";
@@ -145,6 +99,7 @@ if ( $type == 1 ){
 		for( $i = 0; $i < sizeof($extras); $i++ ){
 			$checked = "";
 			$title = direction($extras[$i]["enTitle"],$extras[$i]["arTitle"]);
+			$productExtras = (isset($product["extras"]) && !empty($product["extras"]) ) ? json_decode($product["extras"],true): array() ;
 			if( in_array($extras[$i]["id"],$productExtras) ){
 				$checked = "checked";
 			}
@@ -170,13 +125,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Pre-Order</label>
+		<label class="control-label mb-10"><?php echo direction("Pre-Order","طلب مسبق") ?></label>
 		<select name="preorder" class="form-control">
 		<?php
-		if( $preorder == 1 ){
-			echo '<option value="1">Yes</option><option value="0">No</option>';
+		$yesText = direction("Yes","نعم");
+		$noText = direction("No","لا");
+		if( isset($product["preorder"]) && $product["preorder"] == 1 ){
+			echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 		}else{
-			echo '<option value="0">No</option><option value="1">Yes</option>';
+			echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 		}
 		?>
 		</select>
@@ -185,15 +142,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Tag</label>
-		<input type="text" name="preorderText" class="form-control" value="<?php echo $preorderText ?>">
+		<label class="control-label mb-10"><?php echo direction("English Tag","شعار بالإنجليزي") ?></label>
+		<input type="text" name="preorderText" class="form-control" value="<?php echo $preorderText = (isset($product["preorderText"])) ? $product["preorderText"] : ""; ?>">
 	</div>
 </div>
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Tag Arabic</label>
-		<input type="text" name="preorderTextAr" class="form-control" value="<?php echo $preorderTextAr ?>">
+		<label class="control-label mb-10"><?php echo direction("Arabic Tag","شعار بالعربي") ?></label>
+		<input type="text" name="preorderTextAr" class="form-control" value="<?php echo $preorderTextAr = (isset($product["preorderTextAr"])) ? $product["preorderTextAr"] : ""; ?>">
 	</div>
 </div>
 
@@ -248,7 +205,7 @@ if ( $type == 1 ){
 		<label class="control-label mb-10"><?php echo direction("Discount Type","نوع الخصم") ?></label>
 		<select name="discountType" class="form-control">
 		<?php
-		if( $discountType == 1 ){
+		if( isset($product["discountType"]) && $product["discountType"] == 1 ){
 			echo "<option value='1'>".direction("Fixed","قيمة ثابته")."</option>
 			<option value='0'>".direction("Percentage","نسبة مؤوية")."</option>";
 		}else{
@@ -262,15 +219,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 <div class="form-group">
-<label class="control-label mb-10"><?php echo $Discount ?> (%)</label>
-<input name="discount" type="text" name="discount" class="form-control" max="100" min="0" step="1" value="<?php echo $discount ?>">
+<label class="control-label mb-10"><?php echo $Discount ?></label>
+<input name="discount" type="text" name="discount" class="form-control" max="100" min="0" step="1" value="<?php echo $discount = (isset($product["discount"])) ? $product["discount"] : ""; ?>">
 </div>
 </div>
 
 <div class="col-md-4">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Video_Link ?> (YOUTUBE)</label>
-<input name="video" type="text" class="form-control"  value="<?php echo $videoLink ?>">
+<input name="video" type="text" class="form-control"  value="<?php echo $video = (isset($product["video"])) ? $product["video"] : ""; ?>">
 </div>
 </div>
 
@@ -279,10 +236,12 @@ if ( $type == 1 ){
 		<label class="control-label mb-10"><?php echo direction("Size Chart","لوحة المقاسات") ?></label>
 		<select name="sizeChart" class="form-control">
 			<?php
-			if( $sizeChart == 1 ){
-				echo '<option value="1">Yes</option><option value="0">No</option>';
+			$yesText = direction("Yes","نعم");
+			$noText = direction("No","لا");
+			if( isset($product["sizeChart"]) && $product["sizeChart"] == 1 ){
+				echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 			}else{
-				echo '<option value="0">No</option><option value="1">Yes</option>';
+				echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 			}
 			?>
 		</select>
@@ -291,13 +250,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">One Time</label>
+		<label class="control-label mb-10"><?php echo direction("One Time Add","إضافة لمرة واحده") ?></label>
 		<select name="oneTime" class="form-control">
 			<?php
-			if( $oneTime == 1 ){
-				echo '<option value="1">Yes</option><option value="0">No</option>';
+			$yesText = direction("Yes","نعم");
+			$noText = direction("No","لا");
+			if( isset($product["oneTime"]) && $product["oneTime"] == 1 ){
+				echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 			}else{
-				echo '<option value="0">No</option><option value="1">Yes</option>';
+				echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 			}
 			?>
 		</select>
@@ -306,13 +267,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Require Image</label>
+		<label class="control-label mb-10"><?php echo direction("Require Image", "إرفاق صورة") ?></label>
 		<select name="isImage" class="form-control">
 			<?php
-			if( $isImage == 1 ){
-				echo '<option value="1">Yes</option><option value="0">No</option>';
+			$yesText = direction("Yes","نعم");
+			$noText = direction("No","لا");
+			if( isset($product["isImage"]) && $product["isImage"] == 1 ){
+				echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 			}else{
-				echo '<option value="0">No</option><option value="1">Yes</option>';
+				echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 			}
 			?>
 		</select>
@@ -321,13 +284,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Collection</label>
+		<label class="control-label mb-10"><?php echo direction("Collection","المجموعة") ?></label>
 		<select name="collection" class="form-control">
 			<?php
-			if( $collection == 1 ){
-				echo '<option value="1">Yes</option><option value="0">No</option>';
+			$yesText = direction("Yes","نعم");
+			$noText = direction("No","لا");
+			if( isset($product["collection"]) && $product["collection"] == 1 ){
+				echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 			}else{
-				echo '<option value="0">No</option><option value="1">Yes</option>';
+				echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 			}
 			?>
 		</select>
@@ -336,13 +301,15 @@ if ( $type == 1 ){
 
 <div class="col-md-4">
 	<div class="form-group">
-		<label class="control-label mb-10">Gift Card</label>
+		<label class="control-label mb-10"><?php echo direction("Gift Card","كرت هديه") ?></label>
 		<select name="giftCard" class="form-control">
 			<?php
-			if( $giftCard == 1 ){
-				echo '<option value="1">Yes</option><option value="0">No</option>';
+			$yesText = direction("Yes","نعم");
+			$noText = direction("No","لا");
+			if( isset($product["giftCard"]) && $product["giftCard"] == 1 ){
+				echo "<option value='1'>{$yesText}</option><option value='0'>{$noText}</option>";
 			}else{
-				echo '<option value="0">No</option><option value="1">Yes</option>';
+				echo "<option value='0'>{$noText}</option><option value='1'>{$yesText}</option>";
 			}
 			?>
 		</select>
@@ -352,55 +319,39 @@ if ( $type == 1 ){
 <div class="col-sm-4">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $widthTxt ?></label>
-<input name="width" type="float" class="form-control" value="<?php echo $width ?>">
+<input name="width" type="float" class="form-control" value="<?php echo $width = (isset($product["width"])) ? $product["width"] : ""; ?>">
 </div>
 </div>
 
 <div class="col-sm-4">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $heightTxt ?></label>
-<input name="height" type="float" class="form-control" value="<?php echo $height ?>">
+<input name="height" type="float" class="form-control" value="<?php echo $height = (isset($product["height"])) ? $product["height"] : ""; ?>">
 </div>
 </div>
 
 <div class="col-sm-4">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $depthTxt ?></label>
-<input name="depth" type="float" class="form-control" value="<?php echo $depth ?>">
+<input name="depth" type="float" class="form-control" value="<?php echo $depth = (isset($product["depth"])) ? $product["depth"] : ""; ?>">
 </div>
 </div>
 
 <div class="col-sm-4">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $weightTxt ?></label>
-<input name="weight" type="float" class="form-control" value="<?php echo $weight ?>">
+<input name="weight" type="float" class="form-control" value="<?php echo $weight = (isset($product["weight"])) ? $product["weight"] : ""; ?>">
 </div>
 </div>
 
 </div>
-<!--<div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="control-label mb-10"><?php echo $lengthText ?></label>
-<select name="length" class="form-control">
-<option value="0" <?php if ( $length == 0 ) {echo "selected"; } ?>>YES</option>
-<option value="1" <?php if ( $length == 1 ) {echo "selected"; } ?>>NO</option>
-</select>
-</div>
-</div>
-<div class="col-sm-6">
-<div class="form-group">
-<label class="control-label mb-10"><?php echo $Online_Quantity ?></label>
-</div>
-</div>
-</div>-->
 
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-comment-text mr-10"></i><?php echo $English_Description ?></h6>
 <hr class="light-grey-hr"/>
 <div class="row">
 <div class="col-md-12">
 <div class="form-group">
-<textarea name="enDetails" class="tinymce"><?php echo $enDetails ?></textarea>
+<textarea name="enDetails" class="tinymce"><?php echo $enDetails = (isset($product["enDetails"])) ? $product["enDetails"] : ""; ?></textarea>
 </div>
 </div>
 </div>
@@ -409,7 +360,7 @@ if ( $type == 1 ){
 <div class="row">
 <div class="col-md-12">
 <div class="form-group">
-<textarea name="arDetails" class="tinymce"><?php echo $arDetails ?></textarea>
+<textarea name="arDetails" class="tinymce"><?php echo $arDetails = (isset($product["arDetails"])) ? $product["arDetails"] : ""; ?></textarea>
 </div>
 </div>
 </div>
@@ -419,37 +370,31 @@ if ( $type == 1 ){
 <div class="row">
 <div class="col-lg-12">
 <?php 
-$sql = "SELECT * FROM `images` WHERE `productId` = '{$id}'";
-$result = $dbconnect->query($sql);
-if ( $result->num_rows > 0 )
-{
-while ( $row = $result->fetch_assoc() )
-{
-?>
-<div class="img-upload-wrap">
-<table style="width:100%">
-<tr>
-<td style="width:300px">
-<img class="img-responsive" style="width:300px;height:300px" src="../logos/<?php echo $row["imageurl"];?>" alt="upload_img">
-</td>
-</tr>
-<tr>
-<td class="btn btn-info btn-icon left-icon">
-<a href="<?php echo "add-products.php?act=". $_GET["act"] ."&id=". $id ."&imgdel" . "=" .$row["id"] ?>" target="" style="text-decoration:none;color:white"><?php echo $Delete ?></a>
-</td>
-</tr>
-</table>
-</div>
-<?php
-}
-}
-else
-{
-?>
-<div class="img-upload-wrap">
-<img class="img-responsive" src="../img/slide1.jpg" alt="upload_img"> 
-</div>
-<?php
+if ( isset($_GET["id"]) && $images = selectDB("images","`productId` = '{$_GET["id"]}'") ){
+	for( $i = 0; $i < sizeof($images); $i++ ){
+		?>
+		<div class="img-upload-wrap">
+		<table style="width:100%">
+		<tr>
+		<td style="width:300px">
+		<img class="img-responsive" style="width:300px;height:300px" src="../logos/<?php echo $images[$i]["imageurl"];?>" alt="upload_img">
+		</td>
+		</tr>
+		<tr>
+		<td class="btn btn-info btn-icon left-icon">
+		<a href="<?php echo "?v=ProductAction&id=". $id ."&imgdel" . "=" .$images[$i]["id"] ?>" target="" style="text-decoration:none;color:white"><?php echo $Delete ?></a>
+		</td>
+		</tr>
+		</table>
+		</div>
+		<?php
+	}
+}else{
+	?>
+	<div class="img-upload-wrap">
+	<img class="img-responsive" src="../img/slide1.jpg" alt="upload_img"> 
+	</div>
+	<?php
 }
 ?>
 <div style="padding-top:10px"></div>
@@ -472,3 +417,24 @@ else
 </div>
 </div>
 </div>
+<script>
+$(function(){
+	$(".hideMeSoon").hide();
+	$("select[name=type]").on("change", function(){
+		var selectType = $(this).val();
+		if ( selectType == 1 ){
+			$(".hideMeSoon").show();
+		}else{
+			$(".hideMeSoon").hide();
+		}
+	});
+	
+	<?php
+	if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
+		if ( $type == 1 ){
+			?> $(".hideMeSoon").show();<?php
+		}
+	}
+	?>
+});
+</script>
