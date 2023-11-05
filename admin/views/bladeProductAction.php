@@ -30,7 +30,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 <div class="panel-body">
 <div class="form-wrap">
 <form action="<?php echo $actionLink ?>" method="POST" enctype="multipart/form-data">
-<input name="onlineQuantity" type="hidden" class="form-control" value="<?php echo $onlineQuantity ?>">
+<input name="onlineQuantity" type="hidden" class="form-control" value="<?php echo $onlineQuantity = (isset($product["onlineQuantity"])) ? $product["onlineQuantity"] : ""; ?>">
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-info-outline mr-10"></i><?php echo $about_product ?></h6>
 <hr class="light-grey-hr"/>
 <div class="row">
