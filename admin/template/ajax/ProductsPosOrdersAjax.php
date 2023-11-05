@@ -39,34 +39,15 @@ while ($row = mysqli_fetch_assoc($empRecords)) {
     $action ='';
     $status ='';
     if ( $row["pMethod"] == 1 ) {$payment_method = "<b style='color:darkblue'>KNET</b>"; } elseif($row["pMethod"] == 3) { $payment_method = "<b style='color:darkgreen'>CASH</b>";; } else { $payment_method = "<b style='color:darkred'>VISA/MASTER</b>";}
-
-        if ( $row["status"] == 6 )
-        {
-        $status = "<span class='label label-default font-weight-100'>$preparingText</span>";
-        }
-        if ( $row["status"] == 5 )
-        {
-        	$status = "<span class='label label-warning font-weight-100'>$OnDelivery</span>";
-        }
-        if ( $row["status"] == 4 )
-        {
-        	$status = "<span class='label label-success font-weight-100'>$Delivered</span>";
-        }
-        if ( $row["status"] == 3 )
-        {
-        	//echo "<span class='label label-danger font-weight-100'>$Returned</span>";
-        }
-        if ( $row["status"] == 2 )
-        {
-        	$status = "<span class='label label-danger font-weight-100'>$Failed</span>";
-        }
-        if ( $row["status"] == 1 )
-        {
-        $status = "<span class='label label-primary font-weight-100'>$Paid</span>";
-        }
-        if ( $row["status"] == 0 )
-        {
-        	$status = "<span class='label label-default font-weight-100'>$Pending</span>";
+        $statusText = ["returned","success","delivered","onDelivery","preparing","failed"];
+        $updateStatus = ["3","1","4","5","6","2"];
+        $statusColor = ["info","primary","success","warning","default","danger"];
+        for( $i = 0; $i < sizeof($updateStatus); $i++){
+            if( $row["status"] == $updateStatus[$i] ){
+                $status = "<span class='label label-default font-weight-100'>{$statusText[$i]}</span>";
+            }else{
+                $status = "<span class='label label-default font-weight-100'>{$Pending}</span>";
+            }
         }
     $action .='<button class="btn btn-primary btn-icon-anim btn-circle printNow" onclick="printNow(this.id)" title="Print" data-toggle="tooltip" id="'.$orederID.'">
         <i class="fa fa-print"></i>
