@@ -84,14 +84,14 @@ if ( $row["collection"] == 1 ){
 	}else{
 		$color = "txt-grey";
 	}
-	$action .='<a href="?bestId='.$row["id"].'" class="font-18 '.$color.' mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.direction("Bestseller","الأكثر مبيعا").'"><i class="fa fa-usd"></i></a>';
+	$action .='<a href="?v=Product&bestId='.$row["id"].'" class="font-18 '.$color.' mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.direction("Bestseller","الأكثر مبيعا").'"><i class="fa fa-usd"></i></a>';
 	
 	if( $row["recent"] == 1 ){
 		$color = "txt-success";
 	}else{
 		$color = "txt-grey";
 	}
-	$action .='<a href="?newId='.$row["id"].'" class="font-18 '.$color.' mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.direction("Recent","جديدنا").'"><i class="fa fa-plus-square"></i></a>';
+	$action .='<a href="?v=Product&newId='.$row["id"].'" class="font-18 '.$color.' mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.direction("Recent","جديدنا").'"><i class="fa fa-plus-square"></i></a>';
 
 $arTitle=$row['arTitle'];
    $data[] = array( 
