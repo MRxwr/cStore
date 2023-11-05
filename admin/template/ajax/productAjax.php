@@ -62,7 +62,7 @@ if ( $row["type"] == 0 ){
 }
 if ( $row["collection"] == 1 ){
 
-		$action .='<a href="?v=Collection?id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="Collection"><i class="fa fa-object-group"></i></a>';
+		$action .='<a href="?v=Collection&id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="Collection"><i class="fa fa-object-group"></i></a>';
 
 }
 
