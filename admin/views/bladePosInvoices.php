@@ -5,8 +5,6 @@ if( isset($_GET["status"]) && !empty(isset($_GET["status"])) ){
     for( $i = 0; $i < sizeof($updateStatus); $i++){
         if( strtolower($_GET["status"]) == strtolower($statusText[$i]) ){
             $dataUpdate = array("status" => $updateStatus[$i]);
-        }else{
-            $dataUpdate = array("status" => 0);
         }
     }
     updateDB("posorders",$dataUpdate,"`orderId` = '{$_GET["id"]}'");
