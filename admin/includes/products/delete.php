@@ -1,36 +1,14 @@
 <?php
-
 require ("../config.php");
-
-$id = $_GET["id"];
-
-if ( isset($_GET["show"]) AND $_GET["show"] == 1 ){
-	$sql = "UPDATE `products` 
-			SET 
-			`hidden` = '0'
-			WHERE `id`='$id'";
-}elseif( isset($_GET["forceDelete"]) AND $_GET["forceDelete"] == 1 ){
-	/*$sql = "UPDATE `products` 
-			SET 
-			`hidden` = '2',
-			`arTitle` = CONCAT('**',`arTitle`,'**'),
-			`enTitle` = CONCAT('**',`enTitle`,'**')
-			WHERE `id`='$id'";
-	*/
-	$sql = "UPDATE `products` 
-			SET 
-			`hidden` = '2'
-			WHERE `id`='$id'";
-}else{
-	$sql = "UPDATE `products` 
-			SET 
-			`hidden` = '1'
-			WHERE `id`='$id'";
+require ("../functions.php");
+if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
+	if( isset($_GET["show"]) AND $_GET["show"] == 1 ){
+		updateDB("products",array('hidden' => '0'),"`id` = '{$_GET["id"]}'");
+	}elseif( isset($_GET["forceDelete"]) AND $_GET["forceDelete"] == 1 ){
+		updateDB("products",array('hidden' => '2'),"`id` = '{$_GET["id"]}'");
+	}else{
+		updateDB("products",array('hidden' => '1'),"`id` = '{$_GET["id"]}'");
+	}
 }
-
-//$sql = "DELETE FROM `products` WHERE `id`='$id'";
-$result = $dbconnect->query($sql);
-
-header("LOCATION: ../../product.php");
-
+header("LOCATION: ../../index.php?v=Product");
 ?>
