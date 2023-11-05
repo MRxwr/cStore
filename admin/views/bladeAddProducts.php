@@ -7,7 +7,8 @@
 
 <!-- Row -->
 <?php
-if ( isset($_GET["act"] ) ){
+var_dump($_GET["act"]);die();
+if ( isset($_GET["act"]) ){
 	if ( $_GET["act"] == "add" ){
 		require ("template/products/add.php");
 	}elseif ( $_GET["act"] == "edit" AND !isset($_GET["imgdel"]) ){
