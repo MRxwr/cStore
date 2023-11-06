@@ -40,9 +40,11 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				position: relative;
 				box-shadow: 0 1px 21px #acacac;
 				color: #333333;
+				font-family: 'Noto Sans Arabic', sans-serif !important;
 			}
 			.receipt-main p {
 				color: #333333;
+				font-family: 'Noto Sans Arabic', sans-serif !important;
 				line-height: 1.42857;
 			}
 			.receipt-footer h1 {
