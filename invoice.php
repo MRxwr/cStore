@@ -15,6 +15,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 ?>
 <html>
     <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
