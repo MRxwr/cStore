@@ -23,7 +23,6 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
         <style>
 			* {
 				font-family: DejaVu Sans, sans-serif;
-				direction: rtl;
 			}
             body{
 				background:#eee; 
