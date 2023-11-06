@@ -1,6 +1,5 @@
 <style>
 body{background-color:#fafafa}
-
 </style>
 <?php
 date_default_timezone_set('Asia/Riyadh');
@@ -33,7 +32,15 @@ for( $i = 0; $i < sizeof($items); $i++ ){
 		"quantity" => $items[$i]["quantity"]
 	);
 	updateItemQuantity($dataUpdate);
-	$orderDetailsNoti .= "{$items[$i]["quantity"]}x {$product[0]["enTitle"]} {$attribute[0]["enTitle"]} {$attribute[0]["sku"]} {$items[$i]["note"]} - {$attribute[0]["price"]}KD, ";
+	$extras = $items[$i]["extras"];
+	$output = "";
+	for( $y = 0; $y < sizeof($extras["id"]) ; $y++ ){
+		if ( !empty($extras["variant"][$y]) ){
+			$extraInfo = selectDB('extras', "`id` = '{$extras["id"][$y]}'");
+			$output = "[" . direction($extraInfo[0]["enTitle"],$extraInfo[0]["arTitle"]) . ": {$extras["variant"][$y]}]";
+		}
+	}
+	$orderDetailsNoti .= "{$items[$i]["quantity"]}x {$product[0]["enTitle"]} {$attribute[0]["enTitle"]} {$output} {$attribute[0]["sku"]} {$items[$i]["note"]} - {$attribute[0]["price"]}KD, ";
 }
 
 if( isset($voucher["voucher"]) && !empty($voucher["voucher"]) ){
