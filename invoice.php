@@ -32,7 +32,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				border-top: 12px solid #9f181c;
 				margin-top: 50px;
 				margin-bottom: 50px;
-				padding: 30px;
+				/*padding: 30px;*/
 				position: relative;
 				box-shadow: 0 1px 21px #acacac;
 				color: #333333;
