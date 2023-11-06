@@ -152,7 +152,7 @@ function sendMails($orderId, $email){
 	GLOBAL $settingsEmail, $settingsTitle, $settingsWebsite, $settingslogo;
 			$sendEmail = $email;
 			$title = "Order From - {$settingsTitle}";
-			$msg = emailBody($orderId);
+			echo $msg = emailBody($orderId);
 		$curl = curl_init();
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => 'https://createid.link/api/v1/send/notify',
@@ -171,7 +171,7 @@ function sendMails($orderId, $email){
 				'to_email' => $sendEmail
 			),
 		));
-		$response = curl_exec($curl);
+		print_r($response = curl_exec($curl));
 		curl_close($curl);
 }
 
