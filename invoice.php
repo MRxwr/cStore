@@ -20,7 +20,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
             body{
-				background:#eee;
+				background:#eee; 
 				margin-top:20px;
 			}
 			.text-danger strong {
