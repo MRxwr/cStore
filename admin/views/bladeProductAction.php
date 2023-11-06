@@ -415,7 +415,7 @@ if ( isset($_GET["id"]) && $images = selectDB("images","`productId` = '{$_GET["i
 
 <div class="form-actions">
 <button class="btn btn-success btn-icon left-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span><?php echo $save ?></span></button>
-<a href="product.php"><button type="button" class="btn btn-warning pull-left"><?php echo $Return ?></button></a>
+<a href="?v=Product"><button type="button" class="btn btn-warning pull-left"><?php echo $Return ?></button></a>
 <div class="clearfix"></div>
 </div>
 </form>
