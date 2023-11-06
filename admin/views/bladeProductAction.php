@@ -355,19 +355,18 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 
 </div>
 
+<div class="row">
+<div class="col-md-6">
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-comment-text mr-10"></i><?php echo $English_Description ?></h6>
 <hr class="light-grey-hr"/>
-<div class="row">
-<div class="col-md-12">
 <div class="form-group">
 <textarea name="enDetails" class="tinymce"><?php echo $enDetails = (isset($product["enDetails"])) ? $product["enDetails"] : ""; ?></textarea>
 </div>
 </div>
-</div>
+
+<div class="col-md-6">
 <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-comment-text mr-10"></i><?php echo $Arabic_Description ?></h6>
 <hr class="light-grey-hr"/>
-<div class="row">
-<div class="col-md-12">
 <div class="form-group">
 <textarea name="arDetails" class="tinymce"><?php echo $arDetails = (isset($product["arDetails"])) ? $product["arDetails"] : ""; ?></textarea>
 </div>
