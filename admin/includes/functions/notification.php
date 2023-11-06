@@ -92,7 +92,7 @@ function emailBody($orderId){
 				}
 				$product = selectDB("products","`id` = '{$subProduct[0]["productId"]}'");
 				$body .= "<tr>
-						<td>{$items[$i]["quantity"]}x {$product[0]["enTitle"]} - {$subProduct[0]["enTitle"]} - {$output} - {$subProduct[0]["sku"]} - {$items[$i]["note"]}</td>
+						<td>{$items[$i]["quantity"]}x {$product[0]["enTitle"]} - {$subProduct[0]["enTitle"]} {$output} {$subProduct[0]["sku"]} {$items[$i]["note"]}</td>
 						<td>{$sale}KD</td>
 						</tr>";
 			}
