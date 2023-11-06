@@ -25,8 +25,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
             body{
 				background:#eee;
 				margin-top:20px;
-				font-family: 'Noto Sans Arabic', sans-serif;
-				font-family: 'Signika Negative', sans-serif;
+				font-family: 'Noto Sans Arabic', sans-serif !important;
 			}
 			.text-danger strong {
 				color: #9f181c;
@@ -109,7 +108,6 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				margin: 24px 0;
 				overflow: hidden;
 			}
-			
 			#container {
 				background-color: #dcdcdc;
 			}
