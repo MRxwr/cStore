@@ -19,10 +19,14 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
+			@font-face {
+				font-family: "DejaVu Sans";
+				src: url(fonts/dejavu-sans.book.ttf) format("truetype");
+			}
             body{
 				background:#eee;
 				margin-top:20px;
-				font-family: DejaVu Sans, sans-serif;
+				font-family: "DejaVu Sans", sans-serif;
 			}
 			.text-danger strong {
 				color: #9f181c;
