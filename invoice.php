@@ -23,9 +23,6 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 			* {
 				font-family: DejaVu Sans, sans-serif;
 			}
-			.arabic-text {
-				direction: rtl;
-			}
             body{
 				background:#eee; 
 				margin-top:20px;
@@ -160,7 +157,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 											$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 									}
 									if( !empty($address2[$keys[$i]]) ){
-										echo "<p class='arabic-text'>" . strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, </p><br>";
+										echo strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, <br>";
 									}
 								}
 								?>
