@@ -175,8 +175,8 @@ function sendMails($orderId, $email){
 		curl_close($curl);
 }
 
-function sendMailsAdmin($orderId, $email){
-	GLOBAL $settingsEmail, $settingsTitle, $settingsWebsite, $settingslogo;
+function sendMailsAdmin($orderId){
+	GLOBAL $settingsEmail, $settingsTitle;
 			$sendEmail = $settingsEmail;
 			$title = "New order - {$settingsTitle}";
 			$msg = emailBody($orderId);
@@ -198,7 +198,7 @@ function sendMailsAdmin($orderId, $email){
 				'to_email' => $sendEmail
 			),
 		));
-		$response = curl_exec($curl);
+		var_dump($response = curl_exec($curl));
 		curl_close($curl);
 }
 ?>

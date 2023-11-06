@@ -85,7 +85,7 @@ if ( $order[0]["status"] == '0' ){
 		'noti' => $noti
 	);
 	sendMails($order[0]["orderId"],$email);
-	if($email != $settingsEmail && sendMailsAdmin($order[0]["orderId"],$settingsEmail)){
+	if($email != $settingsEmail && sendMailsAdmin($order[0]["orderId"])){
 		
 	}
 	sendNotification($data);
