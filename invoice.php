@@ -19,6 +19,9 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
+			* {
+				font-family: DejaVu Sans, sans-serif;
+			}
             body{
 				background:#eee; 
 				margin-top:20px;
@@ -36,11 +39,9 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				position: relative;
 				box-shadow: 0 1px 21px #acacac;
 				color: #333333;
-				font-family: open sans;
 			}
 			.receipt-main p {
 				color: #333333;
-				font-family: open sans;
 				line-height: 1.42857;
 			}
 			.receipt-footer h1 {
