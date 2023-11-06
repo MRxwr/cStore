@@ -167,7 +167,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 <!--/span-->
 <div class="hideMeSoon">
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Price ?></label>
 <div class="input-group">
@@ -177,7 +177,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Cost ?></label>
 <div class="input-group">
@@ -187,7 +187,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $quantityText ?></label>
 <div class="input-group">
@@ -197,7 +197,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
 <label class="control-label mb-10">SKU</label>
 <div class="input-group">
@@ -209,7 +209,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Discount Type","نوع الخصم") ?></label>
 		<select name="discountType" class="form-control">
@@ -226,21 +226,21 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Discount ?></label>
 <input name="discount" type="text" name="discount" class="form-control" max="100" min="0" step="1" value="<?php echo $discount = (isset($product["discount"])) ? $product["discount"] : ""; ?>">
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $Video_Link ?> (YOUTUBE)</label>
 <input name="video" type="text" class="form-control"  value="<?php echo $video = (isset($product["video"])) ? $product["video"] : ""; ?>">
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Size Chart","لوحة المقاسات") ?></label>
 		<select name="sizeChart" class="form-control">
@@ -257,7 +257,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("One Time Add","إضافة لمرة واحده") ?></label>
 		<select name="oneTime" class="form-control">
@@ -274,7 +274,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Require Image", "إرفاق صورة") ?></label>
 		<select name="isImage" class="form-control">
@@ -291,7 +291,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div> 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Collection","المجموعة") ?></label>
 		<select name="collection" class="form-control">
@@ -308,7 +308,7 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-2">
 	<div class="form-group">
 		<label class="control-label mb-10"><?php echo direction("Gift Card","كرت هديه") ?></label>
 		<select name="giftCard" class="form-control">
@@ -325,28 +325,28 @@ if ( isset($_GET["id"]) AND !empty($_GET["id"]) && $product = selectDB("products
 	</div>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $widthTxt ?></label>
 <input name="width" type="float" class="form-control" value="<?php echo $width = (isset($product["width"])) ? $product["width"] : ""; ?>">
 </div>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $heightTxt ?></label>
 <input name="height" type="float" class="form-control" value="<?php echo $height = (isset($product["height"])) ? $product["height"] : ""; ?>">
 </div>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $depthTxt ?></label>
 <input name="depth" type="float" class="form-control" value="<?php echo $depth = (isset($product["depth"])) ? $product["depth"] : ""; ?>">
 </div>
 </div>
 
-<div class="col-sm-4">
+<div class="col-sm-3">
 <div class="form-group">
 <label class="control-label mb-10"><?php echo $weightTxt ?></label>
 <input name="weight" type="float" class="form-control" value="<?php echo $weight = (isset($product["weight"])) ? $product["weight"] : ""; ?>">
