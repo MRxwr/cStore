@@ -15,18 +15,13 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 ?>
 <html>
     <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@200&family=Signika+Negative:wght@300&display=swap" rel="stylesheet">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
             body{
 				background:#eee;
 				margin-top:20px;
-				font-family: 'Noto Sans Arabic', sans-serif !important;
 			}
 			.text-danger strong {
 				color: #9f181c;
@@ -41,11 +36,11 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				position: relative;
 				box-shadow: 0 1px 21px #acacac;
 				color: #333333;
-				font-family: 'Noto Sans Arabic', sans-serif !important;
+				font-family: open sans;
 			}
 			.receipt-main p {
 				color: #333333;
-				font-family: 'Noto Sans Arabic', sans-serif !important;
+				font-family: open sans;
 				line-height: 1.42857;
 			}
 			.receipt-footer h1 {
@@ -111,6 +106,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 				margin: 24px 0;
 				overflow: hidden;
 			}
+			
 			#container {
 				background-color: #dcdcdc;
 			}
