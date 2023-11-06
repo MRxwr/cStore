@@ -16,17 +16,17 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 <html>
     <head>
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@200&family=Signika+Negative:wght@300&display=swap" rel="stylesheet">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
-			@font-face {
-				font-family: "DejaVu Sans";
-				src: url(fonts/dejavu-sans.book.ttf) format("truetype");
-			}
             body{
 				background:#eee;
 				margin-top:20px;
-				font-family: "DejaVu Sans", sans-serif;
+				font-family: 'Noto Sans Arabic', sans-serif;
+				font-family: 'Signika Negative', sans-serif;
 			}
 			.text-danger strong {
 				color: #9f181c;
