@@ -146,7 +146,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 							<h5><?php echo $info['name'] ?></h5>
 							<p><b>Mobile : </b><?php echo $info['phone'] ?></p>
 							<p><b>Email : </b> <?php echo $info['email'] ?></p>
-							<p class="arabic-text"><b>Address : </b>
+							<p><b>Address : </b>
 								<p>
 								<?php
 								$address2 = $address;
@@ -160,7 +160,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 											$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 									}
 									if( !empty($address2[$keys[$i]]) ){
-										echo strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, <br>";
+										echo "<p class='arabic-text'>" . strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, </p><br>";
 									}
 								}
 								?>
