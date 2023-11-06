@@ -84,9 +84,12 @@ if ( $order[0]["status"] == '0' ){
 		'refference' => $settings[0]["refference"],
 		'noti' => $noti
 	);
-	sendMails($order[0]["orderId"],$email);
-	if($email != $settingsEmail && sendMailsAdmin($order[0]["orderId"])){
-		
+
+	if($email == $settingsEmail ){
+		sendMailsAdmin($order[0]["orderId"]);
+	}else{
+		sendMailsAdmin($order[0]["orderId"]);
+		sendMails($order[0]["orderId"],$email);
 	}
 	sendNotification($data);
 	whatsappNoti($order[0]["orderId"]);
