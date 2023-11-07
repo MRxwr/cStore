@@ -27,7 +27,7 @@ CURLOPT_CUSTOMREQUEST => 'GET',
 ));
 echo $response = curl_exec($curl);
 curl_close($curl);
-$pdfFilePath = "/img/invoice-".strtotime(date("Y/m/d H:i:s"))."order31.pdf";
+$pdfFilePath = "img/invoice-".strtotime(date("Y/m/d H:i:s"))."order31.pdf";
 $fileHandle = fopen($pdfFilePath, 'w');
 fwrite($fileHandle, $response);
 fclose($fileHandle);
