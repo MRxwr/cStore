@@ -157,7 +157,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 											$address2[$keys[$i]] = $areaTitle[0]["enTitle"];
 									}
 									if( !empty($address2[$keys[$i]]) ){
-										echo strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, <br>";
+										echo strtoupper($keys[$i]) .": {$address2[$keys[$i]]}, ";
 									}
 								}
 								?>
