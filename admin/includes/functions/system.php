@@ -196,11 +196,11 @@ function getPDF($orderId){
 	));
 	$response = curl_exec($curl);
 	curl_close($curl);
-	$pdfFilePath = "/img/invoice-".strtotime(date("Y/m/d H:i:s"))."order{$orderId}.pdf";
+	$pdfFilePath = "img/invoice-".strtotime(date("Y/m/d H:i:s"))."-order{$orderId}.pdf";
     $fileHandle = fopen($pdfFilePath, 'w');
     fwrite($fileHandle, $response);
     fclose($fileHandle);
-    print_r('PDF saved to ' . $pdfFilePath);
+    return "{$settings[0]["website"]}/{$pdfFilePath}";
 	/*
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
