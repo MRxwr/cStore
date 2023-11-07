@@ -1,4 +1,5 @@
 <?php
+/*
 require ('admin/includes/config.php');
 require ('admin/includes/translate.php');
 setcookie($cookieSession."Store", "", time() - (86400*30 ), "/");
@@ -7,4 +8,7 @@ if ( session_destroy() )
 {
 	header("Location: index.php");
 }
+*/
+require ('templates/header.php');
+getPDF($orderId);
 ?>
