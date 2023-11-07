@@ -10,5 +10,5 @@ if ( session_destroy() )
 }
 */
 require ('templates/header.php');
-getPDF($orderId);
+getPDF(31);
 ?>
