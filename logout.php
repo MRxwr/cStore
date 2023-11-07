@@ -9,6 +9,9 @@ if ( session_destroy() )
 	header("Location: index.php");
 }
 */
-require ('templates/header.php');
+require ('admin/includes/config.php');
+require ('admin/includes/translate.php');
+require ('admin/includes/functions.php');
+require ('includes/checksouthead.php');
 getPDF(31);
 ?>
