@@ -16,13 +16,12 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 <html>
     <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amiri&display=swap">
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
         <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
 			* {
-				font-family: 'Amiri', sans-serif;
+				font-family: DejaVu Sans, sans-serif;
 			}
             body{
 				background:#eee; 
