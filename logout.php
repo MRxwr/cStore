@@ -16,7 +16,7 @@ require ('admin/includes/functions.php');
 $settings = selectDB("settings","`id` = '1'");
 $curl = curl_init();
 curl_setopt_array($curl, array(
-CURLOPT_URL => 'https://api.html2pdfrocket.com/pdf?apiKey=06d3c526-b550-4e65-a4f9-3647b2dc180a&value='.urlencode("{$settings[0]["website"]}/invoice.php?orderId={$orderId}"),
+CURLOPT_URL => 'https://api.html2pdfrocket.com/pdf?apiKey=06d3c526-b550-4e65-a4f9-3647b2dc180a&value='.urlencode("{$settings[0]["website"]}/invoice.php?orderId=31"),
 CURLOPT_RETURNTRANSFER => true,
 CURLOPT_ENCODING => '',
 CURLOPT_MAXREDIRS => 10,
@@ -27,7 +27,7 @@ CURLOPT_CUSTOMREQUEST => 'GET',
 ));
 echo $response = curl_exec($curl);
 curl_close($curl);
-$pdfFilePath = "/img/invoice-".strtotime(date("Y/m/d H:i:s"))."order{$orderId}.pdf";
+$pdfFilePath = "/img/invoice-".strtotime(date("Y/m/d H:i:s"))."order31.pdf";
 $fileHandle = fopen($pdfFilePath, 'w');
 fwrite($fileHandle, $response);
 fclose($fileHandle);
