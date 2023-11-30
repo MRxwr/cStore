@@ -184,8 +184,9 @@ function whatsappNoti($order){
 function encryptImage($path){
     global $settingsWebsite;
     $imagePath = "{$settingsWebsite}/{$path}";
+    $imagePathEncoded = urlencode("{$settingsWebsite}/{$path}");
     if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
-        $svgData = file_get_contents($imagePath);
+        $svgData = file_get_contents($imagePathEncoded);
         if ($svgData !== false) {
             $base64SvgData = base64_encode($svgData);
             $blobImage = "data:image/svg+xml;base64,{$base64SvgData}";
@@ -193,8 +194,8 @@ function encryptImage($path){
             $blobImage = "data:image/svg+xml;base64,Error";
         }
     }else{
-        $imageData = base64_encode(file_get_contents($imagePath));
-        $imageInfo = getimagesize($imagePath);
+        $imageData = base64_encode(file_get_contents($imagePathEncoded));
+        $imageInfo = getimagesize($imagePathEncoded);
         if($imageInfo !== false){
             $imageMimeType = $imageInfo['mime'];
         }
