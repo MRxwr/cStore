@@ -187,13 +187,12 @@ function encryptImage($path){
     $imagePath = "{$settingsWebsite}/{$path}";
     // Check if the file is an SVG
     if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
-        // Handle SVG
-        $xml = simplexml_load_file($imagePath);
-        if($xml !== false){
-            // Handle SVG data accordingly (you might want to adjust this part)
-            $svgData = file_get_contents($imagePath);
+        $svgData = file_get_contents($imagePath);
+        if ($svgData !== false) {
+            // Properly URL-encode SVG data
+            $svgData = urlencode($svgData);
             return "data:image/svg+xml,{$svgData}";
-        }else{
+        } else {
             // Handle SVG loading error
             return "data:image/svg+xml;base64,Error";
         }
