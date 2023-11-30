@@ -183,22 +183,16 @@ function whatsappNoti($order){
 
 function encryptImage($path){
     global $settingsWebsite;
-    // Construct full image path
     $imagePath = "{$settingsWebsite}/{$path}";
-    // Check if the file is an SVG
     if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
-        // Handle SVG
         $svgData = file_get_contents($imagePath);
         if ($svgData !== false) {
-            // Base64 encode SVG data
             $base64SvgData = base64_encode($svgData);
-            return "data:image/svg+xml;base64,{$base64SvgData}";
+            $blobImage = "data:image/svg+xml;base64,{$base64SvgData}";
         } else {
-            // Handle SVG loading error
-            return "data:image/svg+xml;base64,Error";
+            $blobImage = "data:image/svg+xml;base64,Error";
         }
     }else{
-        // Handle other image formats
         $imageData = base64_encode(file_get_contents($imagePath));
         $imageInfo = getimagesize($imagePath);
         if($imageInfo !== false){
@@ -206,8 +200,8 @@ function encryptImage($path){
         }
         $imageMimeType = isset($imageMimeType) ? $imageMimeType : "image/png";
         $blobImage = "data:{$imageMimeType};base64,{$imageData}";
-        return $blobImage;
     }
+	return $blobImage;
 }
 
 function getPDF($orderId){
