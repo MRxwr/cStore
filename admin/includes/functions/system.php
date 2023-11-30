@@ -183,7 +183,7 @@ function whatsappNoti($order){
 
 function encryptImage($path){
 	// encrypt image url 
-	$imagePath = $path;
+	$imagePath = "../../{$path}";
 	$imageData = base64_encode(file_get_contents($imagePath));
 	$imageInfo = getimagesize($imagePath);
 	if ($imageInfo !== false) {
