@@ -182,17 +182,34 @@ function whatsappNoti($order){
 }
 
 function encryptImage($path){
-	GLOBAL $settingsWebsite;
-	// encrypt image url 
-	$imagePath = "{$settingsWebsite}/{$path}";
-	$imageData = base64_encode(file_get_contents($imagePath));
-	$imageInfo = getimagesize($imagePath);
-	if ($imageInfo !== false) {
-		$imageMimeType = $imageInfo['mime'];
-	}
-	$imageMimeType = ( isset($imageMimeType) ) ? $imageMimeType : "image/png" ;
-	$blobImage = "data:{$imageMimeType};base64,{$imageData}";
-	return $blobImage;
+    global $settingsWebsite;
+    // Construct full image path
+    $imagePath = "{$settingsWebsite}/{$path}";
+    // Check if the file is an SVG
+    if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
+        // Handle SVG
+        $xml = simplexml_load_file($imagePath);
+        if($xml !== false){
+            $width = (int)$xml['width'];
+            $height = (int)$xml['height'];
+            // Handle SVG data accordingly (you might want to adjust this part)
+            $svgData = file_get_contents($imagePath);
+            return "data:image/svg+xml,{$svgData}";
+        }else{
+            // Handle SVG loading error
+            return "data:image/svg+xml;base64,Error";
+        }
+    }else{
+        // Handle other image formats
+        $imageData = base64_encode(file_get_contents($imagePath));
+        $imageInfo = getimagesize($imagePath);
+        if($imageInfo !== false){
+            $imageMimeType = $imageInfo['mime'];
+        }
+        $imageMimeType = isset($imageMimeType) ? $imageMimeType : "image/png";
+        $blobImage = "data:{$imageMimeType};base64,{$imageData}";
+        return $blobImage;
+    }
 }
 
 function getPDF($orderId){
