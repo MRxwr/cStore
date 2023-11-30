@@ -49,6 +49,16 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 			for ( $i =0; $i < sizeof($subProductDetails); $i++ ){
 				if($listOfProducts = selectDB("products","`id` = '{$subProductDetails[$i]["productId"]}' AND `hidden` = '0'")){
 				$image = selectDB("images","`productId` = '{$listOfProducts[0]["id"]}' ORDER BY `id` ASC LIMIT 1");
+				// encrypt image url 
+				$imagePath = "logos/m{$image[0]["imageurl"]}";
+				$imageData = base64_encode(file_get_contents($imagePath));
+				$imageInfo = getimagesize($imagePath);
+				if ($imageInfo !== false) {
+					$imageMimeType = $imageInfo['mime'];
+				}
+				$imageMimeType = ( isset($imageMimeType) ) ? $imageMimeType : "image/png" ;
+				$blobImage = "data:{$imageMimeType};base64,{$imageData}";
+				$image[0]["imageurl"] = $blobImage;
 				$category = selectDB("categories","`id` = '{$cpLink[$y]["categoryId"]}'");
 				
 				?>
