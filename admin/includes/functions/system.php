@@ -181,6 +181,19 @@ function whatsappNoti($order){
 	return $response;
 }
 
+function encryptImage($path){
+	// encrypt image url 
+	$imagePath = $path;
+	$imageData = base64_encode(file_get_contents($imagePath));
+	$imageInfo = getimagesize($imagePath);
+	if ($imageInfo !== false) {
+		$imageMimeType = $imageInfo['mime'];
+	}
+	$imageMimeType = ( isset($imageMimeType) ) ? $imageMimeType : "image/png" ;
+	$blobImage = "data:{$imageMimeType};base64,{$imageData}";
+	return $blobImage;
+}
+
 function getPDF($orderId){
 	$settings = selectDB("settings","`id` = '1'");
 	$curl = curl_init();

@@ -77,7 +77,7 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 						echo '</span>';
 					}
 					?>
-					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>"><img src='logos/m<?php echo $image[0]["imageurl"] ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
+					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>"><img src='<?php echo encryptImage("logos/m{$image[0]["imageurl"]}") ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
 					<div class="product-text">
 					<label class="product-title txt-dark" style="height:50px;overflow-y:auto">
 					<?php echo direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]); ?>

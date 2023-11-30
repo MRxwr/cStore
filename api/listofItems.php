@@ -69,7 +69,7 @@ if( isset($_POST["id"]) ){
 							}
 							$output .= "</span>";
 						}
-					$output .= "<a href='product.php?id={$listOfProducts[0]["id"]}' class='img-fluid {$productShape}' ><img src='logos/m{$image[0]["imageurl"]}' style='width: 100%;' alt='{$listOfProducts[0]["enTitle"]}'></a>
+					$output .= "<a href='product.php?id={$listOfProducts[0]["id"]}' class='img-fluid {$productShape}' ><img src='".encryptImage("logos/m{$image[0]["imageurl"]}")."' style='width: 100%;' alt='{$listOfProducts[0]["enTitle"]}'></a>
 						<div class='product-text'>
 						<h6 class='product-title' style='height:50px; overflow-y:auto'>
 						";
