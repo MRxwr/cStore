@@ -190,7 +190,7 @@ function encryptImage($path){
         $svgData = file_get_contents($imagePath);
         if ($svgData !== false) {
             // Properly URL-encode SVG data
-            $svgData = urlencode($svgData);
+            $svgData = urlencode(str_replace(["\n", "\r", ' '], '', $svgData));
             return "data:image/svg+xml,{$svgData}";
         } else {
             // Handle SVG loading error
