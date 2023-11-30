@@ -16,7 +16,7 @@ if( isset($_COOKIE[$cookieSession."activity"]) ){
 				<div id='removeWish{$i}'>
 				<div class='row m-1 w-100'>
 					<div class='col-3 p-0'>
-						<img src='logos/{$image[0]["imageurl"]}' class='CartItem-Image m-0 rounded'>
+						<img src='".encryptImage("logos/{$image[0]["imageurl"]}")."' class='CartItem-Image m-0 rounded'>
 					</div>
 					<div class='col-7 ".direction("text-right","text-right")."'>
 						<p style='font-weight:700'>".direction($product[0]["enTitle"],$product[0]["arTitle"])."</p>

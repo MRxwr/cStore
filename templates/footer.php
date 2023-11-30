@@ -4,8 +4,8 @@
             <div class="container">
                <div class="row">
                   <div class="col-12 text-center mb-5" dir="ltr">
-                     Powered with <img src="img/heart-footer.svg" class="heart-footer" alt='Made with love By CreateKuwait.com'> by  Create. <br>
-                     <img src="img/payment-icons.webp" class="img-fluid payment-icons" align="img" alt='payment gateways createkuwait.com'>
+                     Powered with <img src="<?php echo encryptImage("img/heart-footer.svg") ?>" class="heart-footer" alt='Made with love By CreateKuwait.com'> by  Createkuwait.com <br>
+                     <img src="<?php echo encryptImage("img/payment-icons.webp") ?>" class="img-fluid payment-icons" alt='payment gateways createkuwait.com'>
                   </div>
                </div>
             </div>
