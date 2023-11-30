@@ -190,8 +190,6 @@ function encryptImage($path){
         // Handle SVG
         $xml = simplexml_load_file($imagePath);
         if($xml !== false){
-            $width = (int)$xml['width'];
-            $height = (int)$xml['height'];
             // Handle SVG data accordingly (you might want to adjust this part)
             $svgData = file_get_contents($imagePath);
             return "data:image/svg+xml,{$svgData}";
