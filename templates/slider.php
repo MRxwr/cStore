@@ -7,11 +7,11 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
 	}
 }
 ?>
-<div class="main-slider" style="background-image: url(&quot;logos/<?php echo $settingsImage ?>&quot;);margin-top:50px;">
+<div class="main-slider" style="background-image: url(&quot;<?php echo encryptImage("logos/{$settingsImage}") ?>&quot;);margin-top:50px;">
     <div class="slider-text-div">
         <div class="row d-flex justify-content-center text-center" style="margin-left:0; margin-right:0;">
             <div class="col-12" style="<?php echo showLogo() ?>">
-                <img src="logos/<?php echo $settingslogo ?>" class="img-fluid slider-logo" style="border-radius: 10.25rem!important;">
+                <img src="<?php echo encryptImage("logos/{$settingslogo}") ?>" class="img-fluid slider-logo" style="border-radius: 10.25rem!important;">
                 <h1></h1>
                 <p style="font-size:18px">
                  </p>
