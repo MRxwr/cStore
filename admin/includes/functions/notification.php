@@ -171,7 +171,7 @@ function sendMails($orderId, $email){
 				'to_email' => $sendEmail
 			),
 		));
-		var_dump($response = curl_exec($curl));
+		$response = curl_exec($curl);
 		curl_close($curl);
 }
 
