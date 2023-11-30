@@ -184,7 +184,7 @@ function whatsappNoti($order){
 function encryptImage($path){
     global $settingsWebsite;
     $imagePath = "{$settingsWebsite}/{$path}";
-    $imagePathEncoded = urlencode("{$settingsWebsite}/{$path}");
+    $imagePathEncoded = str_replace(" ","%20","{$settingsWebsite}/{$path}");
     if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
         $svgData = file_get_contents($imagePathEncoded);
         if ($svgData !== false) {
