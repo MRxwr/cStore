@@ -9,6 +9,7 @@ if ( isset ( $_COOKIE[$cookieSession."A"] ) ){
 		$userID = $user[0]["id"];
 		$email = $user[0]["email"];
 		$username = $user[0]["fullName"];
+		$empUsername = $user[0]["fullName"];
 		$userType = $user[0]["empType"];
 		$_SESSION[$cookieSession."A"] = $email;	
 	}else{
@@ -17,4 +18,3 @@ if ( isset ( $_COOKIE[$cookieSession."A"] ) ){
 }elseif( !isset ( $_COOKIE[$cookieSession."A"] ) ){
 	header("Location: login.php");die();
 }
-?>

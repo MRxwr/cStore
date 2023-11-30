@@ -5,7 +5,7 @@ if( isset($_GET["newId"]) && !empty($_GET["newId"]) ){
 	}else{
 		updateDB("products",array("recent"=>0),"`id` = '{$_GET["newId"]}'");
 	}
-	header("LOCATION: ?v=Poduct");
+	header("LOCATION: ?v=Product");
 }
 if( isset($_GET["bestId"]) && !empty($_GET["bestId"]) ){
 	if( selectDB("products","`id` = '{$_GET["bestId"]}' AND `bestSeller` = '0'") ){
@@ -13,7 +13,7 @@ if( isset($_GET["bestId"]) && !empty($_GET["bestId"]) ){
 	}else{
 		updateDB("products",array("bestSeller"=>0),"`id` = '{$_GET["bestId"]}'");
 	}
-	header("LOCATION: ?v=Poduct");
+	header("LOCATION: ?v=Product");
 }
 if ( isset($_POST["subId"]) ){
 	for ( $i = 0 ; $i < sizeof($_POST["subId"]) ; $i++ ){
