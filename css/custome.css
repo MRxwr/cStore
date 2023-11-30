@@ -2517,7 +2517,7 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       background: transparent;
-      background-image: url(../img/ionic-ios-arrow-down.svg);
+      /*background-image: url(../img/ionic-ios-arrow-down.svg);*/
       background-repeat: no-repeat;
      
       background-position-x: 4%;

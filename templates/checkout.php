@@ -150,15 +150,15 @@ if ( isset($userID) AND !empty($userID) )
 <ul class="nav nav-tabs" style="padding-right:0px">
 <li class="nav-item">
     <a class="nav-link active homeForm" id="homeFormId">
-        <img src="img/home.png" class="main-img">
-        <img src="img/home-active.png" class="active-img">
+        <img src="<?php echo encryptImage("img/home.png") ?>" class="main-img">
+        <img src="<?php echo encryptImage("img/home-active.png") ?>" class="active-img">
         <p><?php echo $houseText ?></p>
     </a>
 </li>
 <li class="nav-item">
     <a class="nav-link apartmentForm" id="apartmentFormId">
-        <img src="img/apartment.png" class="main-img">
-        <img src="img/apartment-active.png" class="active-img">
+        <img src="<?php echo encryptImage("img/apartment.png") ?>" class="main-img">
+        <img src="<?php echo encryptImage("img/apartment-active.png") ?>" class="active-img">
         <p><?php echo $apartmentText ?></p>
     </a>
 </li>
