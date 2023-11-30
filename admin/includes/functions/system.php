@@ -32,7 +32,7 @@ function forgetPass($data){
 			'site' => "{$settingsTitle}",
 			'subject' => "Forget Password - {$settingsTitle}",
 			'body' => "<center>
-					<img src='{$settingsWebsite}/logos/{$settingslogo}' style='width:200px;height:200px'>
+					<img src='".encryptImage("logos/{$settingslogo}")."' style='width:200px;height:200px'>
 					<p>&nbsp;</p>
 					<p>Dear {$data["email"]},</p>
 					<p>Your new password at {$settingsWebsite} is:<br>
@@ -62,7 +62,7 @@ function getCategories(){
 			$categoryShape = ( $settings[0]["categoryView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
     		$output .= "<div class='col-xl-4 col-lg-4 col-md-4 col-sm-4 col-6' style='text-align: -webkit-center!important'>
     		<a href='list.php?id={$categories[$i]["id"]}'>
-    		<img src='logos/{$categories[$i]["imageurl"]}' class='img-fluid {$categoryShape} rounded' alt='{$categories[$i]["enTitle"]}'>";
+    		<img src='".encryptImage("logos/{$categories[$i]["imageurl"]}")."' class='img-fluid {$categoryShape} rounded' alt='{$categories[$i]["enTitle"]}'>";
     		if ( $settings[0]["showCategoryTitle"] == 0 ){
 				$output .= "<span style='font-weight: 600;font-size: 18px;'>";
 				$output .= direction($categories[$i]["enTitle"],$categories[$i]["arTitle"]);

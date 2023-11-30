@@ -13,7 +13,7 @@
                         for( $i=0; $i < sizeof($banners); $i++ ){
                         ?>
                         <div class="item" style="margin-left: 20px;">
-                            <a href="<?php echo $banners[$i]["link"] ?>" alt="<?php echo $banners[$i]["title"] ?>"><img src="logos/<?php echo $banners[$i]["image"] ?>" alt="<?php echo $banners[$i]["title"] ?>"></a>
+                            <a href="<?php echo $banners[$i]["link"] ?>" alt="<?php echo $banners[$i]["title"] ?>"><img src="<?php echo encryptImage("logos/{$banners[$i]["image"]}") ?>" alt="<?php echo $banners[$i]["title"] ?>"></a>
                         </div>
                         <?php
                             }

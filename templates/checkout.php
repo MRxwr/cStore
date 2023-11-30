@@ -270,7 +270,7 @@ if( $pMethods = selectDB("p_methods","`hidden` = '1' AND `status` = '0' ORDER BY
 		?>
 		<div class="col-sm-4 col-4 col-md-4" id="<?php echo $pMethods[$i]["paymentId"] ?>p_m">
 			<a class="<?php echo $paymentClassLabelId ?>" id="<?php echo $pMethods[$i]["paymentId"] ?>"><label id="pMethods<?php echo $pMethods[$i]["paymentId"] ?>" class="pMethods radiocardwrapper">
-				<img src="logos/<?php echo $pMethods[$i]["icon"] ?>" style="width:40px;height:25px" class="d-block">
+				<img src="<?php echo encryptImage("logos/{$pMethods[$i]["icon"]}") ?>" style="width:40px;height:25px" class="d-block">
 				<span class="cardcontent d-block"><?php echo direction($pMethods[$i]["enTitle"],$pMethods[$i]["arTitle"]) ?></span>
 			</label></a>
 		</div>

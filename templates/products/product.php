@@ -58,10 +58,10 @@ if ( $theme == 1 ){
 			?>
 			   <div class="carousel-item <?php echo $active ?>">
 				  <div class="img_producto_container" data-scale="1.6">
-					 <a class="dslc-lightbox-image img_producto" href="javascript:void();"  target="_self" style="background-image:url('logos/<?php echo $images[$i]["imageurl"] ?>')">
+					 <a class="dslc-lightbox-image img_producto" href="javascript:void();"  target="_self" style="background-image:url('<?php echo encryptImage("logos/{$images[$i]["imageurl"]}") ?>')">
 					 </a>
 				  </div>
-				 <a class="expand--img-popup" data-fancybox="images" href="logos/<?php echo $images[$i]["imageurl"] ?>"><i class="fa fa-expand"></i>  <span>Click to enlarge</span></a>
+				 <a class="expand--img-popup" data-fancybox="images" href="<?php echo encryptImage("logos/{$images[$i]["imageurl"]}") ?>"><i class="fa fa-expand"></i>  <span>Click to enlarge</span></a>
 			   </div>
 			<?php
 			}
@@ -82,7 +82,7 @@ if ( $theme == 1 ){
 					}
 				?>
 			   <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $i ?>" class="<?php echo $active . " " . $cust ?> col-3">
-				  <img class="d-block w-100" src="logos/<?php echo $images[$i]["imageurl"] ?>" alt="<?php echo $i ?> slide">
+				  <img class="d-block w-100" src="<?php echo encryptImage("logos/{$images[$i]["imageurl"]}") ?>" alt="<?php echo $i ?> slide">
 			   </li>
 			   <?php
 			   }
@@ -321,19 +321,19 @@ if ( $theme == 1 ){
 			$testThisProduct = direction("Try this awesome product...","جرب هذا المنتج الرائع... ");
 			?>
 				<a href="https://pinterest.com/pin/create/button/?url=h<?php echo $actual_link ?>&media=&description=<?php echo $testThisProduct ?>" target="_blank" >
-			   <div class="d-inline-block share-btn-cust"> <img src="img/awesome-pinterest.svg"> &nbsp; PIN IT</div>
+			   <div class="d-inline-block share-btn-cust"> <img src="<?php echo encryptImage("img/awesome-pinterest.svg") ?>"> &nbsp; PIN IT</div>
 			   </a>
 			   <a href="https://twitter.com/intent/tweet?url=<?php echo $actual_link ?>&text=<?php echo $testThisProduct ?>" target="_blank" >
-			   <div class="d-inline-block share-btn-cust"> <img src="img/awesome-twitter.svg"> &nbsp; TWEET</div>
+			   <div class="d-inline-block share-btn-cust"> <img src="<?php echo encryptImage("img/awesome-twitter.svg") ?>"> &nbsp; TWEET</div>
 			   </a>
 			   <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $actual_link ?>" target="_blank" >
-			   <div class="d-inline-block share-btn-cust"> <img src="img/awesome-facebook-square.svg"> &nbsp; SHARE</div>
+			   <div class="d-inline-block share-btn-cust"> <img src="<?php echo encryptImage("img/awesome-facebook-square.svg") ?>"> &nbsp; SHARE</div>
 			   </a>
 			   <a href="https://www.instagram.com/direct/new/" target="_blank" >
-			   <div class="d-inline-block share-btn-cust"> <img src="img/IconAwesome-instagram.svg"> &nbsp; SHARE</div>
+			   <div class="d-inline-block share-btn-cust"> <img src="<?php echo encryptImage("img/IconAwesome-instagram.svg") ?>"> &nbsp; SHARE</div>
 			   </a>
 			   <a href="https://wa.me/?text=<?php echo $actual_link . " " . $testThisProduct ?>" target="_blank" >
-			   <div class="d-inline-block share-btn-cust"> <img src="img/IconIonic-logo-whatsapp.svg"> &nbsp; SHARE</div>
+			   <div class="d-inline-block share-btn-cust"> <img src="<?php echo encryptImage("img/IconIonic-logo-whatsapp.svg") ?>"> &nbsp; SHARE</div>
 			   </a>
 			</div>
 		 </div>

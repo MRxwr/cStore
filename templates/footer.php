@@ -76,7 +76,7 @@
 							<input type="text" name="qorder<?php echo $i ?>" class="form-control input-number" value="<?php echo $cart[$i]["quantity"] ?>" min="1" max="10" style="border-radius:0;border: 1px solid #e7eaf3;text-align:center;height:37px;width:52px; background-color: transparent;" readonly >
 						</div>
 						<!-- img -->
-						<img src="logos/b<?php echo $image[0]["imageurl"] ?>" class="CartItem-Image">
+						<img src="<?php echo encryptImage("logos/b{$image[0]["imageurl"]}") ?>" class="CartItem-Image">
 						<!-- info -->
 						<div class="Information">
 							<span class="Name">
@@ -166,7 +166,7 @@
 </div>
 
 <!-- sign up popup -->
-<div class="modal form-popup myModal--effect-zoomIn" id="reg_popup" style="">
+<div class="modal form-popup myModal--effect-zoomIn" id="reg_popup" >
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -328,7 +328,7 @@
       <?php 
         if( $sizeChart = selectDB("s_media","`id` = '4'") ){
             if ( !empty($sizeChart[0]["sizeChartImage"]) ){
-                echo "<img src='logos/{$sizeChart[0]["sizeChartImage"]}' style='width:100%'>";
+                echo "<img src='".encryptImage("logos/{$sizeChart[0]["sizeChartImage"]}")."' style='width:100%'>";
             }
         }
         ?>

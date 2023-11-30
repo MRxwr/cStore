@@ -55,7 +55,7 @@ if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' 
 				echo '</span>';
 			}
 			?>
-			<a href="product.php?id=<?php echo $products[$i]["id"] ?>"  alt="<?php echo $products[$i]["enTitle"] ?>"><img src='logos/m<?php echo $image[0]["imageurl"] ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $products[$i]["enTitle"] ?>"></a>
+			<a href="product.php?id=<?php echo $products[$i]["id"] ?>"  alt="<?php echo $products[$i]["enTitle"] ?>"><img src='<?php echo encryptImage("logos/m{$image[0]["imageurl"]}") ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $products[$i]["enTitle"] ?>"></a>
 			<div class="product-text">
 			<label class="product-title txt-dark" style="height:50px;overflow-y:auto">
 			<?php echo direction($products[$i]["enTitle"],$products[$i]["arTitle"]); ?>

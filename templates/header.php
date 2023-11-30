@@ -34,17 +34,17 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 <meta property="og:title" content="<?php echo $settingsTitle ?>">
 <meta property="og:url" content="<?php echo $settingsWebsite ?>">
 <meta property="og:description" content="<?php echo $settingsOgDescription ?>">
-<meta property="og:image" content="logos/<?php echo $settingslogo ?>">
+<meta property="og:image" content="<?php echo encryptImage("logos/{$settingslogo}") ?>">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="theme-color" content="<?php echo $websiteColor ?>" />
-    <link href="logos/<?php echo $settingslogo ?>" rel="shortcut icon" />
+    <link href="<?php echo encryptImage("logos/{$settingslogo}") ?>" rel="shortcut icon" />
     <title><?php echo $settingsTitle ?></title>
     <meta name="description" content="<?php echo $settingsOgDescription ?>">
     <meta name="keywords" content="<?php echo $settingsOgDescription ?>">
-    <link rel="shortcut icon" href="logos/<?php echo $settingslogo ?>" type="image/x-icon">
-    <link rel="apple-touch-icon" href="logos/<?php echo $settingslogo ?>">
+    <link rel="shortcut icon" href="<?php echo encryptImage("logos/{$settingslogo}") ?>" type="image/x-icon">
+    <link rel="apple-touch-icon" href="<?php echo encryptImage("logos/{$settingslogo}") ?>">
     <link href="css/bootstrap.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
     <link href="css/owl.carousel.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
     <link href="css/bootstrap-select.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
@@ -187,7 +187,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 					<span></span>
 					<ul id="menu">
 						<li>
-							<img src='logos/<?php echo $settingslogo ?>' style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
+							<img src='<?php echo encryptImage("logos/{$settingslogo}") ?>' style="height: 200px;width: 200px;" class="rounded"alt="<?php echo $settingsTitle ?>">
 						</li>
 						<li>
 							<a href="index.php" class="active">

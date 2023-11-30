@@ -14,7 +14,7 @@
 <div class="card-header">
 <a class="card-link collapsed" data-toggle="collapse" href="#collapse0">
 <h6 class="product-category" type="0">
-<img src="https://i.imgur.com/H2EYo9m.png" style="18px" height="18px" class="ml-3 mr-3">
+<img src="https://i.imgur.com/H2EYo9m.png" width="18px" height="18px" class="ml-3 mr-3">
 <?php echo " " ; echo direction("All","الكل"); ?>
 </h6>
 </a>
@@ -31,7 +31,7 @@ if( $categories = selectDB("categories","`status` = '0' AND `hidden` = '1' ORDER
 		<div class="card-header">
 		<a class="card-link collapsed" data-toggle="collapse" href="#collapse<?php echo $categories[$i]["id"] ?>">
 		<h6 class="product-category <?php if ($categories[$i]["glow"] == 1 ){echo 'glow" style="font-weight:700';} ?>" type="<?php echo $categories[$i]["id"] ?>">
-		<img src="logos/<?php echo $categories[$i]["imageurl"] ?>" style="18px" height="18px" class="ml-3 mr-3">
+		<img src="<?php echo encryptImage("logos/{$categories[$i]["imageurl"]}") ?>" style="18px" height="18px" class="ml-3 mr-3">
 		<?php echo " " ; echo direction($categories[$i]["enTitle"],$categories[$i]["arTitle"]); ?>
 		</h6>
 		</a>
