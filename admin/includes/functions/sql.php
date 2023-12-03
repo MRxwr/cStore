@@ -136,14 +136,17 @@ function insertDB($table, $data){
     $stmt = $dbconnect->prepare($sql);
     $types = str_repeat('s', count($data));
     $stmt->bind_param($types, ...array_values($data));
-    $array = array(
-        "userId" => $userID,
-        "username" => $empUsername,
-        "module" => $_GET["v"],
-        "action" => "Insert",
-        "sqlQuery" => json_encode(array("table"=>$table,"data"=>$data)),
-    );
-    LogsHistory($array);
+    if( isset($_GET["v"]) && !empty($_GET["v"]) ){
+        $array = array(
+            "userId" => $userID,
+            "username" => $empUsername,
+            "module" => $_GET["v"],
+            "action" => "Insert",
+            "sqlQuery" => json_encode(array("table"=>$table,"data"=>$data)),
+        );
+        LogsHistory($array);
+    }
+   
     if($stmt->execute()){
         return 1;
     }else{
@@ -172,14 +175,17 @@ function updateDB($table, $data, $where) {
     $values = array_values($data);
     $stmt->bind_param($params, ...$values);
     
-    $array = array(
-        "userId" => $userID,
-        "username" => $empUsername,
-        "module" => $_GET["v"],
-        "action" => "update",
-        "sqlQuery" => json_encode(array("table"=>$table,"data"=>$data,"where"=>$where)),
-    );
-    LogsHistory($array);
+    if( isset($_GET["v"]) && !empty($_GET["v"]) ){
+        $array = array(
+            "userId" => $userID,
+            "username" => $empUsername,
+            "module" => $_GET["v"],
+            "action" => "update",
+            "sqlQuery" => json_encode(array("table"=>$table,"data"=>$data,"where"=>$where)),
+        );
+        LogsHistory($array);
+    }
+    
 
     if ($stmt->execute()) {
         return 1;
