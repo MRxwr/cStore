@@ -182,7 +182,9 @@ function whatsappNoti($order){
 }
 
 function encryptImage($path){
-    global $settingsWebsite;
+    //global $settingsWebsite;
+	return $path;
+	/*
     $imagePath = "{$settingsWebsite}/{$path}";
     $imagePathEncoded = str_replace(" ","%20","{$settingsWebsite}/{$path}");
     if(pathinfo($imagePath, PATHINFO_EXTENSION) === 'svg'){
@@ -203,6 +205,7 @@ function encryptImage($path){
         $blobImage = "data:{$imageMimeType};base64,{$imageData}";
     }
 	return $blobImage;
+	*/
 }
 
 function getPDF($orderId){
