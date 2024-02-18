@@ -56,29 +56,13 @@ if (isset($_POST["title"])) {
 	`shippingMethod` = '".$_POST["shippingMethod"]."',
 	`website` = '" . $_POST["website"] . "',";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
-		$fileType = mime_content_type($_FILES['bgImage']['tmp_name']);
-		if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-			$directory = "../logos/";
-			$originalFileName = pathinfo($_FILES["bgImage"]["name"], PATHINFO_FILENAME);
-			$fileExtension = pathinfo($_FILES["bgImage"]["name"], PATHINFO_EXTENSION);
-			$originalfile = $directory . $originalFileName . "." . $fileExtension;
-			move_uploaded_file($_FILES["bgImage"]["tmp_name"], $originalfile);
-			$filenewname = str_replace("../logos/", '', $originalfile);
-			$sql .= "`bgImage` = '" . $filenewname . "',";
-		}
+		$filenewname = uploadImageBanner($_FILES['bgImage']['tmp_name']);
+		$sql .= "`bgImage` = '" . $filenewname . "',";
 	}
 	
 	if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
-		$fileType = mime_content_type($_FILES['logo']['tmp_name']);
-		if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-			$directory = "../logos/";
-			$originalFileName = pathinfo($_FILES["logo"]["name"], PATHINFO_FILENAME);
-			$fileExtension = pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
-			$originalfile = $directory . $originalFileName . "." . $fileExtension;
-			move_uploaded_file($_FILES["logo"]["tmp_name"], $originalfile);
-			$filenewname = str_replace("../logos/", '', $originalfile);
-			$sql .= "`logo` = '" . $filenewname . "',";
-		}
+		$filenewname = uploadImageBanner($_FILES['logo']['tmp_name']);
+		$sql .= "`logo` = '" . $filenewname . "',";
 	}
 	
 	$sql .= "`email` = '" . $_POST["email"] . "'WHERE `id` LIKE '1'";

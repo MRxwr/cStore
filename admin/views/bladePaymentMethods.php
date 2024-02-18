@@ -23,10 +23,7 @@ if( isset($_POST["arTitle"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
         if( is_uploaded_file($_FILES['icon']['tmp_name']) ){
-			$directory = "../logos/";
-			$originalfile = $directory . date("d-m-y") . time() .  round(microtime(true)). "." . getFileExtension($_FILES["icon"]["name"]);
-			move_uploaded_file($_FILES["icon"]["tmp_name"], $originalfile);
-			$_POST["icon"] = str_replace("../logos/",'',$originalfile);
+			$_POST["icon"] = uploadImageBanner($_FILES['icon']['tmp_name']);
 		}else{
 			$_POST["icon"] = "";
 		}
@@ -41,10 +38,7 @@ if( isset($_POST["arTitle"]) ){
 		}
 	}else{
         if( is_uploaded_file($_FILES['icon']['tmp_name']) ){
-			$directory = "../logos/";
-			$originalfile = $directory . date("d-m-y") . time() .  round(microtime(true)). "." . getFileExtension($_FILES["icon"]["name"]);
-			move_uploaded_file($_FILES["icon"]["tmp_name"], $originalfile);
-			$_POST["icon"] = str_replace("../logos/",'',$originalfile);
+			$_POST["icon"] = uploadImageBanner($_FILES['icon']['tmp_name']);
 		}else{
 			$icon = selectDB("p_methods","`id` = '{$id}'");
 			$_POST["icon"] = $icon[0]["icon"];
