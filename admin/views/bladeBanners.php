@@ -170,7 +170,7 @@ if( isset($_POST["title"]) ){
 		</td>
 		<td id="title<?php echo $banners[$i]["id"]?>" ><?php echo $banners[$i]["title"] ?></td>
 		<td id="link<?php echo $banners[$i]["id"]?>" ><?php echo $banners[$i]["link"] ?></td>
-		<td><img src="../logos/m<?php echo $banners[$i]["image"] ?>" style="width:150px;height:150px"></td>
+		<td><img src="../logos/<?php echo $banners[$i]["image"] ?>" style="width:150px;height:150px"></td>
 		<td class="text-nowrap">
 		
 		<a id="<?php echo $banners[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
