@@ -29,18 +29,8 @@ if( isset($_POST["title"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if (is_uploaded_file($_FILES['image']['tmp_name'])) {
-            $fileType = mime_content_type($_FILES['image']['tmp_name']);
-            if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-                $directory = "../logos/";
-                $originalFileName = pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME);
-                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                $originalfile = $directory . $originalFileName . "." . $fileExtension;
-                move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
-                $_POST["image"] = str_replace("../logos/", '', $originalfile);
-            } else {
-                $_POST["image"] = "";
-            }
-        } else {
+            $_POST["image"] = uploadImage($_FILES['image']['tmp_name']);
+		}else{
             $_POST["image"] = "";
         }
 		
@@ -55,25 +45,12 @@ if( isset($_POST["title"]) ){
 		}
 	}else{
 		if (is_uploaded_file($_FILES['image']['tmp_name'])) {
-            $fileType = mime_content_type($_FILES['image']['tmp_name']);
-        
-            if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-                $directory = "../logos/";
-                $originalFileName = pathinfo($_FILES["image"]["name"], PATHINFO_FILENAME);
-                $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-                $originalfile = $directory . $originalFileName . "." . $fileExtension;
-                move_uploaded_file($_FILES["image"]["tmp_name"], $originalfile);
-                $_POST["image"] = str_replace("../logos/", '', $originalfile);
-            } else {
-                $imageurl = selectDB("banner", "`id` = '{$id}'");
-                $_POST["image"] = $imageurl[0]["image"];
-            }
-        } else {
+            $_POST["image"] = uploadImage($_FILES['image']['tmp_name']);
+		}else{
             $imageurl = selectDB("banner", "`id` = '{$id}'");
             $_POST["image"] = $imageurl[0]["image"];
         }
 
-		
 		if( updateDB("banner", $_POST, "`id` = '{$id}'") ){
 			header("LOCATION: ?v=Banners");
 		}else{
@@ -193,7 +170,7 @@ if( isset($_POST["title"]) ){
 		</td>
 		<td id="title<?php echo $banners[$i]["id"]?>" ><?php echo $banners[$i]["title"] ?></td>
 		<td id="link<?php echo $banners[$i]["id"]?>" ><?php echo $banners[$i]["link"] ?></td>
-		<td><img src="../logos/<?php echo $banners[$i]["image"] ?>" style="width:150px"></td>
+		<td><img src="../logos/m<?php echo $banners[$i]["image"] ?>" style="width:150px;height:150px"></td>
 		<td class="text-nowrap">
 		
 		<a id="<?php echo $banners[$i]["id"] ?>" class="mr-25 edit" data-toggle="tooltip" data-original-title="<?php echo direction("Edit","تعديل") ?>"> <i class="fa fa-pencil text-inverse m-r-10"></i>
