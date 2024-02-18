@@ -50,7 +50,6 @@ if( isset($_POST["title"]) ){
             $imageurl = selectDB("banner", "`id` = '{$id}'");
             $_POST["image"] = $imageurl[0]["image"];
         }
-		var_dump($_POST);die();
 		if( updateDB("banner", $_POST, "`id` = '{$id}'") ){
 			header("LOCATION: ?v=Banners");
 		}else{
