@@ -153,7 +153,7 @@ function uploadImageBanner($imageLocation){
 	$response = json_decode(curl_exec($curl),true);
 	curl_close($curl);
 	if( isset($response["success"]) && $response["success"] == true ){
-		$imageSizes = ["","b","m"];
+		$imageSizes = [""];//,"b","m"];
 		for( $i = 0; $i < sizeof($imageSizes); $i++ ){
 			// Your file
 			$file = $response["data"]["link"];
