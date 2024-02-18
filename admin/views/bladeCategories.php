@@ -29,33 +29,13 @@ if( isset($_POST["arTitle"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if (is_uploaded_file($_FILES['imageurl']['tmp_name'])) {
-			$fileType = mime_content_type($_FILES['imageurl']['tmp_name']);
-			if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-				$directory = "../logos/";
-				$originalFileName = pathinfo($_FILES["imageurl"]["name"], PATHINFO_FILENAME);
-				$fileExtension = pathinfo($_FILES["imageurl"]["name"], PATHINFO_EXTENSION);
-				$originalfile = $directory . $originalFileName . "." . $fileExtension;
-				move_uploaded_file($_FILES["imageurl"]["tmp_name"], $originalfile);
-				$_POST["imageurl"] = str_replace("../logos/", '', $originalfile);
-			} else {
-				$_POST["imageurl"] = "";
-			}
+			$_POST["imageurl"] = uploadImageBanner($_FILES['imageurl']['tmp_name']);
 		} else {
 			$_POST["imageurl"] = "";
 		}
 		
 		if (is_uploaded_file($_FILES['header']['tmp_name'])) {
-			$fileType = mime_content_type($_FILES['header']['tmp_name']);
-			if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-				$directory = "../logos/";
-				$originalFileName = pathinfo($_FILES["header"]["name"], PATHINFO_FILENAME);
-				$fileExtension = pathinfo($_FILES["header"]["name"], PATHINFO_EXTENSION);
-				$originalfile1 = $directory . $originalFileName . "h." . $fileExtension;
-				move_uploaded_file($_FILES["header"]["tmp_name"], $originalfile1);
-				$_POST["header"] = str_replace("../logos/", '', $originalfile1);
-			} else {
-				$_POST["header"] = "";
-			}
+			$_POST["imageurl"] = uploadImageBanner($_FILES['header']['tmp_name']);
 		} else {
 			$_POST["header"] = "";
 		}
@@ -72,36 +52,14 @@ if( isset($_POST["arTitle"]) ){
 		}
 	}else{
 		if (is_uploaded_file($_FILES['imageurl']['tmp_name'])) {
-			$fileType = mime_content_type($_FILES['imageurl']['tmp_name']);
-			if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-				$directory = "../logos/";
-				$originalFileName = pathinfo($_FILES["imageurl"]["name"], PATHINFO_FILENAME);
-				$fileExtension = pathinfo($_FILES["imageurl"]["name"], PATHINFO_EXTENSION);
-				$originalfile = $directory . $originalFileName . "." . $fileExtension;
-				move_uploaded_file($_FILES["imageurl"]["tmp_name"], $originalfile);
-				$_POST["imageurl"] = str_replace("../logos/", '', $originalfile);
-			} else {
-				$imageurl = selectDB("categories", "`id` = '{$id}'");
-				$_POST["imageurl"] = $imageurl[0]["imageurl"];
-			}
+			$_POST["imageurl"] = uploadImageBanner($_FILES['imageurl']['tmp_name']);
 		} else {
 			$imageurl = selectDB("categories", "`id` = '{$id}'");
 			$_POST["imageurl"] = $imageurl[0]["imageurl"];
 		}
 		
 		if (is_uploaded_file($_FILES['header']['tmp_name'])) {
-			$fileType = mime_content_type($_FILES['header']['tmp_name']);
-			if (in_array($fileType, array("image/jpeg", "image/png", "image/gif", "image/bmp"))) {
-				$directory = "../logos/";
-				$originalFileName = pathinfo($_FILES["header"]["name"], PATHINFO_FILENAME);
-				$fileExtension = pathinfo($_FILES["header"]["name"], PATHINFO_EXTENSION);
-				$originalfile1 = $directory . $originalFileName . "h." . $fileExtension;
-				move_uploaded_file($_FILES["header"]["tmp_name"], $originalfile1);
-				$_POST["header"] = str_replace("../logos/", '', $originalfile1);
-			} else {
-				$header = selectDB("categories", "`id` = '{$id}'");
-				$_POST["header"] = $header[0]["header"];
-			}
+			$_POST["imageurl"] = uploadImageBanner($_FILES['header']['tmp_name']);
 		} else {
 			$header = selectDB("categories", "`id` = '{$id}'");
 			$_POST["header"] = $header[0]["header"];
