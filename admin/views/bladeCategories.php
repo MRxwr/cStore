@@ -59,7 +59,7 @@ if( isset($_POST["arTitle"]) ){
 		}
 		
 		if (is_uploaded_file($_FILES['header']['tmp_name'])) {
-			$_POST["imageurl"] = uploadImageBanner($_FILES['header']['tmp_name']);
+			$_POST["header"] = uploadImageBanner($_FILES['header']['tmp_name']);
 		} else {
 			$header = selectDB("categories", "`id` = '{$id}'");
 			$_POST["header"] = $header[0]["header"];
