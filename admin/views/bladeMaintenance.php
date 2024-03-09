@@ -35,6 +35,9 @@ if ( isset($_POST["currency"]) ){
 if ( isset($_POST["noAddress"]) ){
 	updateDB("s_media",array('noAddress' => $_POST["noAddress"]),"`id` = '3'");
 }
+if ( isset($_POST["noAddress"]) ){
+	updateDB("s_media",array('noAddressDelivery' => $_POST["noAddressDelivery"]),"`id` = '3'");
+}
 
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
@@ -57,6 +60,7 @@ $options = selectDB("s_media","`id` != '0'");
 $visaSwitch = $options[2]["visa"];
 $storeSwitch = $options[2]["inStore"];
 $noAddress = $options[2]["noAddress"];
+$noAddressDelivery = $options[2]["noAddressDelivery"];
 $cashSwitch = $options[2]["cash"];
 $switchKent = $options[2]["knet"];
 $emailOpt = $options[2]["emailOpt"];
@@ -365,6 +369,25 @@ $row = $result->fetch_assoc();
 						<input type="radio" class="form-control"  name="noAddress" id="radio18" value="0" <?php if ( $noAddress == 0 ) { echo 'checked=""'; } ?>>
 						<label for="radio18"> <?php echo $Off ?> </label>
 					</div>
+					<input type="submit"  class="form-control btn btn-default" value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("No Address Delivery Charges","رسوم توصيل بدون عنوان") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<input type="number" class="form-control"  name="noAddressDelivery" id="noAddressDelivery" value="<?php echo $noAddressDelivery; ?>" >
 					<input type="submit"  class="form-control btn btn-default" value="submit">
 					</form>
 				</div>

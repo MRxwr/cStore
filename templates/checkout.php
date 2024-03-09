@@ -164,18 +164,29 @@ if ( isset($userID) AND !empty($userID) )
 </li>
 
 <?php
-$sql = "SELECT `inStore` FROM `s_media` WHERE `id` LIKE '3'";
+$sql = "SELECT `inStore`,`noAddress` FROM `s_media` WHERE `id` LIKE '3'";
 $result = $dbconnect->query($sql);
 $row = $result->fetch_assoc();
 if ( $row["inStore"] == "1")
 {
 ?>
-
 <li class="nav-item">
     <a class="nav-link pickUpFROM" id="pickUpFROMid">
         <img src="https://i.imgur.com/8k3poG6.png" class="main-img" style="width:31px; height:31px">
         <img src="https://i.imgur.com/8k3poG6.png"  style="color: #f00;-webkit-filter: invert(100%);filter: invert(100%);width:31px; height:31px" class="active-img">
         <p><?php echo $pickUpText ?></p>
+    </a>
+</li>
+<?php
+}
+if ( $row["noAddress"] == "1")
+{
+?>
+<li class="nav-item">
+    <a class="nav-link noAddressFROM" id="noAddressFROMid">
+        <img src="https://i.imgur.com/8k3poG6.png" class="main-img" style="width:31px; height:31px">
+        <img src="https://i.imgur.com/8k3poG6.png"  style="color: #f00;-webkit-filter: invert(100%);filter: invert(100%);width:31px; height:31px" class="active-img">
+        <p><?php echo direction("No Address","لا يوجد عنوان") ?></p>
     </a>
 </li>
 <?php
@@ -244,13 +255,23 @@ if ( $row["inStore"] == "1")
 	<div class="form-group">
 		<input type="hidden" class="form-control checkLetters" id="apartment" name="address[apartment]" placeholder="<?php echo $apartmentText ?>" value="">
 	</div>
-</div>
 	<div class="form-group">
 		<input type="text" class="form-control checkLetters" id="postalCode" name="address[postalCode]" placeholder="<?php echo direction("Postal Code","رمز صندوق البريد") ?>" pattern="^[a-zA-Z0-9\s]+$">
 	</div>
 	<div class="form-group">
 		<input type="text" class="form-control" id="notes" name="address[notes]" placeholder="<?php echo $specialInstructionText ?>">
 	</div>
+</div>
+
+<div id="" class="tab-pane active noAddressDiv addressDiv" style="display:none">
+	<div class="form-group">
+		<input type="text" class="form-control checkLetters" id="noAddressName" name="address[noAddressName]" placeholder="<?php echo direction("Recipient name","اسم المستلم") ?>">
+	</div>
+	<div class="form-group">
+		<input type="text" class="form-control checkLetters" id="noAddressPhone" name="address[noAddressPhone]" placeholder="<?php echo direction("Recipient phone","هاتف المستلم") ?>">
+	</div>
+</div>
+	
 </div>
 </div>
 
@@ -428,6 +449,7 @@ $(function(){
 	});
 	$('.homeForm').click(function(e){
 		$('.homeFormDiv').attr("style","display:block");
+		$('.noAddressDiv').attr("style","display:none");
 		$('#block').prop('required',true);
 		$('#street').prop('required',true);
 		$('#avenue').prop('required',false);
@@ -436,19 +458,21 @@ $(function(){
 		$('#apartment').prop('required',false);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('#noAddressName').prop('required',false);
+		$('#noAddressPhone').prop('required',false);
 		$('.getAreas').prop('required',true);
 		$('#floor').attr("type","hidden");
 		$('#apartment').attr("type","hidden");
 		$('#homeFormId').addClass('active');
 		$('#apartmentFormId').removeClass('active');
 		$('#pickUpFROMid').removeClass('active');
-		$('#postalCode').attr('style',"display:block");
-		$('#notes').attr('style',"display:block");
+		$('#noAddressFROMid').removeClass('active');
 		$('.areaSelection').attr('style',"display:block");
 		$('#place').val('1');
 	});
 	$('.apartmentForm').click(function(e){
 		$('.homeFormDiv').attr("style","display:block");
+		$('.noAddressDiv').attr("style","display:none");
 		$('#block').prop('required',true);
 		$('#street').prop('required',true);
 		$('#avenue').prop('required',false);
@@ -457,19 +481,21 @@ $(function(){
 		$('#apartment').prop('required',true);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('#noAddressName').prop('required',false);
+		$('#noAddressPhone').prop('required',false);
 		$('.getAreas').prop('required',true);
 		$('#floor').attr("type","text");
 		$('#apartment').attr("type","text");
 		$('#apartmentFormId').addClass('active');
 		$('#homeFormId').removeClass('active');
 		$('#pickUpFROMid').removeClass('active');
-		$('#postalCode').attr('style',"display:block");
-		$('#notes').attr('style',"display:block");
+		$('#noAddressFROMid').removeClass('active');
 		$('.areaSelection').attr('style',"display:block");
 		$('#place').val('2');
 	});
 	$('.pickUpFROM').click(function(e){
 		$('.homeFormDiv').attr("style","display:none");
+		$('.noAddressDiv').attr("style","display:none");
 		$('#block').prop('required',false);
 		$('#street').prop('required',false);
 		$('#avenue').prop('required',false);
@@ -478,14 +504,36 @@ $(function(){
 		$('#apartment').prop('required',false);
 		$('#postalCode').prop('required',false);
 		$('#notes').prop('required',false);
+		$('#noAddressName').prop('required',false);
+		$('#noAddressPhone').prop('required',false);
 		$('.getAreas').prop('required',false);
-		$('#postalCode').attr('style',"display:none");
-		$('#notes').attr('style',"display:none");
 		$('.areaSelection').attr('style',"display:none");
 		$('#pickUpFROMid').addClass('active');
 		$('#homeFormId').removeClass('active');
 		$('#apartmentFormId').removeClass('active');
+		$('#noAddressFROMid').removeClass('active');
 		$('#place').val('3');
+	}); 
+	$('.noAddressFROM').click(function(e){
+		$('.homeFormDiv').attr("style","display:none");
+		$('.noAddressDiv').attr("style","display:block");
+		$('#block').prop('required',false);
+		$('#street').prop('required',false);
+		$('#avenue').prop('required',false);
+		$('#building').prop('required',false);
+		$('#floor').prop('required',false);
+		$('#apartment').prop('required',false);
+		$('#postalCode').prop('required',false);
+		$('#notes').prop('required',false);
+		$('#noAddressName').prop('required',true);
+		$('#noAddressPhone').prop('required',true);
+		$('.getAreas').prop('required',false);
+		$('.areaSelection').attr('style',"display:none");
+		$('#noAddressFROMid').addClass('active');
+		$('#pickUpFROMid').removeClass('active');
+		$('#homeFormId').removeClass('active');
+		$('#apartmentFormId').removeClass('active');
+		$('#place').val('4');
 	}); 
 	<?php
 	if( $pMethods = selectDB("p_methods","`hidden` = '1' AND `status` = '0' ORDER BY `rank` ASC")){

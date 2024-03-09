@@ -239,11 +239,13 @@ if ( $order[0]["status"] == '0' ){
                             <div class="col-sm-8">
                                 <p>
 								<?php
-								if ( $address["place"] != "3" ){
+								if ( $address["place"] != "3" && $address["place"] != "4" ){
 									$address2 = $address;
 									unset($address2["shipping"]);
 									unset($address2["place"]);
 									unset($address2["notes"]);
+									unset($address2["noAddressName"]);
+									unset($address2["noAddressPhone"]);
 									$keys = array_keys($address2);
                                     for( $i = 0; $i < sizeof($address2); $i++){
 										if( $address2["country"] == "KW" && $keys[$i] == "area" ){
@@ -254,6 +256,9 @@ if ( $order[0]["status"] == '0' ){
 											echo $keys[$i] . ": " . $address2[$keys[$i]] . ", ";
 										}
 									}
+								}elseif( $address["place"] == "4" ){
+									echo direction("Recipient name","إسم المستلم") . ": {$address['noAddressName']}<br>";
+									echo direction("Recipient Phone","هاتف المستلم") . ": {$address['noAddressPhone']}";
 								}else{
 								    echo direction("Pick up","إستلام من المتجر");
 								}

@@ -41,7 +41,7 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 	}
 }
 
-if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && $_POST["address"]["place"] != 3 ){
+if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && $_POST["address"]["place"] != 3 && $_POST["address"]["place"] != 4 ){
 	if ( $_POST["address"]["country"] == "KW" && $delivery = selectDB("areas","`id` = '{$_POST["address"]["area"]}'") ){
 		$shoppingCharges = $delivery[0]["charges"];
 	}elseif( $delivery = selectDB("settings","`id` = '1'") ){
@@ -57,6 +57,9 @@ if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && 
 		}
 	}
 	$userDelivery = $shoppingCharges;
+}elseif( $_POST["address"]["place"] == 4 ){
+	$delivery = selectDB("s_media","`id` = '3'");
+	$userDelivery = $delivery[0]["noAddressDelivery"];
 }else{
 	$userDelivery = 0;
 }
