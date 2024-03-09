@@ -5,6 +5,9 @@ function deleteDB($table, $where){
     $check = [';', '"'];
     $where = str_replace($check, "", $where);
     $sql = "DELETE FROM `" . $table . "` WHERE " . $where;
+    if( !isset($_GET["v"]) ){
+        $_GET["v"] = "RemoveCart";
+    }
     $array = array(
         "userId" => $userID,
         "username" => $empUsername,
