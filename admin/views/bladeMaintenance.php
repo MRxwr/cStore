@@ -32,6 +32,10 @@ if ( isset($_POST["minPrice"]) ){
 if ( isset($_POST["currency"]) ){
 	updateDB("s_media",array('currency' => $_POST["currency"]),"`id` = '3'");
 }
+if ( isset($_POST["noAddress"]) ){
+	updateDB("s_media",array('noAddress' => $_POST["noAddress"]),"`id` = '3'");
+}
+
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
 		'internationalDelivery' => $_POST["internationalDelivery"],
@@ -52,6 +56,7 @@ if ( isset($_FILES['sizeChartImage']) && is_uploaded_file($_FILES['sizeChartImag
 $options = selectDB("s_media","`id` != '0'");
 $visaSwitch = $options[2]["visa"];
 $storeSwitch = $options[2]["inStore"];
+$noAddress = $options[2]["noAddress"];
 $cashSwitch = $options[2]["cash"];
 $switchKent = $options[2]["knet"];
 $emailOpt = $options[2]["emailOpt"];
@@ -333,6 +338,32 @@ $row = $result->fetch_assoc();
 					<div class="radio">
 						<input type="radio" class="form-control"  name="switchStore" id="radio14" value="0" <?php if ( $storeSwitch == 0 ) { echo 'checked=""'; } ?>>
 						<label for="radio14"> <?php echo $Off ?> </label>
+					</div>
+					<input type="submit"  class="form-control btn btn-default" value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("No Address","لا يوجد عنوان") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="radio">
+						<input type="radio" class="form-control"  name="noAddress" id="radio18" value="1" <?php if ( $noAddress == 1 ) { echo 'checked=""'; } ?>>
+						<label for="radio18"> <?php echo $On ?> </label>
+					</div>
+					<div class="radio">
+						<input type="radio" class="form-control"  name="noAddress" id="radio18" value="0" <?php if ( $noAddress == 0 ) { echo 'checked=""'; } ?>>
+						<label for="radio18"> <?php echo $Off ?> </label>
 					</div>
 					<input type="submit"  class="form-control btn btn-default" value="submit">
 					</form>
