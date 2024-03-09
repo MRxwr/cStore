@@ -35,7 +35,7 @@ if ( isset($_POST["currency"]) ){
 if ( isset($_POST["noAddress"]) ){
 	updateDB("s_media",array('noAddress' => $_POST["noAddress"]),"`id` = '3'");
 }
-if ( isset($_POST["noAddress"]) ){
+if ( isset($_POST["noAddressDelivery"]) ){
 	updateDB("s_media",array('noAddressDelivery' => $_POST["noAddressDelivery"]),"`id` = '3'");
 }
 
