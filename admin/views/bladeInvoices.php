@@ -8,8 +8,10 @@ if( isset($_GET["status"]) && !empty($_GET["status"]) && isset($_GET["orderId"])
 $array = [1,2,3,4,5,6];
 if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 	$type = " AND `status` = '{$_GET["type"]}'";
+	$tp=$_GET["type"];
 }else{
 	$type = "";
+	$tp= "";
 }
 ?>
 <div class="row">
@@ -25,7 +27,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <div class="panel-body row">
 <div class="table-wrap">
 <div class="table-responsive">
-<table class="table display responsive product-overview mb-30" id="myTable">
+<table class="table display responsive product-overview display dataTable mb-30" id="AjaxTable">
 <thead>
 <tr>
 <th><?php echo $DateTime ?></th>
@@ -39,47 +41,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 </tr>
 </thead>
 <tbody>
-	<?php
-	if( $orders = selectDB("orders2","`id` != '0' {$type} GROUP BY `orderId`") ){
-		for( $i = 0; $i < sizeof($orders); $i++ ){
-			$statusId = [0,1,2,3,4,5,6];
-			$statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
-			$statusBgColor = ["default","primary","info","warning","success","danger","default"];
-			if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'") ){
-				$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
-			}else{
-				$method = "";
-			}
-			$price = numTo3Float($orders[$i]["price"]+getExtrasOrder($orders[$i]["orderId"]));
-			echo "<tr><td>".timeZoneConverter($orders[$i]["date"])."</td>";
-			echo "<td>{$orders[$i]["orderId"]}</td>";
-			$info = json_decode($orders[$i]["info"],true);
-			echo "<td>{$info["phone"]}</td>";
-			$voucher = json_decode($orders[$i]["voucher"],true);
-			echo "<td>{$voucher["voucher"]}</td>";
-			echo "<td>{$price}KD</td>";
-			echo "<td>{$method}</td>";
-			for ( $y = 0; $y < sizeof($statusId); $y++ ){
-				if( $statusId[$y] == $orders[$i]["status"] ){
-					echo "<td class='bg-{$statusBgColor[$y]}' style='font-weight:700; color:black'>{$statusText[$y]}</td>";
-				}
-			}
-			$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
-			echo "<td>
-					<a href='?v=Order&orderId={$orders[$i]["orderId"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip' target='_blank'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=1' class='btn btn-primary btn-circle' title='".direction("Paid","مدفوعه")."' data-toggle='tooltip'><i class='fa fa-money' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=2' class='btn btn-info btn-circle' title='".direction("Preparing","جاري التجهيز")."' data-toggle='tooltip'><i class='fa fa-clock-o' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=3' class='btn btn-warning btn-circle' title='".direction("On Delivery","جاري التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=4' class='btn btn-success btn-circle' title='".direction("Delivered","تم التوصيل")."' data-toggle='tooltip'><i class='fa fa-car' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=5' class='btn btn-danger btn-circle' title='".direction("Cancel","ملغية")."' data-toggle='tooltip'><i class='fa fa-times' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<a href='?v={$_GET["v"]}&orderId={$orders[$i]["orderId"]}&status=6' class='btn btn-default btn-circle' title='".direction("Return","مسترجع")."' data-toggle='tooltip' ><i class='fa fa-retweet' style='font-size: 27px;margin-top: 5px;'></i></a>
-					<button class='btn btn-primary btn-icon-anim btn-circle printNow' title='".direction("Print","طباعة")."' data-toggle='tooltip' id='{$orders[$i]["orderId"]}'>
-					<i class='fa fa-print' style='font-size: 27px;margin-top: 5px;'></i>
-					</button>
-				  </td></tr>";
-		}
-	}
-	?>
+	
 </tbody>
 </table>
 </div>
@@ -133,4 +95,32 @@ $(function(){
         .appendTo("body");
 	});
 })
+</script>
+<link href='https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+
+<!-- Datatable JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function(){
+   $('#AjaxTable').DataTable({
+      'processing': true,
+      'serverSide': true,
+      "pageLength": 25,
+      'serverMethod': 'post',
+      'ajax': {
+          'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>'
+      },
+      'order': [[0, 'desc']],
+      'columns': [
+         { data: 'date' },
+         { data: 'orderId' },
+         { data: 'phone' },
+         { data: 'voucher' },
+         { data: 'price' },
+         { data: 'method' },
+         { data: 'status' },
+         { data: 'action' },
+      ]
+   });
+});
 </script>

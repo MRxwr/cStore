@@ -241,4 +241,24 @@ function insertLogDB($table,$data){
 function LogsHistory($array){
     insertLogDB("logs",$array);
 }
+
+function queryDB($sql){
+    GLOBAL $dbconnect;
+    if ($stmt = $dbconnect->prepare($sql)) {
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $array = array();
+        while ($row = $result->fetch_assoc()) {
+            $array[] = $row;
+        }
+        if (isset($array) && is_array($array)) {
+            return $array;
+        } else {
+            return 0;
+        }
+    } else {
+        $error = array("msg" => "select table error");
+        return outputError($error);
+    }
+}
 ?>
