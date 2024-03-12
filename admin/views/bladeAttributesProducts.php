@@ -62,6 +62,7 @@ function combineAttributes($data1,$data2){
 }
 
 function subProducts($data){
+	$name = array();
 	$ids = array_values(array_unique($data["id"]));
 	for ( $j = 0; $j < sizeof($ids); $j++ ){
 		for( $i = 0; $i < sizeof($data["id"]) ; $i++ ){
@@ -191,13 +192,13 @@ if( isset($_POST["edit"]) && !empty($_POST["edit"]) ){
 }
 
 if( isset($_GET["hide"]) && !empty($_GET["hide"]) ){
-	if( updateDB('attributes_products',array('hidden'=> '2'),"`id` = '{$_GET["hide"]}'") ){
+	if( updateDB('attributes_products',array('hidden'=> '1'),"`id` = '{$_GET["hide"]}'") ){
 		header("LOCATION: ?v=AttributesProducts&id={$_GET["id"]}");
 	}
 }
 
 if( isset($_GET["show"]) && !empty($_GET["show"]) ){
-	if( updateDB('attributes_products',array('hidden'=> '1'),"`id` = '{$_GET["show"]}'") ){
+	if( updateDB('attributes_products',array('hidden'=> '0'),"`id` = '{$_GET["show"]}'") ){
 		header("LOCATION: ?v=AttributesProducts&id={$_GET["id"]}");
 	}
 }
@@ -322,7 +323,7 @@ if( selectDB("attributes_products","`productId` = {$_GET["id"]}") ){
 		if( $attributes = selectDB("attributes_products","`status` != '1' AND `productId` = '{$_GET["id"]}'") ){
 			for( $i = 0; $i < sizeof($attributes); $i++ ){
 				$counter = $i + 1;
-				if ( $attributes[$i]["hidden"] == 2 ){
+				if ( $attributes[$i]["hidden"] == 1 ){
 					$icon = "fa fa-eye";
 					$link = "?v={$_GET["v"]}&show={$attributes[$i]["id"]}&id={$_GET["id"]}";
 					$hide = direction("Show","إظهار");

@@ -16,7 +16,7 @@ if( isset($_POST["enTitle"]) ){
 	unset($_POST["update"]);
 	$variants = selectDB("extras","`id` = '{$id}'");
 	$variants = json_decode($variants[0]["variants"],true);
-	if( is_array($variants) ){
+	if( is_array($variants) && sizeof($variants["enTitle"]) != 0  ){
 		$size = sizeof($variants["enTitle"]);
 		for( $i = 0; $i < $size; $i++ ){
 			if( isset($_POST["enTitle"][$i]) && !is_null($_POST["enTitle"][$i]) ){
