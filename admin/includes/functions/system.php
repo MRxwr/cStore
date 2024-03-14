@@ -288,4 +288,21 @@ function getPDF($orderId){
 	return $response;
 	*/
 }
+
+function manifestGenerate(){
+    $settings = selectDB("settings","`id` = '1'");
+    $jsonFilePath = '../manifest.json';
+    $jsonContent = file_get_contents($jsonFilePath);
+    $data = json_decode($jsonContent, true);
+    $data["name"] = $settings[0]["title"];
+    $data["short_name"] = $settings[0]["title"];
+    $data["theme_color"] = $settings[0]["websiteColor"];
+    $data["icons"][0]["src"] = $settings[0]["logo"];
+    $data["icons"][1]["src"] = $settings[0]["logo"];
+    $data["icons"][2]["src"] = $settings[0]["logo"];
+    $data["icons"][3]["src"] = $settings[0]["logo"];
+    $data["icons"][4]["src"] = $settings[0]["logo"];
+    $modifiedJsonContent = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    file_put_contents($jsonFilePath, $modifiedJsonContent);
+}
 ?>

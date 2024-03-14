@@ -1,4 +1,5 @@
 <?php
+manifestGenerate();
 if (isset($_POST["title"])) {
 	// change websote color \\
 	$color = selectDB("settings", "`id` = '1'");

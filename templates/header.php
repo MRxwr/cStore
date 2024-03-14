@@ -57,11 +57,9 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 	<link href="css/jquery.fancybox.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<?php echo $fontLink ?>
-	<?php /*
 	<script src="js/main.js?y=<?php echo md5(time()) ?>"></script>
     <script src="js/js.js?y=<?php echo md5(time()) ?>"></script>
-	<!--<link rel="manifest" href="manifest.json">-->
-	*/ ?>
+	<link rel="manifest" href="manifest.json">
     <script src="js/jquery-3.3.1.slim.min.js" ></script>
     <script src="js/jquery-1.11.1.js"></script>
     <script src="js/jquery.min.js"></script>
