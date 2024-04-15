@@ -13,6 +13,7 @@ if ( isset($_COOKIE[$cookieSession."Store"]) && !empty($_COOKIE[$cookieSession."
 			$userDiscount = $userDis[0]["userDiscount"];
 		}
 	}else{
+		setcookie($cookieSession."Store", "", time() - (86400*30 ), "/");
 		$userDiscount = 0;
 	}
 }else{
