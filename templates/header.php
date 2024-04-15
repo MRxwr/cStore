@@ -55,6 +55,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
     <link href="css/font-awesome.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
     <link href="css/animate.min.css?<?php echo randLetter() . "=" . rand(0,9) ?>" rel="stylesheet">
 	<link href="css/jquery.fancybox.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<?php echo $fontLink ?>
 	<link rel="manifest" href="manifest.json">
