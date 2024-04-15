@@ -16,5 +16,5 @@ if ( isset($_COOKIE[$cookieSession."A"]) && !empty($_COOKIE[$cookieSession."A"])
 		header("Location: logout.php");die();
 	}
 }else{
-	header("Location: login.php");die();
+	header("Location: logout.php");die();
 }
