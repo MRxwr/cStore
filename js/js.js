@@ -4,7 +4,12 @@ document.addEventListener("DOMContentLoaded", function() {
         var loadingScreen = document.querySelector(".loading-screen");
         var content = document.getElementById("content");
         
-        loadingScreen.style.display = "none";
-        content.style.display = "block"; // Show the content
+        if (loadingScreen !== null) {
+            loadingScreen.style.display = "none";
+        }
+        
+        if (content !== null) {
+            content.style.display = "block"; // Show the content
+        }
     });
 });
