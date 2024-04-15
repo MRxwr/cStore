@@ -983,6 +983,6 @@ $("#mobile-drop-cust-close .product-category-mobile").click(function() {
     }
 })
 </script>
-
+<script src="js/js.js?y=<?php echo md5(time()) ?>"></script>
 </body>
 </html> 
