@@ -1,5 +1,5 @@
 <?php
-if ( isset($_COOKIE[$cookieSession."Store"]) ){
+if ( isset($_COOKIE[$cookieSession."Store"]) && !empty($_COOKIE[$cookieSession."Store"]) ){
 	$svdva = $_COOKIE[$cookieSession."Store"];
 	if ( $user = selectDB("users","`keepMeAlive` LIKE '%{$svdva}%'") ){
 		$userID = $user[0]["id"];
