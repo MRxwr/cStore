@@ -1,9 +1,7 @@
 var cacheVersion = 'v1';
 var cacheName = 'YaZeenha-' + cacheVersion;
 var filesToCache = [
-    'css/style.css',
-    'js/main.js',
-    'js/js.js'
+    ''
 ];
 
 self.addEventListener('install', function(e) {
