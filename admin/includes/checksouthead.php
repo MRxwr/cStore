@@ -4,6 +4,7 @@ require ("translate.php");
 require ("functions.php");
 if ( isset($_COOKIE[$cookieSession."A"]) && !empty($_COOKIE[$cookieSession."A"]) ){
 	session_start ();
+	var_dump($_COOKIE[$cookieSession."A"]);
 	$svdva = $_COOKIE[$cookieSession."A"];
 	if ( $user = selectDB("employees","`keepMeAlive` LIKE '%".$svdva."%'") ){
 		$userID = $user[0]["id"];
