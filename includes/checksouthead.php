@@ -15,6 +15,8 @@ if ( isset($_COOKIE[$cookieSession."Store"]) && !empty($_COOKIE[$cookieSession."
 	}else{
 		$userDiscount = 0;
 	}
+}else{
+	setcookie($cookieSession."Store", "", time() - (86400*30 ), "/");
 }
 
 if( !isset($_COOKIE[$cookieSession."activity"]) ){
