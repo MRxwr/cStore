@@ -292,7 +292,10 @@ function getPDF($orderId){
 function manifestGenerate(){
     $settings = selectDB("settings","`id` = '1'");
     $jsonFilePath = '../manifest.json';
+    $styleFilePath = '../css/style.css';
     $jsonContent = file_get_contents($jsonFilePath);
+    $styleContent = file_get_contents($styleFilePath);
+	$syleData = str_replace(".loader {",".loader { border-top: 16px solid {$settings[0]["websiteColor"]} !important;",$styleContent);
     $data = json_decode($jsonContent, true);
     $data["name"] = $settings[0]["title"];
     $data["short_name"] = $settings[0]["title"];
@@ -304,5 +307,6 @@ function manifestGenerate(){
     $data["icons"][4]["src"] = "logos/{$settings[0]["logo"]}";
     $modifiedJsonContent = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
     file_put_contents($jsonFilePath, $modifiedJsonContent);
+    file_put_contents($styleFilePath, $syleData);
 }
 ?>
