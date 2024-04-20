@@ -178,7 +178,7 @@ function updateDB($table, $data, $where) {
     $values = array_values($data);
     $stmt->bind_param($params, ...$values);
     
-    if( isset($_GET["v"]) && !empty($_GET["v"]) ){
+    if( isset($empUsername) && !empty($empUsername) && isset($_GET["v"]) && !empty($_GET["v"]) ){
         $array = array(
             "userId" => $userID,
             "username" => $empUsername,
