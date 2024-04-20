@@ -5,17 +5,16 @@ function deleteDB($table, $where){
     $check = [';', '"'];
     $where = str_replace($check, "", $where);
     $sql = "DELETE FROM `" . $table . "` WHERE " . $where;
-    if( !isset($_GET["v"]) ){
-        $_GET["v"] = "RemoveCart";
+    if( isset($_GET["v"]) && !empty($_GET["v"]) ){
+        $array = array(
+            "userId" => $userID,
+            "username" => $empUsername,
+            "module" => $_GET["v"],
+            "action" => "Delete",
+            "sqlQuery" => json_encode(array("table"=>$table,"where"=>$where)),
+        );
+        LogsHistory($array);
     }
-    $array = array(
-        "userId" => $userID,
-        "username" => $empUsername,
-        "module" => $_GET["v"],
-        "action" => "Delete",
-        "sqlQuery" => json_encode(array("table"=>$table,"where"=>$where)),
-    );
-    LogsHistory($array);
     if ($stmt = $dbconnect->prepare($sql)) {
         if ($stmt->execute()) {
             return 1;
@@ -178,7 +177,7 @@ function updateDB($table, $data, $where) {
     $values = array_values($data);
     $stmt->bind_param($params, ...$values);
     
-    if( isset($empUsername) && !empty($empUsername) && isset($_GET["v"]) && !empty($_GET["v"]) ){
+    if( isset($_GET["v"]) && !empty($_GET["v"]) ){
         $array = array(
             "userId" => $userID,
             "username" => $empUsername,
