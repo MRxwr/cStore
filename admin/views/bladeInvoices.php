@@ -1,7 +1,7 @@
 <?php
 header ("Refresh:180");
 if( isset($_GET["status"]) && !empty($_GET["status"]) && isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
-	updateDB("orders2",array("status" => "{$_GET["status"]}"),"`orderId` = '{$_GET["orderId"]}'");
+	updateDB("orders2",array("status" => "{$_GET["status"]}"),"`id` = '{$_GET["orderId"]}'");
 	$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
 	header("LOCATION: ?v={$_GET["v"]}");
 }
