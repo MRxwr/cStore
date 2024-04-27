@@ -32,7 +32,7 @@ function sendNotification($data){
 
 function emailBody($orderId){
 	GLOBAL $settingsEmail, $settingsTitle, $settingsWebsite, $settingslogo;
-	$order = selectDB("orders2","`orderId` = '{$orderId}'");
+	$order = selectDB("orders2","`id` = '{$orderId}'");
 	$info = json_decode($order[0]["info"],true);
 	$address = json_decode($order[0]["address"],true);
 	$giftCard = json_decode($order[0]["giftCard"],true);

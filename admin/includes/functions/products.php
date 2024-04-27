@@ -11,7 +11,7 @@ function checkProductDiscount($id){
 }
 
 function getExtrasOrder($id){
-	$order = selectDB("orders2","`orderId` = '{$id}'");
+	$order = selectDB("orders2","`id` = '{$id}'");
 	$items = json_decode($order[0]["items"],true);
 	for( $i = 0; $i < sizeof($items); $i++){
 		$extras = $items[$i]["extras"];

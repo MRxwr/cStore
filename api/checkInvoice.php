@@ -5,7 +5,7 @@ if ( isset($_GET["c"]) ){
 }elseif( isset($_GET["OrderID"]) && !empty($_GET["OrderID"]) ){
 	$Key = $_GET["OrderID"];
 	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["OrderID"]}'") ){
-		$orderId = $order[0]["orderId"];
+		$orderId = $order[0]["id"];
 	}else{
 		header("LOCATION: checkout.php?error=3");die();
 	}
@@ -43,7 +43,7 @@ if ( isset($_GET["c"]) ){
 		$resultMY = json_decode($response, true);
 		$orderId = $resultMY["data"]["Data"]["InvoiceId"];
 		if( $order = selectDB("orders2","`gatewayId` = '{$orderId}'") ){
-			$orderId = $order[0]["orderId"];
+			$orderId = $order[0]["id"];
 		}else{
 			header("LOCATION: checkout.php?error=3");die();
 		}

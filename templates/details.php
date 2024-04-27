@@ -5,7 +5,7 @@ body{background-color:#fafafa}
 date_default_timezone_set('Asia/Riyadh');
 $check = ["'",'"',")","(",";","?",">","<","~","!","#","$","%","^","&","*","-","_","=","+","/","|",":"];
 require('api/checkInvoice.php');
-$order = selectDB("orders2","`orderId` = '{$orderId}'");
+$order = selectDB("orders2","`id` = '{$orderId}'");
 $info = json_decode($order[0]["info"],true);
 $address = json_decode($order[0]["address"],true);
 $giftCard = json_decode($order[0]["giftCard"],true);
@@ -68,7 +68,7 @@ if( !empty($giftCard["from"]) ){
 
 if ( $order[0]["status"] == '0' ){ 
 	$data = array("status" => "1");
-	updateDB("orders2",$data,"`orderId` = '{$orderId}'");
+	updateDB("orders2",$data,"`id` = '{$orderId}'");
 	if ( $order[0]["paymentMethod"] == 10 ){
 		$noti = 2;
 	}else{
@@ -80,20 +80,20 @@ if ( $order[0]["status"] == '0' ){
 		'email' => $info["email"],
 		'mobile' => $info["phone"],
 		'price' => numTo3Float($order[0]["price"]+$address["shipping"]),
-		'details' => "{$order[0]["orderId"]} - {$orderDetailsNoti}",
+		'details' => "{$order[0]["id"]} - {$orderDetailsNoti}",
 		'refference' => $settings[0]["refference"],
 		'noti' => $noti
 	);
 
 	if($email == $settingsEmail ){
-		sendMailsAdmin($order[0]["orderId"]);
+		sendMailsAdmin($order[0]["id"]);
 	}else{
-		sendMailsAdmin($order[0]["orderId"]);
-		sendMails($order[0]["orderId"],$email);
+		sendMailsAdmin($order[0]["id"]);
+		sendMails($order[0]["id"],$email);
 	}
 	sendNotification($data);
-	whatsappNoti($order[0]["orderId"]);
-	sendOrderToAllowMENA($order[0]["orderId"]);
+	whatsappNoti($order[0]["id"]);
+	sendOrderToAllowMENA($order[0]["id"]);
 }
 
 ?>
@@ -141,7 +141,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
 							<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("Addons","الإضافات") ?></p>
-                                <p><?php echo $extras = priceCurr(getExtrasOrder($order[0]["orderId"])) . selectedCurr() ?></p>
+                                <p><?php echo $extras = priceCurr(getExtrasOrder($order[0]["id"])) . selectedCurr() ?></p>
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("Sub Total","المجموع الفرعي") ?></p>

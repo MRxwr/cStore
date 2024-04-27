@@ -2,14 +2,14 @@
 	if( $settings = selectDB("settings","`id` = '1'") ){
 		$defaultCurr = $settings[0]["currency"];
 	}
-	if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) && $order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'") ){
+	if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) && $order = selectDB("orders2","`id` = '{$_GET["orderId"]}'") ){
 		$items = json_decode($order[0]["items"],true);
 		$voucher = json_decode($order[0]["voucher"],true);
 		$giftCard = json_decode($order[0]["giftCard"],true);
 		$address = json_decode($order[0]["address"],true);
 		$info = json_decode($order[0]["info"],true);
 		$date = timeZoneConverter($order[0]["date"]);
-		$orderId = $order[0]["orderId"];
+		$orderId = $order[0]["id"];
 		$gatewayId = $order[0]["gatewayId"];
 		$creditTax = $order[0]["creditTax"];
 		$userDiscount = $order[0]["userDiscount"];

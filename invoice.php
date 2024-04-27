@@ -2,7 +2,7 @@
 include_once("admin/includes/config.php");
 include_once("admin/includes/functions.php");
 if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
-	$order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'");
+	$order = selectDB("orders2","`id` = '{$_GET["orderId"]}'");
 	$info = json_decode($order[0]["info"],true);
 	$address = json_decode($order[0]["address"],true);
 	$giftCard = json_decode($order[0]["giftCard"],true);
@@ -167,7 +167,7 @@ if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) ){
 					</td>
 					<td class="col-xs-4 col-sm-4 col-md-4" style="text-align:right">
 						<div class="receipt-left">
-							<h3>INVOICE # <?php echo $order[0]["orderId"] ?></h3>
+							<h3>INVOICE # <?php echo $order[0]["id"] ?></h3>
 						</div>
 					</td>
 				</tr>

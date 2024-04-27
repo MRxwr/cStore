@@ -1,6 +1,6 @@
 <?php
-if( isset($orderUserEmail) && !empty($orderUserEmail) && $checkUser = selectDB("orders2","JSON_UNQUOTE(JSON_EXTRACT(info,'$.email')) LIKE '%{$orderUserEmail}%' AND `orderId` = '{$_GET["orderId"]}'") ){
-    if ( isset($_GET["orderId"]) && $order = selectDB("orders2","`orderId` = '{$_GET["orderId"]}'")){
+if( isset($orderUserEmail) && !empty($orderUserEmail) && $checkUser = selectDB("orders2","JSON_UNQUOTE(JSON_EXTRACT(info,'$.email')) LIKE '%{$orderUserEmail}%' AND `id` = '{$_GET["orderId"]}'") ){
+    if ( isset($_GET["orderId"]) && $order = selectDB("orders2","`id` = '{$_GET["orderId"]}'")){
         $info = json_decode($order[0]["info"],true);
         $address = json_decode($order[0]["address"],true);
         $giftCard = json_decode($order[0]["giftCard"],true);
@@ -57,7 +57,7 @@ if ( $address["place"] != "3" ){
     <?php echo $deliveryText . ": " . numTo3Float(priceCurr($address["shipping"])) . selectedCurr()?><br>
     <?php echo $discount = ( $discountAmount == 0 ) ? $discountText . ": ". $discountAmount . "<br>": "";?>    
     <?php echo $userDiscountText = ($order[0]["userDiscount"] != 0 ) ? direction("User Discount","خصم الأعضاء") . ": ". $order[0]["userDiscount"] . "%<br>": ""; ?>    
-    <?php echo $totalPriceText . ": " . numTo3Float(priceCurr($order[0]["price"])+priceCurr($address["shipping"])+priceCurr(getExtrasOrder($_GET["orderId"]))) . selectedCurr()?><br>
+    <?php echo $totalPriceText . ": " . numTo3Float(priceCurr($order[0]["price"])+priceCurr($address["shipping"])+priceCurr(getExtrasOrder($_GET["id"]))) . selectedCurr()?><br>
 </div>
 </div>
 </div>
