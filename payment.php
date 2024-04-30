@@ -173,8 +173,8 @@ $data = array(
 if( insertDB("orders2",$data) ){
 	if ( $_POST["paymentMethod"] == 10 ){
 		$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
-		$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
-		header("Location: details.php?c={$orderId}");
+		$_SESSION["createKW"]["orderId"] = $gatewayId;
+		header("Location: details.php?c={$gatewayId}");
 	}else{
 		$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 		$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];

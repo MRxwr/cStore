@@ -1,7 +1,11 @@
 <?php
 if ( isset($_GET["c"]) ){
 	$Key = $_GET["c"];
-	$orderId = $_GET["c"];
+	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["c"]}'") ){
+		$orderId = $order[0]["id"];
+	}else{
+		header("LOCATION: checkout.php?error=3");die();
+	}
 }elseif( isset($_GET["OrderID"]) && !empty($_GET["OrderID"]) ){
 	$Key = $_GET["OrderID"];
 	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["OrderID"]}'") ){
