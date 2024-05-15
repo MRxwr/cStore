@@ -29,6 +29,37 @@ function deleteDB($table, $where){
     }
 }
 
+function selectDBNew($table, $placeHolders, $where, $order){
+    GLOBAL $dbconnect;
+    $check = [';', '"'];
+    $where = str_replace($check, "", $where);
+    $sql = "SELECT * FROM `{$table}`";
+    if(!empty($where)) {
+        $sql .= " WHERE {$where}";
+    }
+    if(!empty($order)) {
+        $sql .= " ORDER BY {$order}";
+    }
+	
+    if($stmt = $dbconnect->prepare($sql)) {
+        $types = str_repeat('s', count($placeHolders));
+        $stmt->bind_param($types, ...$placeHolders);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $array = array();
+        while ($row = $result->fetch_assoc()) {
+            $array[] = $row;
+        }
+        if(isset($array) && is_array($array)) {
+            return $array;
+        }else{
+            return 0;
+        }
+    }else{
+        return 0;
+    }
+}
+
 function selectDB($table, $where){
     GLOBAL $dbconnect;
     $check = [';', '"'];
