@@ -104,7 +104,7 @@ if ( isset($_POST["loginEmailAj"]) && isset($_POST["loginPassAj"]) ){
 	}
 	$table = "users";
 	$placeHolders = [$_POST["loginEmailAj"],sha1($_POST["loginPassAj"])];
-	$where = "`email` LIKE '?' AND `password` LIKE ? AND `hidden` = '0' AND `status` = '0'";
+	$where = "`email` LIKE ? AND `password` LIKE ? AND `hidden` = '0' AND `status` = '0'";
 	$order = "";
 	if ( $user = selectDBNew($table,$placeHolders,$where,$order) ){
 		$randomCookie = generateRandomString();
