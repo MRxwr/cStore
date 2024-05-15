@@ -27,7 +27,7 @@ if ( isset ($_GET["error"]) )
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Create - Store</title>
+    <title>Create - CP</title>
     <meta
       name="description"
       content="Droopy is a Dashboard & Admin Site Responsive Template by hencework."

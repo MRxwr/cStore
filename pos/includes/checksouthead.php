@@ -1,21 +1,17 @@
 <?php
-if ( isset ( $_COOKIE[$cookieSession."Pos"] ) ){
+if ( isset($_COOKIE[$cookieSession."Pos"]) && !empty($_COOKIE[$cookieSession."Pos"]) ){
+	session_start ();
 	$svdva = $_COOKIE[$cookieSession."Pos"];
-	$sql = "SELECT * 
-			FROM `employees` 
-			WHERE 
-            `keepMeAlive` LIKE '%".$svdva."%'
-            ";
-	$result = $dbconnect->query($sql);
-	if ( $result->num_rows == 1 ){
-		$row = $result->fetch_assoc();
-		$userID = $row["id"];
-		$email = $row["email"];
-		$username = $row["fullName"];
-		$shopId = $row["shopId"];
-		$_SESSION[$cookieSession."Pos"] = $email;
+	if ( $user = selectDBNew("employees", [$svdva], "`keepMeAlive` LIKE ? AND `hidden` != '2' AND `status` = '0'", "")){
+		$userID = $user[0]["id"];
+		$email = $user[0]["email"];
+		$username = $user[0]["fullName"];
+		$shopId = $user[0]["shopId"];
+		$_SESSION[$cookieSession."Pos"] = $email;	
+	}else{
+		header("Location: logout.php");die();
 	}
 }else{
-	header('LOCATION: logout.php');die();
+	header("Location: logout.php");die();
 }
 ?>
