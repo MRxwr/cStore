@@ -1,11 +1,7 @@
 <?php
 if ( isset($_COOKIE[$cookieSession."Store"]) && !empty($_COOKIE[$cookieSession."Store"]) ){
 	$svdva = $_COOKIE[$cookieSession."Store"];
-	$table = "users";
-	$placeHolders = [$svdva];
-	$where = "`keepMeAlive` LIKE ?";
-	$order = "";
-	if ( $user = selectDBNew($table,$placeHolders,$where,$order) ){
+	if ( $user = selectDBNew("users",[$svdva],"`keepMeAlive` LIKE ?","") ){
 		$userID = $user[0]["id"];
 		$orderUserEmail = $user[0]["email"];
 		$ordersUserId = $user[0]["id"];
