@@ -85,7 +85,7 @@ if ( isset($_POST["nameReg"]) && isset($_POST["phoneReg"]) && isset($_POST["emai
 		"password" => sha1($_POST["passwordReg"]),
 		"phone" => $_POST["phoneReg"]
 	);
-	if ( selectDB("users","`email` LIKE '%{$_POST["emailReg"]}%'") ){
+	if ( selectDBNew("users",[$_POST["emailReg"]],"`email` LIKE ?","") ){
 		echo $emailExistText ;
 	}else{
 		if( insertDB("users",$insertData) ){
