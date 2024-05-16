@@ -280,7 +280,7 @@ if( isset($userID) ){
     </span>
 </div>
 
-<span style="color:red"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
+<span style="color:red"  style="display:none"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
 
 <div class="calc-text-box d-flex justify-content-between">
 <span class="bold voucherMsgS" style="color:red;font-size:18px"><b class="voucherMsg"></b></span>
