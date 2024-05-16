@@ -102,29 +102,23 @@ if ( $place == 1 ){
 
 if ( isset($_POST["orderVoucher"]) AND !empty($_POST["orderVoucher"]) ){
     $orderVoucher = $_POST["orderVoucher"];
+	if( $voucher = selectDBNew("vouchers",[$orderVoucher],"`id` = ?","")){
+		$discount = $voucher[0]["discount"];
+		$_SESSION["createKW"]["discount"] = $discount;
+		$voucherTitle = $voucher[0]["voucher"];
+		$_SESSION["createKW"]["voucher"] = $voucherTitle;
+	}else{
+		$discount = 0;
+		$_SESSION["createKW"]["discount"] = $discount;
+		$voucherTitle = '';
+		$_SESSION["createKW"]["voucher"] = '';
+	}
 }else{
     $orderVoucher = "0";
-}
-
-$sql = "SELECT `percentage`,`voucher`
-        FROM `vouchers`
-        WHERE `id` = '".$orderVoucher."'
-        ";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-if ( isset($row["percentage"]) ){
-	@$discount = $row["percentage"];
+	$discount = 0;
 	$_SESSION["createKW"]["discount"] = $discount;
-}else{
-	@$discount = 0;
-}
-
-if ( isset($row["voucher"]) ){
-	@$voucherTitle = $row["voucher"];
-	@$_SESSION["createKW"]["voucher"] = $row["voucher"];
-}else{
-	@$voucherTitle = '';
-	@$_SESSION["createKW"]["voucher"] = '';
+	$voucherTitle = '';
+	$_SESSION["createKW"]["voucher"] = '';
 }
 
 for ( $i = 0; $i < sizeof($_SESSION["cart"]["id"]); $i++ ){
