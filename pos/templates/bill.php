@@ -322,40 +322,27 @@ if( isset($userID) ){
 
 <Script>
 $(function(){
-$('.sendVoucher').click(function(e){
-e.preventDefault();
-var voucher = $('#voucherInput').val()
-console.log(voucher)
-$.ajax({
-type:"POST",
-url: "../api/functions.php",
-data: {
-checkVoucherVal: voucher,
-visaCardCheck: <?php echo $VisaCard ?>,
-userDiscountCheck: <?php echo array_sum($totals2) ?>,
-totals2: <?php echo array_sum($totals2) ?>,
-shippingChargesInput : <?php echo $shoppingCharges ?>,
-paymentMethodInput : <?php echo $_POST["paymentMethod"] ?>,
-userDiscountPercentage: <?php echo $userDiscount; ?>,
-},
-success:function(result){
-console.log(result);
-
-var data = result.split(',');
-console.log(data[3]);
-$('.totalSpan').text(data[0]+"KD");
-$('.ShoppingSpan').text(data[3]+"KD");
-$('.VisaSpan').text(data[5]+"KD");
-$('.UserDiscount').text(data[6]+"%");
-$('.voucherMsg').html(data[1]);
-$('.orderVoucherInput').val(data[2]);
-$('.DiscountSpan').text(data[4]+"%");
-$('.totalPriceClass').val(data[0]);
-$('.VisaClass').val(data[5]);
-$('.SubTotal').text(data[7]+"KD");
-
-}
-});
-});
+	$('.sendVoucher').click(function(e){
+		e.preventDefault();
+		var voucher = $('#voucherInput').val()
+		$.ajax({
+			type:"POST",
+			url: "../api/functions.php",
+			data: {
+				checkPosVoucherVal: voucher,
+				totals2: <?php echo array_sum($totals2) ?>,
+			},
+			success:function(result){
+				var data = result.split(',');
+				console.log(data[3]);
+				$('.totalSpan').text(data[0]+"KD");
+				$('.totalPriceClass').val(data[0]);
+				$('.voucherMsg').html(data[1]);
+				$('.orderVoucherInput').val(data[2]);
+				$('.DiscountSpan').text(data[3]+"%");
+				$('.SubTotal').text(data[0]+"KD");
+			}
+		});
+	});
 })
 </script>
