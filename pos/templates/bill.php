@@ -278,7 +278,8 @@ if( isset($userID) ){
 		}else{
 			echo (float)round($totals21, 2) ;
 		}
-		?>KD
+		echo selectedCurr();
+		?>
     </span>
 </div>
 
