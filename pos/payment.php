@@ -185,16 +185,16 @@ while ( $i < sizeof ($_SESSION["cart"]["id"]) ){
 if ( $_POST["paymentMethod"] == 3 ){
 	$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 	$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
-	header("Location: details.php?c=".$resultMY["data"]["InvoiceId"]);
+	header("Location: details.php?p=".$resultMY["data"]["InvoiceId"]);
 }
 elseif ( $_POST["paymentMethod"] == 1 ){
 	$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 	$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
-	header("Location: details.php?c=".$resultMY["data"]["InvoiceId"]);
+	header("Location: details.php?p=".$resultMY["data"]["InvoiceId"]);
 }
 elseif ( $_POST["paymentMethod"] == 2 ){
 	$_SESSION["createKW"]["pMethod"] = $_POST["paymentMethod"];
 	$_SESSION["createKW"]["orderId"] = $resultMY["data"]["InvoiceId"];
-	header("Location: details.php?c=".$resultMY["data"]["InvoiceId"]);
+	header("Location: details.php?p=".$resultMY["data"]["InvoiceId"]);
 }
 ?>

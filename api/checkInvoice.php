@@ -6,6 +6,13 @@ if ( isset($_GET["c"]) ){
 	}else{
 		header("LOCATION: checkout.php?error=3");die();
 	}
+}elseif ( isset($_GET["p"]) ){
+	$Key = $_GET["p"];
+	if( $order = selectDB("posorders","`orderId` = '{$_GET["p"]}'") ){
+		$orderId = $order[0]["orderId"];
+	}else{
+		header("LOCATION: index.php?error=3");die();
+	}
 }elseif( isset($_GET["OrderID"]) && !empty($_GET["OrderID"]) ){
 	$Key = $_GET["OrderID"];
 	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["OrderID"]}'") ){
