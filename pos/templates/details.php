@@ -6,8 +6,8 @@ body{background-color:#fafafa}
 date_default_timezone_set('Asia/Riyadh');
 $check = ["'",'"',")","(",";","?",">","<","~","!","#","$","%","^","&","*","-","_","=","+","/","|",":"];
 require('../api/checkInvoice.php');
-@$order = selectDB("posorders","`orderId` = '{$orderId}'");
-if( @$voucherDetails = selectDB("vouchers","`id` = '{$order[0]["voucher"]}'")){
+$order = selectDB("posorders","`orderId` = '{$orderId}'");
+if( $voucherDetails = selectDB("vouchers","`id` = '{$order[0]["voucher"]}'")){
 	$voucher = $voucherDetails[0]["voucher"];
 }else{
 	$voucher = 0;
