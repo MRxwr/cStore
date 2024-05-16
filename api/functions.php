@@ -77,7 +77,6 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	$totals2 		 = $_POST["totals2"];
 	$incomingVoucher = $_POST["checkPosVoucherVal"];
-	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
 	if( $voucher = selectDBNew("vouchers",[$incomingVoucher],"`code` LIKE ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$voucherId = $voucher[0]["id"];
 		if( $voucher[0]["type"] == 1 ){
@@ -91,7 +90,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	}else{
 		$voucherId = 0;
 		$discountPercentage = 0;
-		$totals2 = $newTotal;
+		$totals2 = $totals2;
 		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
 	}
  	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".$discountPercentage;
