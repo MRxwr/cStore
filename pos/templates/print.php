@@ -86,6 +86,17 @@ require ('../../admin/includes/functions.php');
 			<td colspan="2"><hr></td>
 		</tr>
 		
+		
+		<?php 
+		if( !empty($order[0]["discount"]) ){
+		?>
+		<tr>
+			<td>Discount: </td>
+			<td><?php echo $order[0]["discount"] . $discountSign ?></td>
+		</tr>
+		<?php
+		}
+		?>
 		<tr>
 			<td>Total: </td>
 			<td><?php echo $data[0]["totalPrice"] ?>KD</td>
