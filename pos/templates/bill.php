@@ -195,7 +195,9 @@ $row = $result->fetch_assoc();
             echo $price2 = $row["subPrice"] - ( $row["subPrice"] * $row["discount"] / 100 );
         }else{
             echo $price2 = $row["subPrice"] - $row["discount"];
-        } ?>KD
+        } 
+		echo selectedCurr();
+		?>
     </span>
 </div>
 <?php
@@ -211,7 +213,7 @@ $i++;
 <div class="calc-text-box d-flex justify-content-between" style="display:none !important">
     <span class="calc-text bold subTotalPrice"><?php echo $subTotalPriceText ?></span>
     <span class="calc-text bold SubTotal">
-    <?php echo array_sum($totals2) ; ?>KD
+    <?php echo array_sum($totals2) . selectedCurr(); ?>
     </span>
 </div>
 
