@@ -73,7 +73,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $deliveryText ?></p>
-                                <p><?php echo $order[0]["d_s_charges"] ?>KD</p>
+                                <p><?php echo priceCurr($order[0]["d_s_charges"]) . selectedCurr()?></p>
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $Voucher ?></p>
@@ -93,7 +93,7 @@ if ( $order[0]["status"] == '0' ){
 							?>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $totalPriceText ?></p>
-                                <p><?php echo $order[0]["totalPrice"] ?>KD</p>
+                                <p><?php echo priceCurr($order[0]["totalPrice"]) . selectedCurr()?></p>
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $paymentMethodText ?></p>
@@ -117,7 +117,7 @@ if ( $order[0]["status"] == '0' ){
                                 <p>
 								
 								<?php
-									echo $order[0]["creditTax"] . "KD";
+									echo priceCurr($order[0]["creditTax"]) . selectedCurr();
 									?>
 								</p>
 								</div>
@@ -242,8 +242,8 @@ if ( $order[0]["status"] == '0' ){
 									</span>
                                     <span class="Price">
 									<?php 
-									echo $order[$i]["productPrice"];
-									?>KD
+									echo priceCurr($order[$i]["productPrice"]) . selectedCurr();
+									?>
 									</span>
                                 </div>
 							<?php
