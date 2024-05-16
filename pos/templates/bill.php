@@ -335,7 +335,7 @@ $(function(){
 			success:function(result){
 				var data = result.split(',');
 				console.log(data[3]);
-				$('.totalSpan').text(data[0]);
+				$('.totalSpan').text(data[0] + "<?php echo selectedCurr() ?>");
 				$('.totalPriceClass').val(data[0]);
 				$('.voucherMsg').html(data[1]);
 				$('.orderVoucherInput').val(data[2]);
