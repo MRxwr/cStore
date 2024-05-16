@@ -76,7 +76,7 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 
 if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	$totals2 		 = $_POST["totals2"];
-	$incomingVoucher = $_POST["checkVoucherVal"];
+	$incomingVoucher = $_POST["checkPosVoucherVal"];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
 	if( $voucher = selectDB("vouchers","`code` LIKE '{$incomingVoucher}' AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'") ){
 		$voucherId = $voucher[0]["id"];
