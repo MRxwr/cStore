@@ -36,7 +36,7 @@ if ( $order[0]["status"] == '0' ){
 		$noti = 1;
 	}
 	$settings = selectDB("settings","`id` = '1'");
-	$data = array(
+	/*$data = array(
 		'name' => $order[0]["fullName"],
 		'email' => $order[0]["email"],
 		'mobile' => $order[0]["mobile"],
@@ -46,7 +46,7 @@ if ( $order[0]["status"] == '0' ){
 		'noti' => $noti
 	);
 	@sendMails($orderId,$email);
-	@sendNotification($data);
+	@sendNotification($data);*/
 }
 ?>
 <div class="sec-pad grey-bg">
