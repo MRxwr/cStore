@@ -88,11 +88,16 @@ require ('../../admin/includes/functions.php');
 		
 		
 		<?php 
-		if( !empty($order[0]["discount"]) ){
+		if( !empty($data[0]["discount"]) ){
 		?>
 		<tr>
 			<td>Discount: </td>
-			<td><?php echo $order[0]["discount"] . $discountSign ?></td>
+			<td>
+				<?php 
+					$discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
+					echo $data[0]["discount"] . $discountSign 
+				?>
+			</td>
 		</tr>
 		<?php
 		}
