@@ -9,9 +9,9 @@ if( $employee = selectDBNew("employees",[$_POST["email"],sha1($_POST["password"]
 	}else{
 		$GenerateNewCC = md5(rand());
 		if( updateDB("employees",array("keepMeAlive"=>$GenerateNewCC),"`id` = '{$employee[0]["id"]}'") ){
-			$_SESSION[$cookieSession."A"] = $email;
+			$_SESSION[$cookieSession."Pos"] = $email;
 			header("Location: ../index.php");
-			setcookie($cookieSession."A", $GenerateNewCC, time() + (86400*30 ), "/");die();
+			setcookie($cookieSession."Pos", $GenerateNewCC, time() + (86400*30 ), "/");die();
 		}else{
 			header("Location: ../login.php?error=cookiesNS");die();
 		}
