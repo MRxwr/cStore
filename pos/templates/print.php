@@ -67,7 +67,7 @@ require ('../../admin/includes/functions.php');
 		?>
 		<tr>
 			<td><?php echo $item ?></td>
-			<td><?php echo $price ?>KD</td>
+			<td><?php echo $price . selectedCurr() ?></td>
 		</tr>
 		<?php
 		}
@@ -101,7 +101,7 @@ require ('../../admin/includes/functions.php');
 		?>
 		<tr>
 			<td>Total: </td>
-			<td><?php echo $data[0]["totalPrice"] ?>KD</td>
+			<td><?php echo $data[0]["totalPrice"] . selectedCurr()?></td>
 		</tr>
 		</tfoot>
 	</table>
