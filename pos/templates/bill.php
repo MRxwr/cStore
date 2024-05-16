@@ -222,7 +222,7 @@ $i++;
     </span>
 </div>
 
-<div class="calc-text-box d-flex justify-content-between"  style="display:none">
+<div class="calc-text-box d-flex justify-content-between"  style="display:none !important">
     <span class="calc-text bold"><?php echo $deliveryText ?></span>
     <span class="calc-text bold ShoppingSpan">
     <?php if ( !empty($shoppingCharges) ) {echo $shoppingCharges ;} else { echo 0;} ?>KD
@@ -241,7 +241,7 @@ $i++;
 */
 if($VisaCard != 0){
 ?>
-<div class="calc-text-box d-flex justify-content-between"  style="display:none">
+<div class="calc-text-box d-flex justify-content-between"  style="display:none !important">
     <span class="calc-text bold"><?php echo "Visa/Master Tax" ?></span>
     <span class="calc-text bold VisaSpan">
     <?php echo (float)round($VisaCard, 2)  ?>KD
@@ -254,7 +254,7 @@ if($VisaCard != 0){
 <?php
 if( isset($userID) ){
 ?>
-<div class="calc-text-box d-flex justify-content-between" style="display:none">
+<div class="calc-text-box d-flex justify-content-between" style="display:none !important">
     <span class="calc-text bold"><?php echo $userDiscountText ?></span>
     <span class="calc-text bold UserDiscount">
     <?php echo $userDiscount."%"; ?>
@@ -280,7 +280,7 @@ if( isset($userID) ){
     </span>
 </div>
 
-<span style="color:red"  style="display:none"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
+<span style="color:red"  style="display:none !important"><?php echo direction($settingsDTime,$settingsDTimeAr);  ?></span>
 
 <div class="calc-text-box d-flex justify-content-between">
 <span class="bold voucherMsgS" style="color:red;font-size:18px"><b class="voucherMsg"></b></span>
