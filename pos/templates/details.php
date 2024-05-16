@@ -266,7 +266,7 @@ if ( $order[0]["status"] == '0' ){
 $(function(){
 	$('.printNow').on('click',function(e){
 		e.preventDefault();
-		var printId = "<?php echo $_GET['c'] ?>";
+		var printId = "<?php echo $_GET['p'] ?>";
 		var url = '<?php echo $settingsWebsite ?>';
 		$("<iframe>")
         .hide()
