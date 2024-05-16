@@ -12,6 +12,7 @@ if( $voucherDetails = selectDB("vouchers","`id` = '{$order[0]["voucher"]}'")){
 }else{
 	$voucher = 0;
 }
+$discountSign = ( $voucher[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 $email = $order[0]["email"];
 
 for( $i=0; $i<sizeof($order); $i++ ){
@@ -79,7 +80,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $discountText ?></p>
-                                <p>%<?php echo $order[0]["discount"] ?></p>
+                                <p><?php echo $order[0]["discount"] . $discountSign ?></p>
                             </div>
 							<?php
 							/*
