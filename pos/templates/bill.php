@@ -208,7 +208,7 @@ $i++;
 </div>
 <div class="checkoutsidebar-calculation">
 
-<div class="calc-text-box d-flex justify-content-between">
+<div class="calc-text-box d-flex justify-content-between" style="display:none !important">
     <span class="calc-text bold subTotalPrice"><?php echo $subTotalPriceText ?></span>
     <span class="calc-text bold SubTotal">
     <?php echo array_sum($totals2) ; ?>KD
@@ -335,12 +335,12 @@ $(function(){
 			success:function(result){
 				var data = result.split(',');
 				console.log(data[3]);
-				$('.totalSpan').text(data[0]+"KD");
+				$('.totalSpan').text(data[0]);
 				$('.totalPriceClass').val(data[0]);
 				$('.voucherMsg').html(data[1]);
 				$('.orderVoucherInput').val(data[2]);
 				$('.DiscountSpan').text(data[3]);
-				$('.SubTotal').text(data[0]+"KD");
+				$('.SubTotal').text(data[0]);
 			}
 		});
 	});
