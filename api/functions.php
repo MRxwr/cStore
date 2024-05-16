@@ -87,7 +87,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 		}else{
 			$newTotal = $totals2;
 		} 
-		$discountPercentage = ( $voucher[0]["discountType"] == 1 ) ? $voucher[0]["discount"] : priceCurr($voucher[0]["discount"]);
+		$discountPercentage = ( $voucher[0]["discountType"] == 1 ) ? $voucher[0]["discount"] : numTo3Float($voucher[0]["discount"]);
 		$totals2 = $newTotal;
 		$msg = direction("Code has been applied successfully.","تم تفعيل كود الخصم بنجاح");
 	}else{
