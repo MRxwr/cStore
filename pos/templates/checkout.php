@@ -183,7 +183,7 @@ if ( $emailOpt == 0 ){
 		<input type="hidden" class="form-control" name="civilId" placeholder="<?php echo $civilIdText ?>" >
 	</div>
 </div>
-<div class="checkout-informationbox">
+<div class="checkout-informationbox" style="display:none">
 <div class="media checkout-heading-box">
 <span class="count-number">3</span>
 <div class="media-body">
@@ -294,7 +294,7 @@ while ($row = $result->fetch_assoc() )
 
 <div class="checkout-informationbox">
 <div class="media checkout-heading-box">
-<span class="count-number">4</span>
+<span class="count-number">3</span>
 <div class="media-body">
     <h3 class="checkout-heading"><?php echo $paymentMethodText ?></h3>
     <p class="checkout-heading-text"></p>
@@ -484,7 +484,7 @@ $('#payVisa').addClass('active');
 $('#payKnet').removeClass('active');
 $('#payCash').removeClass('active');
 $('#pMethod').val("2");
-alert('<?php echo $visaTaxMsg ?>');
+//alert('<?php echo $visaTaxMsg ?>');
 });
 })
 
