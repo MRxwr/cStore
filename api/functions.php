@@ -77,6 +77,8 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	$totals2 		 = $_POST["totals2"];
 	$incomingVoucher = $_POST["checkPosVoucherVal"];
+	$discountSign = ( $voucher[0]["discountType"] == 1 ) ? "%" : selectedCurr();
+	$discountPercentage = 0;
 	if( $voucher = selectDBNew("vouchers",[$incomingVoucher],"`code` LIKE ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$voucherId = $voucher[0]["id"];
 		if( $voucher[0]["type"] == 1 ){
@@ -84,16 +86,14 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 		}else{
 			$newTotal = $totals2;
 		}
-		$discountPercentage = $voucher[0]["discount"];
+		$discountPercentage = $voucher[0]["discount"] . $discountSign;
 		$totals2 = $newTotal;
 		$msg = direction("Code has been applied successfully.","تم تفعيل كود الخصم بنجاح");
 	}else{
 		$voucherId = 0;
-		$discountPercentage = 0;
-		$totals2 = $totals2;
 		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
 	}
- 	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".$discountPercentage;
+ 	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".$discountPercentage.$discountSign;
 }
 
 // register new user \\
