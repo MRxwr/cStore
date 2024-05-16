@@ -339,7 +339,7 @@ $(function(){
 				$('.totalPriceClass').val(data[0]);
 				$('.voucherMsg').html(data[1]);
 				$('.orderVoucherInput').val(data[2]);
-				$('.DiscountSpan').text(data[3]+"%");
+				$('.DiscountSpan').text(data[3]);
 				$('.SubTotal').text(data[0]+"KD");
 			}
 		});
