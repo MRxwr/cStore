@@ -90,7 +90,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 		$msg = direction("Code has been applied successfully.","تم تفعيل كود الخصم بنجاح");
 	}else{
 		$voucherId = 0;
-		$discountPercentage = $voucher[0]["discount"];
+		$discountPercentage = 0;
 		$totals2 = $newTotal;
 		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
 	}
