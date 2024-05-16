@@ -9,10 +9,11 @@ require('../api/checkInvoice.php');
 $order = selectDB("posorders","`orderId` = '{$orderId}'");
 if( $voucherDetails = selectDB("vouchers","`id` = '{$order[0]["voucher"]}'")){
 	$voucher = $voucherDetails[0]["voucher"];
+    $discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 }else{
 	$voucher = 0;
+    $discountSign = "%";
 }
-$discountSign = ( $voucher[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 $email = $order[0]["email"];
 
 for( $i=0; $i<sizeof($order); $i++ ){
