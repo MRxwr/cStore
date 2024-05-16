@@ -78,6 +78,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	$totals2 		 = $_POST["totals2"];
 	$incomingVoucher = $_POST["checkPosVoucherVal"];
 	$discountPercentage = 0;
+	$discountSign = "%";
 	if( $voucher = selectDBNew("vouchers",[$incomingVoucher],"`code` LIKE ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$discountSign = ( $voucher[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 		$voucherId = $voucher[0]["id"];
@@ -92,7 +93,6 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	}else{
 		$voucherId = 0;
 		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
-		$discountSign = "%";
 	}
  	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".$discountPercentage.$discountSign;
 }

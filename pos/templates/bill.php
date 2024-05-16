@@ -218,7 +218,7 @@ $i++;
 <div class="calc-text-box d-flex justify-content-between">
     <span class="calc-text bold"><?php echo $discountText ?></span>
     <span class="calc-text bold DiscountSpan">
-    <?php echo 0 ; ?>%
+    <?php echo "0%"; ?>
     </span>
 </div>
 
