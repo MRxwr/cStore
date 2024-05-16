@@ -1,6 +1,5 @@
 <?php
 if ( isset($_COOKIE[$cookieSession."Pos"]) && !empty($_COOKIE[$cookieSession."Pos"]) ){
-	session_start ();
 	$svdva = $_COOKIE[$cookieSession."Pos"];
 	if ( $user = selectDBNew("employees", [$svdva], "`keepMeAlive` LIKE ? AND `hidden` != '2' AND `status` = '0'", "")){
 		$userID = $user[0]["id"];
