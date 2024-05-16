@@ -45,6 +45,15 @@ function voucherApplyToAll($code){
 	}
 }
 
+function voucherApplyToAllVoucher($code,$total){
+	$code = selectDB("vouchers","`id` = '{$code}'");
+	if( $code[0]["discountType"] == 1 ){
+		return ((float)$total * ((100-$code[0]["discount"])/100));
+	}elseif( $code[0]["discountType"] == 2 ){
+		return ((float)$total - priceCurr($code[0]["discount"]));
+	}
+}
+
 function voucherSelectedItems($code){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);

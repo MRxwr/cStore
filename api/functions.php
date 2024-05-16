@@ -80,7 +80,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 	if( $voucher = selectDBNew("vouchers",[$incomingVoucher],"`code` LIKE ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$voucherId = $voucher[0]["id"];
 		if( $voucher[0]["type"] == 1 ){
-			$newTotal = voucherApplyToAll($voucherId);
+			$newTotal = voucherApplyToAllVoucher($voucherId,$totals2);
 		}else{
 			$newTotal = $totals2;
 		}
