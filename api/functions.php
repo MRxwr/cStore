@@ -94,7 +94,7 @@ if ( isset($_POST["checkPosVoucherVal"]) && isset($_POST["totals2"]) ) {
 		$voucherId = 0;
 		$msg = direction("Wrong Voucher ","رمز خصم خاطئ") . $incomingVoucher;
 	}
- 	echo numTo3Float($totals2).','.$msg.','.$voucherId.",".$discountPercentage.$discountSign;
+ 	echo numTo3Float($totals2).selectedCurr().','.$msg.','.$voucherId.",".$discountPercentage.$discountSign;
 }
 
 // register new user \\
