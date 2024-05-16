@@ -8,7 +8,7 @@ $check = ["'",'"',")","(",";","?",">","<","~","!","#","$","%","^","&","*","-","_
 require('../api/checkInvoice.php');
 $order = selectDB("posorders","`orderId` = '{$orderId}'");
 if( $voucherDetails = selectDB("vouchers","`id` = '{$order[0]["voucher"]}'")){
-	$voucher = $voucherDetails[0]["voucher"];
+	$voucher = $voucherDetails[0]["code"];
     $discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 }else{
 	$voucher = 0;
