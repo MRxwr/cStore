@@ -67,7 +67,7 @@ require ('../../admin/includes/functions.php');
 		?>
 		<tr>
 			<td><?php echo $item ?></td>
-			<td><?php echo $price . selectedCurr() ?></td>
+			<td><?php echo numTo3Float($price) . selectedCurr() ?></td>
 		</tr>
 		<?php
 		}
@@ -91,17 +91,18 @@ require ('../../admin/includes/functions.php');
 		if( !empty($data[0]["discount"]) ){
 			$voucherDetails = selectDB("vouchers","`id` = '{$data[0]["voucher"]}'");
 			$discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
+			$discountAmount = ( $voucherDetails[0]["discountType"] == 1 ) ? $data[0]["discount"] : numTo3Float($data[0]["discount"]);
 		?>
 		<tr>
 			<td>Discount: </td>
-			<td><?php echo $data[0]["discount"] . $discountSign ?></td>
+			<td><?php echo  $discountAmount . $discountSign ?></td>
 		</tr>
 		<?php
 		}
 		?>
 		<tr>
 			<td>Total: </td>
-			<td><?php echo $data[0]["totalPrice"] . selectedCurr()?></td>
+			<td><?php echo numTo3Float($data[0]["totalPrice"]) . selectedCurr()?></td>
 		</tr>
 		</tfoot>
 	</table>
