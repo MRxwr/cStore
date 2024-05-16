@@ -192,11 +192,11 @@ $row = $result->fetch_assoc();
     <span class="Price">
     <?php 
         if ( $row["discountType"] == 0 ){
-            echo $price2 = $row["subPrice"] - ( $row["subPrice"] * $row["discount"] / 100 );
+            $price2 = $row["subPrice"] - ( $row["subPrice"] * $row["discount"] / 100 );
         }else{
-            echo $price2 = $row["subPrice"] - $row["discount"];
+            $price2 = $row["subPrice"] - $row["discount"];
         } 
-		echo selectedCurr();
+		echo numTo3Float($price2) . selectedCurr();
 		?>
     </span>
 </div>
@@ -274,11 +274,8 @@ if( isset($userID) ){
 		
 		if($VisaCard != 0){
 			$totals21 = $totals21 + $VisaCard ;
-			echo (float)round($totals21, 2) ;
-		}else{
-			echo (float)round($totals21, 2) ;
 		}
-		echo selectedCurr();
+		echo numTo3Float($totals21) . selectedCurr();
 		?>
     </span>
 </div>
