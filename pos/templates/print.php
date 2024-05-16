@@ -89,15 +89,12 @@ require ('../../admin/includes/functions.php');
 		
 		<?php 
 		if( !empty($data[0]["discount"]) ){
+			$voucherDetails = selectDB("vouchers","`id` = '{$data[0]["voucher"]}'");
+			$discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
 		?>
 		<tr>
 			<td>Discount: </td>
-			<td>
-				<?php 
-					$discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
-					echo $data[0]["discount"] . $discountSign 
-				?>
-			</td>
+			<td><?php echo $data[0]["discount"] . $discountSign ?></td>
 		</tr>
 		<?php
 		}
