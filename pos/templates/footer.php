@@ -295,6 +295,7 @@ $row = $result->fetch_assoc();
 </div>
 
 </div>
+                </div>
 <div class="h-body">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 text-center">
