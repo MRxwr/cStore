@@ -5,44 +5,54 @@ for ( $y =0; $y < 3; $y++){
 	"AND (`date` BETWEEN '".date("Y-m-d",mktime(0, 0, 0, date("m")-1, date("d"), date("Y")))."' AND '".date("Y-m-d",mktime(0, 0, 0, date("m"), date("d")+1, date("Y")))."')",
 	""
 	];
-	$statTitle = [direction("Daily","يومية"),direction("Monthly","شهرية"),direction("All time Stats","أحصائيات الكل")];
+	$enStatTitle = ["Daily Stats","Monthly Stats","All time Stats"];
+    $arStatTitle = ["يومية","شهرية","أحصائيات الكل"];
 	$sql = "SELECT SUM(f.price+JSON_UNQUOTE(JSON_EXTRACT(f.address,'$.shipping'))) as totalPrice FROM ( SELECT * FROM `orders2` WHERE `status` != '0' AND `status` != '5' {$statsDate[$y]} GROUP BY `orderId` ) as f;";
 	$result = $dbconnect->query($sql);
 	$row = $result->fetch_assoc();
     $response["totals"][] = array(
-        "title" => $statTitle[$y],
+        "enTitle" => $enStatTitle[$y],
+        "arTitle" => $arStatTitle[$y],
         "total" => $row["totalPrice"] == '' ?  numTo3Float(0) : numTo3Float($row["totalPrice"]),
     );
 }
 
 for ( $y =0; $y < 3; $y++){
 	$statsDate = ["AND `date` LIKE '%".date("Y-m-d")."%'","AND `date` BETWEEN '".date("Y-m-d",mktime(0, 0, 0, date("m")-1, date("d"), date("Y")))."' AND '".date("Y-m-d")."'",""];
-	$statTitle = [direction("Daily Stats","أحصائيات يومية"),direction("Monthly Stats","أحصائيات شهرية"),direction("All time Stats","أحصائيات الكل")];
+	$enStatTitle = ["Daily Stats","Monthly Stats","All time Stats"];
+    $arStatTitle = ["يومية","شهرية","أحصائيات الكل"];
     for( $i=0; $i < 4 ; $i++){
         $size = 0;
 		if ( $i == 0 ){
 			if ($call = selectDB("orders2","`status` = '1' {$statsDate[$y]}")){
 				$size = sizeof($call);
 			}
-			$title = direction("Success","ناجحه");
+			$enTitle = "Success";
+            $arTitle = "ناجحه";
 		}elseif( $i == 1 ){
 			if ($call = selectDB("orders2","`status` = '2' {$statsDate[$y]}")){
 				$size = sizeof($call);
 			}
-			$title = direction("Preparing","قيد التجهيز");
+			$enTitle = "Preparing";
+            $arTitle = "قيد التجهيز";
 		}elseif( $i == 2 ){
 			if ($call = selectDB("orders2","`status` = '3' {$statsDate[$y]}")){
 				$size = sizeof($call);
 			}
-			$title = direction("Delivering","جاري التوصيل");
+			$enTitle = "Delivering";
+            $arTitle = "جاري التوصيل";
 		}elseif( $i == 3 ){
 			if ($call = selectDB("orders2","`status` = '4' {$statsDate[$y]}")){
 				$size = sizeof($call);
 			}
-			$title = direction("Delivered","تم تسليمها");
+			$enTitle = "Delivered";
+            $arTitle = "تم تسليمها";
 		}
         $response["stats"][$statTitle[$y]][] = array(
-            "title" => $title,
+            "enMainTitle" => $enStatTitle[$i],
+            "arMainTitle" => $arStatTitle[$i],
+            "enTitle" => $enTitle,
+            "arTitle" => $arTitle,
             "total" => $size,
         );
     }
