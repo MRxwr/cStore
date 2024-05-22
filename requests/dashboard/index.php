@@ -6,6 +6,6 @@ require_once("../../admin/includes/functions.php");
 if( isset($_GET["a"]) && searchFile("views","blade{$_GET["a"]}.php") ){
 	require_once("views/".searchFile("views","blade{$_GET["a"]}.php"));
 }else{
-	outputError(array("msg" => "404 api Not Found"));
+	echo outputError(array("msg" => "404 api Not Found"));
 }
 ?>

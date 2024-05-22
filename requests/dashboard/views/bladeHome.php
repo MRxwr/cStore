@@ -43,4 +43,4 @@ for ( $y =0; $y < 3; $y++){
     }
 }
 
-outputData($response);
+echo outputData($response);
