@@ -48,7 +48,7 @@ for ( $y =0; $y < 3; $y++){
 			$enTitle = "Delivered";
             $arTitle = "تم تسليمها";
 		}
-        $response["stats"][$statTitle[$y]][] = array(
+        $response["stats"][] = array(
             "enMainTitle" => $enStatTitle[$i],
             "arMainTitle" => $arStatTitle[$i],
             "enTitle" => $enTitle,
