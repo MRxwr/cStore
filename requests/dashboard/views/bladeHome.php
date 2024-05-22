@@ -49,8 +49,8 @@ for ( $y =0; $y < 3; $y++){
             $arTitle = "تم تسليمها";
 		}
         $response["stats"][] = array(
-            "enMainTitle" => $enStatTitle[$i],
-            "arMainTitle" => $arStatTitle[$i],
+            "enMainTitle" => $enStatTitle[$y],
+            "arMainTitle" => $arStatTitle[$y],
             "enTitle" => $enTitle,
             "arTitle" => $arTitle,
             "total" => $size,
