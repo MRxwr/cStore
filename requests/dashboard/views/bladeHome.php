@@ -17,6 +17,7 @@ for ( $y =0; $y < 3; $y++){
 	$statsDate = ["AND `date` LIKE '%".date("Y-m-d")."%'","AND `date` BETWEEN '".date("Y-m-d",mktime(0, 0, 0, date("m")-1, date("d"), date("Y")))."' AND '".date("Y-m-d")."'",""];
 	$statTitle = [direction("Daily Stats","أحصائيات يومية"),direction("Monthly Stats","أحصائيات شهرية"),direction("All time Stats","أحصائيات الكل")];
     for( $i=0; $i < 4 ; $i++){
+        $size = 0;
 		if ( $i == 0 ){
 			if ($call = selectDB("orders2","`status` = '1' {$statsDate[$y]}")){
 				$size = sizeof($call);
