@@ -10,7 +10,7 @@ for ( $y =0; $y < 3; $y++){
 	$sql = "SELECT SUM(f.price+JSON_UNQUOTE(JSON_EXTRACT(f.address,'$.shipping'))) as totalPrice FROM ( SELECT * FROM `orders2` WHERE `status` != '0' AND `status` != '5' {$statsDate[$y]} GROUP BY `orderId` ) as f;";
 	$result = $dbconnect->query($sql);
 	$row = $result->fetch_assoc();
-    $response["totals"][] = array(
+    $response["earnings"][] = array(
         "enTitle" => $enStatTitle[$y],
         "arTitle" => $arStatTitle[$y],
         "total" => $row["totalPrice"] == '' ?  numTo3Float(0) : numTo3Float($row["totalPrice"]),
