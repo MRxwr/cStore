@@ -16,7 +16,7 @@ if ( isset($_POST["getAreasA"]) ){
 			}
 		}
 	}else{
-		if( $countries = selectDB("cities","`CountryCode` = '{$_POST["getAreasA"]}' ORDER BY `CityNames` ASC") ){
+		if( $countries = selectDBNew("cities",[$_POST["getAreasA"]],"`CountryCode` = ?","`CityNames` ASC") ){
 			for( $i =0; $i < sizeof($countries); $i++ ){
 				echo "<option value='{$countries[$i]['CityNames']}'>{$countries[$i]['CityNames']}</option>";
 			}
@@ -28,9 +28,9 @@ if ( isset($_POST["getAreasA"]) ){
 if ( isset($_POST["removeItemBoxId"]) ){
 	$id = $_POST["removeItemBoxId"];
 	$subId = $_POST["removeItemBoxSubId"];
-	if( $cart = selectDB("cart","`id` = '{$id}'") ){
+	if( $cart = selectDBNew("cart",[$id],"`id` = ?","") ){
 		deleteDB("cart","`id` = '{$id}'");
-		if( $cartTotal = selectDB("cart","`cartId` = '{$cart[0]["cartId"]}'") ){
+		if( $cartTotal = selectDBNew("cart",[$cart[0]["cartId"]],"`cartId` = ?","") ){
 			echo sizeof($cartTotal) . "," . getCartPrice();
 		}else{
 			echo "0" . "," . getCartPrice();
@@ -49,7 +49,7 @@ if ( isset($_POST["checkVoucherVal"]) && isset($_POST["totals2"]) && isset($_POS
 	$userDiscountP 	 = $_POST["userDiscountPercentage"];
 	$incomingVoucher = $_POST["checkVoucherVal"];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if( $voucher = selectDB("vouchers","`code` LIKE '{$incomingVoucher}' AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'") ){
+	if( $voucher = selectDBNew("vouchers",[$incomingVoucher],"`code` LIKE ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$voucherId = $voucher[0]["id"];
 		if( $voucher[0]["type"] == 1 ){
 			$newTotal = voucherApplyToAll($voucherId);
