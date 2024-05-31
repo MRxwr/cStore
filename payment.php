@@ -79,7 +79,7 @@ if( $voucherData = selectDBNew("vouchers",[$_POST["voucher"]],"`id` = ? AND `end
 }
 // check price after user discount \\
 $price = $price * ((100-$userDiscount)/100);
-die();
+
 // call payapi to get payment link \\
 $address = json_decode($_POST["address"],true);
 if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
@@ -133,7 +133,7 @@ if( $address["country"] == "KW" ){
     	);
 	}
 }
-	
+die();
 $shippingInfo = array(
 	"CountryCode"	=> $address["country"],
 	"CityName"		=> $address["area"],
