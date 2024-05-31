@@ -57,7 +57,7 @@ if ( $address["place"] != "3" ){
     <?php echo $deliveryText . ": " . numTo3Float(priceCurr($address["shipping"])) . selectedCurr()?><br>
     <?php echo $discount = ( $discountAmount == 0 ) ? $discountText . ": ". $discountAmount . "<br>": "";?>    
     <?php echo $userDiscountText = ($order[0]["userDiscount"] != 0 ) ? direction("User Discount","خصم الأعضاء") . ": ". $order[0]["userDiscount"] . "%<br>": ""; ?>    
-    <?php echo $totalPriceText . ": " . numTo3Float(priceCurr($order[0]["price"])+priceCurr($address["shipping"])+priceCurr(getExtrasOrder($_GET["id"]))) . selectedCurr()?><br>
+    <?php echo $totalPriceText . ": " . numTo3Float(priceCurr($order[0]["price"])+priceCurr($address["shipping"])+priceCurr(getExtrasOrder($_GET["orderId"]))) . selectedCurr()?><br>
 </div>
 </div>
 </div>
