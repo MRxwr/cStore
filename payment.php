@@ -88,7 +88,7 @@ if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
 }else{
 	$address["express"] = 0;
 }
-die();
+
 // create item list \\
 $itemList = getItemsForPayment($getCartId["cart"],$paymentAPIPrice);
 $itemList[] = array(

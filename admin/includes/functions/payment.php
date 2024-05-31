@@ -226,7 +226,7 @@ function checkPayment($data){
 
 // Get Items Details For PaymentAPI \\
 function getItemsForPayment($cartId,$prices){
-	if ( $cart = selectDB("cart",[$cartId],"`cartId` = ?","") ){
+	if ( $cart = selectDBNew("cart",[$cartId],"`cartId` = ?","") ){
 		for( $i = 0; $i < sizeof($cart); $i++ ){
 			$item = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
 			$attribute = selectDB("products","`id` = '{$cart[$i]["subId"]}'");
