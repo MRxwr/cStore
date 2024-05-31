@@ -88,7 +88,7 @@ if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
 }else{
 	$address["express"] = 0;
 }
-
+die();
 // create item list \\
 $itemList = getItemsForPayment($getCartId["cart"],$paymentAPIPrice);
 $itemList[] = array(
@@ -98,7 +98,7 @@ $itemList[] = array(
 	"Quantity" 		=> 1,
 	"UnitPrice" 	=> (float)substr(getExtarsTotalDefault(),0,6)
 );
-die();
+
 // shiiping information \\
 if( $address["country"] == "KW" ){
 	$settingsShippingMethod = 0;
