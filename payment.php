@@ -47,7 +47,7 @@ if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 }else{
 	header("Location: checkout.php?error=2");die();
 }
-die();
+
 // generate order Id \\
 $orderId = generateOrderId();
 $price = (float)substr(getCartPriceDefault(),0,6);
@@ -79,7 +79,7 @@ if( $voucherData = selectDBNew("vouchers",[$_POST["voucher"]],"`id` = ? AND `end
 }
 // check price after user discount \\
 $price = $price * ((100-$userDiscount)/100);
-
+die();
 // call payapi to get payment link \\
 $address = json_decode($_POST["address"],true);
 if( isset($_POST["expressDelivery"]) && !empty($_POST["expressDelivery"]) ){
