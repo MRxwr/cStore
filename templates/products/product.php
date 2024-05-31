@@ -1,10 +1,10 @@
 <?php
-if( $product = selectDB("products","`id` LIKE '{$_GET["id"]}' AND `hidden` = '0'") ){
+if( $product = selectDBNew("products",[$_GET["id"]],"`id` LIKE ? AND `hidden` = '0'","") ){
 	$price = 0;
 	$sku = 0;
 	$quantity = 1;
 	$sale = 0;
-	if( $attribute = selectDB("attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$_GET["id"]}' ORDER BY `price` ASC LIMIT 1") ){
+	if( $attribute = selectDB("attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$product[0]["id"]}' ORDER BY `price` ASC LIMIT 1") ){
 		$price = 0;
 		$sku = 0;
 		$quantity = 1;
@@ -130,7 +130,7 @@ if ( $theme == 1 ){
 			   <select class="form-control pp-fc selectedOptions" name="size" required>
 			   <?php
 			   echo "<option selected value=''>".direction("Options","الخيارات")."</option>";
-			   if( $attributes = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$_GET["id"]}'") ){
+			   if( $attributes = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$product[0]["id"]}'") ){
 				   for ( $i=0; $i<sizeof($attributes); $i++){
 					   if( $product[0]["discountType"] == 0 ){
 						   $price = $attributes[$i]["price"] - $product[0]["discount"];
@@ -144,7 +144,7 @@ if ( $theme == 1 ){
 			   </select>
 			   
 			   <?php
-			   if( $attributes = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$_GET["id"]}'") ){
+			   if( $attributes = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$product[0]["id"]}'") ){
 				   for ( $i=0; $i<sizeof($attributes); $i++){
 					   if( $product[0]["discountType"] == 0 ){
 						   $price = $attributes[$i]["price"] * ( (100 - $product[0]["discount"]) / 100 );
@@ -305,7 +305,7 @@ if ( $theme == 1 ){
 			   <button class="btn btn-theme-cust btn-large" id="subminBtn" ><span class="fa fa-shopping-cart"></span> <?php echo direction("Add to cart","أضف للسلة") ?></button>
 			</div>
 
-			<input type="hidden" name="id" value="<?php echo $_GET["id"] ?>">
+			<input type="hidden" name="id" value="<?php echo $product[0]["id"] ?>">
 			</form>
 			<div class="col-12 mt-3">
 			   <hr>
@@ -356,7 +356,7 @@ $(function(){
 	$("body").on('click','#wishlistBtn',function(e){
 		e.preventDefault();
 		if ( confirm("<?php echo direction("Are you sure you want to add this item to your wishlist?","هل انت متأكد من إنك تريد اضافة هذا المنتج لقائمة المفضلة؟") ?>") ){
-			var id = <?php echo $_GET["id"] ?>;
+			var id = <?php echo $product[0]["id"] ?>;
 			var wishlistArray = JSON.parse($.cookie("<?php echo $cookieSession . "activity" ?>"));
 			wishlistArray["wishlist"]["id"].push(id)
 			$.cookie("<?php echo $cookieSession . "activity" ?>", JSON.stringify(wishlistArray));

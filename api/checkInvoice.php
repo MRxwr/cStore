@@ -1,21 +1,21 @@
 <?php
 if ( isset($_GET["c"]) ){
 	$Key = $_GET["c"];
-	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["c"]}'") ){
+	if( $order = selectDBNew("orders2",[$_GET["c"]],"`gatewayId` = ?","") ){
 		$orderId = $order[0]["id"];
 	}else{
 		header("LOCATION: checkout.php?error=3");die();
 	}
 }elseif ( isset($_GET["p"]) ){
 	$Key = $_GET["p"];
-	if( $order = selectDB("posorders","`orderId` = '{$_GET["p"]}'") ){
+	if( $order = selectDBNew("posorders",[$_GET["p"]],"`orderId` = ?","") ){
 		$orderId = $order[0]["orderId"];
 	}else{
 		header("LOCATION: index.php?error=3");die();
 	}
 }elseif( isset($_GET["OrderID"]) && !empty($_GET["OrderID"]) ){
 	$Key = $_GET["OrderID"];
-	if( $order = selectDB("orders2","`gatewayId` = '{$_GET["OrderID"]}'") ){
+	if( $order = selectDBNew("orders2",[$_GET["OrderID"]],"`gatewayId` = ?","") ){
 		$orderId = $order[0]["id"];
 	}else{
 		header("LOCATION: checkout.php?error=3");die();
@@ -53,7 +53,7 @@ if ( isset($_GET["c"]) ){
 	}else{
 		$resultMY = json_decode($response, true);
 		$orderId = $resultMY["data"]["Data"]["InvoiceId"];
-		if( $order = selectDB("orders2","`gatewayId` = '{$orderId}'") ){
+		if( $order = selectDB("orders2",[$orderId],"`gatewayId` = ?","") ){
 			$orderId = $order[0]["id"];
 		}else{
 			header("LOCATION: checkout.php?error=3");die();

@@ -5,7 +5,7 @@
 
 <div class="mb-3"></div>
 <?php
-if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$_GET["id"]}' ORDER BY RAND() LIMIT 4") ){ 
+if( $products = selectDB("products","`hidden` = '0' AND `id` != '{$product[0]["id"]}' ORDER BY RAND() LIMIT 4") ){ 
 	$settings = selectDB("settings","`id` = '1'"); 
 	$productShape = ( $settings[0]["productView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
 	?>
