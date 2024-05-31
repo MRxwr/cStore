@@ -26,14 +26,14 @@ if ( isset($_POST["id"]) ){
 	if( $cart = selectDBNew("cart",[$getCartId["cart"],$_POST["size"]],"`cartId` = ? AND `subId` = ?","") ){
 		if( $cart = selectDB2("*, SUM(quantity) as totalQuan","cart","`cartId` = '{$getCartId["cart"]}' AND `subId` = '{$_POST["size"]}'") ){
 			$newQuant = $cart[0]["totalQuan"] + $_POST["qorder"];
-			if( $quant = selectDB("attributes_products",[$_POST["size"],$newQuant],"`id` = ? AND `quantity` >= ?","") ){
+			if( $quant = selectDBNew("attributes_products",[$_POST["size"],$newQuant],"`id` = ? AND `quantity` >= ?","") ){
 				insertDB("cart",$productData);
 			}else{
-				$quant = selectDB("attributes_products",[$_POST["size"]],"`id` = ?","");
+				$quant = selectDBNew("attributes_products",[$_POST["size"]],"`id` = ?","");
 				header("LOCATION: product.php?id={$_POST["id"]}&e=1&c={$_POST["qorder"]}");
 			}
 		}else{
-			$quant = selectDB("attributes_products",[$_POST["size"]],"`id` = ?","");
+			$quant = selectDBNew("attributes_products",[$_POST["size"]],"`id` = ?","");
 			header("LOCATION: product.php?id={$_POST["id"]}&e=4&c={$_POST["qorder"]}");
 		}
 	}else{
