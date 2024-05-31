@@ -53,7 +53,7 @@
                 <!-- start cart item -->
                 <?php
                 $getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-				if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+				if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 					$extraPrice = [0];
 					for ($i =0; $i < sizeof($cart); $i++){
 						$product = selectDB("products","`id` = '{$cart[$i]["productId"]}'");

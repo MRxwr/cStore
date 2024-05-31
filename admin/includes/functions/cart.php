@@ -13,7 +13,7 @@ function getCartId(){
 function getCartItemsTotal(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		return sizeof($cart);
 	}else{
 		return 0;
@@ -23,8 +23,12 @@ function getCartItemsTotal(){
 function getCartQuantity(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB2("SUM(quantity) as totalQuan","cart","`cartId` = '{$getCartId["cart"]}'") ){
-		return $cart[0]["totalQuan"];
+	if( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
+		if ( $cart = selectDB2("SUM(quantity) as totalQuan","cart","`cartId` = '{$getCartId["cart"]}'") ){
+			return $cart[0]["totalQuan"];
+		}else{
+			return 0;
+		}
 	}else{
 		return 0;
 	}
@@ -34,7 +38,7 @@ function getCartPrice(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			$sale = checkProductDiscount($cart[$i]["subId"]);
@@ -60,7 +64,7 @@ function getCartPriceTotal(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			$sale = checkProductDiscount($cart[$i]["subId"]);
@@ -86,7 +90,7 @@ function noDiscountCartPrice(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			$price = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");
@@ -112,7 +116,7 @@ function noDiscountCartPrice(){
 function noDiscountItemsPrice(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$price = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");
 			$totals[] = ($price[0]["price"] * $cart[$i]["quantity"]);
@@ -129,7 +133,7 @@ function getExtarsTotal(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			for( $y = 0; $y < sizeof($extras["id"]) ; $y++ ){
@@ -155,7 +159,7 @@ function loadCartItems(){
 	$output = "";
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$product = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
 			$attribute = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");

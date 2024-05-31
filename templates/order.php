@@ -1,6 +1,6 @@
 <?php
-if( isset($orderUserEmail) && !empty($orderUserEmail) && $checkUser = selectDB("orders2","JSON_UNQUOTE(JSON_EXTRACT(info,'$.email')) LIKE '%{$orderUserEmail}%' AND `id` = '{$_GET["orderId"]}'") ){
-    if ( isset($_GET["orderId"]) && $order = selectDB("orders2","`id` = '{$_GET["orderId"]}'")){
+if( isset($orderUserEmail) && !empty($orderUserEmail) && $checkUser = selectDBNew("orders2",[$orderUserEmail,$_GET["orderId"]],"JSON_UNQUOTE(JSON_EXTRACT(info,'$.email')) LIKE CONCAT('%', ?, '%') AND `id` = ?","") ){
+    if ( isset($_GET["orderId"]) && $order = selectDBNew("orders2",[$_GET["orderId"]],"`id` = ?","")){
         $info = json_decode($order[0]["info"],true);
         $address = json_decode($order[0]["address"],true);
         $giftCard = json_decode($order[0]["giftCard"],true);

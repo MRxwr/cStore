@@ -29,7 +29,7 @@ if ( isset($_POST["removeItemBoxId"]) ){
 	$id = $_POST["removeItemBoxId"];
 	$subId = $_POST["removeItemBoxSubId"];
 	if( $cart = selectDBNew("cart",[$id],"`id` = ?","") ){
-		deleteDB("cart","`id` = '{$id}'");
+		deleteDBNew("cart",[$id],"`id` = ?");
 		if( $cartTotal = selectDBNew("cart",[$cart[0]["cartId"]],"`cartId` = ?","") ){
 			echo sizeof($cartTotal) . "," . getCartPrice();
 		}else{

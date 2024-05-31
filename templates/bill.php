@@ -9,7 +9,7 @@ if (isset($_POST["paymentMethod"]) AND $_POST["paymentMethod"] == "2"){
 }
 
 $getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 	$items = $cart;
 	for( $i = 0; $i < sizeof($items); $i++ ){
 		unset($items[$i]["collections"]);
@@ -18,7 +18,7 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 		$items[$i]["collections"] = json_decode($cart[$i]["collections"],true);
 		$items[$i]["extras"] = json_decode($cart[$i]["extras"],true);
 		$items[$i]["giftCard"] = json_decode($cart[$i]["giftCard"],true);
-		if( $subQuan = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}' AND `quantity` >= '{$items[$i]["quantity"]}'") ){
+		if( $subQuan = selectDBNew("attributes_products",[$items[$i]["subId"],$items[$i]["quantity"]],"`id` = ? AND `quantity` >= ?","") ){
 			$items[$i]["price"] = $subQuan[0]["price"];
 			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"]);
 			if(isset($_POST["voucher"])){
@@ -35,14 +35,14 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 				$paymentAPIPrice[] = $items[$i]["price"];
 			}
 		}else{
-			deleteDB("cart","`id` = '{$cart[$i]["id"]}'");
+			deleteDBNew("cart",[$cart[$i]["id"]],"`id` = ?");
 			header("LOCATION: checkout.php?error=5");die();
 		}
 	}
 }
 
 if ( isset($_POST["address"]["place"]) && !empty($_POST["address"]["place"]) && $_POST["address"]["place"] != 3 && $_POST["address"]["place"] != 4 ){
-	if ( $_POST["address"]["country"] == "KW" && $delivery = selectDB("areas","`id` = '{$_POST["address"]["area"]}'") ){
+	if ( $_POST["address"]["country"] == "KW" && $delivery = selectDBNew("areas",[$_POST["address"]["area"]],"`id` = ?","") ){
 		$shoppingCharges = $delivery[0]["charges"];
 	}elseif( $delivery = selectDB("settings","`id` = '1'") ){
 		if( $delivery[0]["shippingMethod"] != 0 ){

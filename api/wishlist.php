@@ -9,7 +9,7 @@ if( isset($_COOKIE[$cookieSession."activity"]) ){
 		echo direction("You have not added any product to the list.","لم تضف اي منتج في القائمة");
 	}else{
 		for( $i = 0; $i < sizeof($activity["wishlist"]["id"]); $i++ ){
-			if( $product = selectDB("products","`id` = '{$activity["wishlist"]["id"][$i]}' AND `hidden` = '0'") ){
+			if( $product = selectDBNew("products",[$activity["wishlist"]["id"][$i]],"`id` = ? AND `hidden` = '0'","") ){
 				$image = selectDB("images","`productId` = '{$product[0]["id"]}' ORDER BY `id` ASC LIMIT 1");
 				$category = selectDB("categories","`id` = '{$product[0]["categoryId"]}'");
 				$output .= "

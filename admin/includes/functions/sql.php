@@ -29,6 +29,37 @@ function deleteDB($table, $where){
     }
 }
 
+function deleteDBNew($table, $params, $where){
+    GLOBAL $dbconnect, $userID, $empUsername, $_GET;
+    $sql = "DELETE FROM `" . $table . "` WHERE " . $where;
+    if (isset($_GET["v"]) && !empty($_GET["v"])) {
+        $array = array(
+            "userId" => $userID,
+            "username" => $empUsername,
+            "module" => $_GET["v"],
+            "action" => "Delete",
+            "sqlQuery" => json_encode(array("table" => $table, "where" => $where)),
+        );
+        LogsHistory($array);
+    }
+    if ($stmt = $dbconnect->prepare($sql)) {
+        $types = str_repeat('s', count($params)); // Assuming all parameters are strings. Adjust if needed.
+        $stmt->bind_param($types, ...$params);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return 1;
+        } else {
+            $stmt->close();
+            $error = array("msg" => "delete table error");
+            return outputError($error);
+        }
+    } else {
+        $error = array("msg" => "prepare statement error");
+        return outputError($error);
+    }
+}
+
+
 function selectDBNew($table, $placeHolders, $where, $order){
     GLOBAL $dbconnect;
     $check = [';', '"'];

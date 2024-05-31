@@ -1,6 +1,6 @@
 <?php
 if( isset($_GET["id"]) && !empty($_GET["id"]) ){
-	if( $category = selectDB("categories","`id` = '{$_GET["id"]}'") ){
+	if( $category = selectDBNew("categories",[$_GET["id"]],"`id` = ?","") ){
 		if( !empty($category[0]["header"]) ){
 			$settingsImage = $category[0]["header"];
 		}

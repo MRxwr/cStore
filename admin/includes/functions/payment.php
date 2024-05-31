@@ -4,7 +4,7 @@ function getCartPriceDefault(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			$sale = checkProductDiscountDefault($cart[$i]["subId"]);
@@ -30,7 +30,7 @@ function getExtarsTotalDefault(){
 	GLOBAL $_COOKIE,$cookieSession;
 	$extraPrice = [0];
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+	if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 		for ($i =0; $i < sizeof($cart); $i++){
 			$extras = json_decode($cart[$i]["extras"] ,true);
 			for( $y = 0; $y < sizeof($extras["id"]) ; $y++ ){
@@ -54,7 +54,7 @@ function getExtarsTotalDefault(){
 // default Vouchers \\
 function checkItemVoucherDefault($code,$id){
 	$sale = checkProductDiscountDefault($id);
-	if( $voucher = selectDB("vouchers","`id` = '{$code}' AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'") ){
+	if( $voucher = selectDBNew("vouchers",[$code],"`id` = ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 		$voucherId = $voucher[0]["id"];
 		if( $voucher[0]["type"] == 1 ){
 			if( $voucher[0]["discountType"] == 1 ){
@@ -64,9 +64,9 @@ function checkItemVoucherDefault($code,$id){
 			}
 			return numTo3Float($price);;
 		}elseif( $voucher[0]["type"] == 2 ){
-			$subProduct = selectDB("attributes_products","`id` = '{$id}'");
+			$subProduct = selectDBNew("attributes_products",[$id],"`id` = ?","");
 			$price = $subProduct[0]["price"];
-			if( $voucher = selectDB("vouchers","JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE '%{$id}%'") ){
+			if( $voucher = selectDBNew("vouchers",[$id],"JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE CONCAT('%', ?, '%')","") ){
 				if( $voucher[0]["discountType"] == 1 ){
 					$price = $price * ((100-$voucher[0]["discount"])/100);
 				}else{
@@ -76,7 +76,7 @@ function checkItemVoucherDefault($code,$id){
 			return numTo3Float($price);
 		}elseif( $voucher[0]["type"] == 3 ){
 			$price = $sale;
-			if( $voucher = selectDB("vouchers","JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE '%{$id}%'") ){
+			if( $voucher = selectDBNew("vouchers",[$id],"JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE CONCAT('%', ?, '%')","") ){
 				if( $voucher[0]["discountType"] == 1 ){
 					$price = $price * ((100-$voucher[0]["discount"])/100);
 				}else{
@@ -91,7 +91,7 @@ function checkItemVoucherDefault($code,$id){
 }
 
 function voucherApplyToAllDefault($code){
-	$code = selectDB("vouchers","`id` = '{$code}'");
+	$code = selectDBNew("vouchers",[$code],"`id` = ?","");
 	if( $code[0]["discountType"] == 1 ){
 		return ((float)substr(getCartPrice(),0,6) * ((100-$code[0]["discount"])/100));
 	}elseif( $code[0]["discountType"] == 2 ){
@@ -102,14 +102,14 @@ function voucherApplyToAllDefault($code){
 function voucherSelectedItemsDefault($code){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	$code = selectDB("vouchers","`id` = '{$code}'");
-	$cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'");
+	$code = selectDBNew("vouchers",[$code],"`id` = ?","");
+	$cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","");
 	$items = json_decode($code[0]["items"],true);
 	for ( $i = 0; $i < sizeof($cart); $i++ ){
-		$subProduct = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");
-		$product = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
+		$subProduct = selectDBNew("attributes_products",[$cart[$i]["subId"]],"`id` = ?","");
+		$product = selectDBNew("products",[$cart[$i]["productId"]],"`id` = ?","");
 		$price = $subProduct[0]["price"];
-		if ( $code = selectDB("vouchers","JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE '%{$cart[$i]["productId"]}%'") ){
+		if ( $code = selectDBNew("vouchers",[$cart[$i]["productId"]],"JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE CONCAT('%', ?, '%')","") ){
 			if( $code[0]["discountType"] == 1 ){
 				$price = $price * ((100-$code[0]["discount"])/100);
 			}else{
@@ -131,18 +131,18 @@ function voucherSelectedItemsDefault($code){
 function voucherDoubleDiscountDefault($code){
 	GLOBAL $_COOKIE,$cookieSession;
 	$getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-	$code = selectDB("vouchers","`id` = '{$code}'");
-	$cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'");
+	$code = selectDBNew("vouchers",[$code],"`id` = ?","");
+	$cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","");
 	$items = json_decode($code[0]["items"],true);
 	for ( $i = 0; $i < sizeof($cart); $i++ ){
-		$subProduct = selectDB("attributes_products","`id` = '{$cart[$i]["subId"]}'");
-		$product = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
+		$subProduct = selectDBNew("attributes_products",[$cart[$i]["subId"]],"`id` = ?","");
+		$product = selectDBNew("products",[$cart[$i]["productId"]],"`id` = ?","");
 		if( $product[0]["discountType"] == 0 ){
 			$price = $subProduct[0]["price"] * ((100-$product[0]["discount"])/100);
 		}else{
 			$price = $subProduct[0]["price"] - $product[0]["discount"];
 		}
-		if ( $code = selectDB("vouchers","JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE '%{$cart[$i]["productId"]}%'") ){
+		if ( $code = selectDBNew("vouchers",[$cart[$i]["productId"]],"JSON_UNQUOTE(JSON_EXTRACT(items,'$[*]')) LIKE CONCAT('%', ?, '%')","") ){
 			if( $code[0]["discountType"] == 1 ){
 				$price = $price * ((100-$code[0]["discount"])/100);
 			}else{
@@ -156,7 +156,7 @@ function voucherDoubleDiscountDefault($code){
 }
 
 function checkProductDiscountDefault($id){
-	$attribute = selectDB("attributes_products","`id` = '{$id}'");
+	$attribute = selectDBNew("attributes_products",[$id],"`id` = ?","");
 	$product = selectDB("products","`id` = '{$attribute[0]["productId"]}'");
 	if( $product[0]["discountType"] == 0 ){
 		$sale = $attribute[0]["price"] * ( 1 - ($product[0]["discount"] / 100) );
@@ -226,7 +226,7 @@ function checkPayment($data){
 
 // Get Items Details For PaymentAPI \\
 function getItemsForPayment($cartId,$prices){
-	if ( $cart = selectDB("cart","`cartId` = '{$cartId}'") ){
+	if ( $cart = selectDB("cart",[$cartId],"`cartId` = ?","") ){
 		for( $i = 0; $i < sizeof($cart); $i++ ){
 			$item = selectDB("products","`id` = '{$cart[$i]["productId"]}'");
 			$attribute = selectDB("products","`id` = '{$cart[$i]["subId"]}'");
@@ -284,7 +284,7 @@ function getInternationalShipping($items,$address){
 function sendOrderToAllowMENA($orderId){
 	GLOBAL $settingsShippingMethod;
 	if ( $settingsShippingMethod == 3 ){
-		$order = selectDB("orders2","`orderId` = '{$orderId}'");
+		$order = selectDB("orders2",[$orderId],"`orderId` = ?","");
 		$order[0]["paymentMethod"] = ($order[0]["paymentMethod"] == 3) ? 0 : $order[0]["paymentMethod"];
 		$address = json_decode($order[0]["address"],true);
 		$info = json_decode($order[0]["info"],true);

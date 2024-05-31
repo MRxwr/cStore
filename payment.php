@@ -17,7 +17,7 @@ $phone1 = (is_numeric($info["phone"]) ? $info["phone"] : "12345678");
 $userDiscount = (isset($userDiscount) && !empty($userDiscount)) ? $userDiscount : 0;
 // cart details \\
 $getCartId = json_decode($_COOKIE[$cookieSession."activity"],true);
-if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
+if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 	$items = $cart;
 	for( $i = 0; $i < sizeof($items); $i++ ){
 		unset($items[$i]["collections"]);
@@ -26,7 +26,7 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 		$items[$i]["collections"] = json_decode($cart[$i]["collections"],true);
 		$items[$i]["extras"] = json_decode($cart[$i]["extras"],true);
 		$items[$i]["giftCard"] = json_decode($cart[$i]["giftCard"],true);
-		if( $subQuan = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}' AND `quantity` >= '{$items[$i]["quantity"]}'") ){
+		if( $subQuan = selectDBNew("attributes_products",[$items[$i]["subId"],$items[$i]["quantity"]],"`id` = ? AND `quantity` >= ?","") ){
 			$items[$i]["originalPrice"] = $subQuan[0]["price"];
 			$items[$i]["price"] = $subQuan[0]["price"]* ((100-$userDiscount)/100);
 			$items[$i]["discountPrice"] = checkProductDiscountDefault($items[$i]["subId"])* ((100-$userDiscount)/100);
@@ -40,7 +40,7 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 			}
 			$paymentAPIPrice[] = $itemPrice;
 		}else{
-			deleteDB("cart","`id` = '{$cart[$i]["id"]}'");
+			deleteDBNew("cart",[$cart[$i]["id"]],"`id` = ?");
 			header("LOCATION: checkout.php?error=5");die();
 		}
 	}
@@ -52,7 +52,7 @@ if ( $cart = selectDB("cart","`cartId` = '{$getCartId["cart"]}'") ){
 $orderId = generateOrderId();
 $price = (float)substr(getCartPriceDefault(),0,6);
 // voucher details \\
-if( $voucherData = selectDB("vouchers","`id` = '{$_POST["voucher"]}' AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'") ){
+if( $voucherData = selectDBNew("vouchers",[$_POST["voucher"]],"`id` = ? AND `endDate` >= '".date("Y-m-d")."' AND `startDate` <= '".date("Y-m-d")."'","") ){
 	$voucherId = $voucherData[0]["id"];
 	if( $voucherData[0]["type"] == 1 ){
 		$price = voucherApplyToAllDefault($voucherId);
@@ -102,7 +102,7 @@ $itemList[] = array(
 // shiiping information \\
 if( $address["country"] == "KW" ){
 	$settingsShippingMethod = 0;
-	$area = selectDB("areas","`id` = '{$address["area"]}'");
+	$area = selectDBNew("areas",[$address["area"]],"`id` = ?","");
 	$address["area"] = $area[0]["enTitle"];
 	$totalPrice = numTo3Float((float)$price + (float)$address["shipping"] + (float)substr(getExtarsTotalDefault(),0,6));
 	$itemList[] = array(
