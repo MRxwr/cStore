@@ -13,6 +13,7 @@ $voucher = json_decode($order[0]["voucher"],true);
 $items = json_decode($order[0]["items"],true);
 if( isset($voucher["id"]) && !empty($voucher["id"]) && $voucherDetails = selectDB("vouchers","`id` = '{$voucher["id"]}'")){
 	$voucher1 = $voucherDetails[0]["code"];
+	$voucherSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%{$voucherDetails[0]["discount"]}" : priceCurr($voucherDetails[0]["discount"]).selectedCurr() ;
 }else{
 	if( isset($voucher["voucher"]) && !empty($voucher["voucher"]) ){
 		$voucher1 = "R.U";
@@ -133,7 +134,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $discountText ?></p>
-                                <p>%<?php echo $voucher["discount"] ?></p>
+                                <p>%<?php echo $voucherSign ?></p>
                             </div>
 							<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("User Discount","خصم الأعضاء") ?></p>
