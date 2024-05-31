@@ -134,7 +134,7 @@ if ( $order[0]["status"] == '0' ){
                             </div>
                             <div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo $discountText ?></p>
-                                <p>%<?php echo $voucherSign ?></p>
+                                <p><?php echo $voucherSign ?></p>
                             </div>
 							<div class="col-md-3 col-sm-6 col-6">
                                 <p class="bold"><?php echo direction("User Discount","خصم الأعضاء") ?></p>
