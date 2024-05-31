@@ -47,7 +47,7 @@ if ( $cart = selectDBNew("cart",[$getCartId["cart"]],"`cartId` = ?","") ){
 }else{
 	header("Location: checkout.php?error=2");die();
 }
-
+die();
 // generate order Id \\
 $orderId = generateOrderId();
 $price = (float)substr(getCartPriceDefault(),0,6);
