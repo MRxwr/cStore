@@ -98,7 +98,7 @@ $itemList[] = array(
 	"Quantity" 		=> 1,
 	"UnitPrice" 	=> (float)substr(getExtarsTotalDefault(),0,6)
 );
-
+die();
 // shiiping information \\
 if( $address["country"] == "KW" ){
 	$settingsShippingMethod = 0;
@@ -133,7 +133,7 @@ if( $address["country"] == "KW" ){
     	);
 	}
 }
-die();
+
 $shippingInfo = array(
 	"CountryCode"	=> $address["country"],
 	"CityName"		=> $address["area"],
