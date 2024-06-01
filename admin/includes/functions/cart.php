@@ -282,7 +282,6 @@ function loadWhatsappItems($items){
 		}else{
 			$sale = $items[$i]["price"];
 		}
-		$sale = $attribute[0]["price"];
 		$output .= "<td class='col-md-9'>{$items[$i]["quantity"]}x ";
 		$output .= direction($product[0]["enTitle"],$product[0]["arTitle"]);
 		if( !empty(direction($attribute[0]["enTitle"],$attribute[0]["arTitle"])) ){
