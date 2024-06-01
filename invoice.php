@@ -250,7 +250,7 @@ for ($i =0; $i < sizeof($items); $i++){
 								if( $voucher["discountType"] == 1 ){
 									$discountAmount = $voucher["discount"] . "%";
 								}elseif( $voucher["discountType"] == 2 ){
-									$discountAmount = $voucher["discount"] . $defaultCurr;
+									$discountAmount = $voucher["discount"] . selectedCurr();
 								}else{
 									$discountAmount = "/-";
 								}
