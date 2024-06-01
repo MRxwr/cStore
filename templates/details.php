@@ -13,7 +13,7 @@ $voucher = json_decode($order[0]["voucher"],true);
 $items = json_decode($order[0]["items"],true);
 if( isset($voucher["id"]) && !empty($voucher["id"]) && $voucherDetails = selectDB("vouchers","`id` = '{$voucher["id"]}'")){
 	$voucher1 = $voucherDetails[0]["code"];
-	$voucherSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%{$voucherDetails[0]["discount"]}" : priceCurr($voucherDetails[0]["discount"]).selectedCurr() ;
+	$voucherSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%{$voucherDetails[0]["discount"]}" : numTo3Float(priceCurr($voucherDetails[0]["discount"])).selectedCurr() ;
 }else{
 	if( isset($voucher["voucher"]) && !empty($voucher["voucher"]) ){
 		$voucher1 = "R.U";
