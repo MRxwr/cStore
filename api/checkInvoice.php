@@ -53,7 +53,7 @@ if ( isset($_GET["c"]) ){
 	}else{
 		$resultMY = json_decode($response, true);
 		$orderId = $resultMY["data"]["Data"]["InvoiceId"];
-		if( $order = selectDB("orders2",[$orderId],"`gatewayId` = ?","") ){
+		if( $order = selectDBNew("orders2",[$orderId],"`gatewayId` = ?","") ){
 			$orderId = $order[0]["id"];
 		}else{
 			header("LOCATION: checkout.php?error=3");die();
