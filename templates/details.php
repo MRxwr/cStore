@@ -21,6 +21,7 @@ if( isset($voucher["id"]) && !empty($voucher["id"]) && $voucherDetails = selectD
 	}else{
 		$voucher1 = 0;
 	}
+	$voucherSign = "";
 }
 
 $email = $info["email"];
