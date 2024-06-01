@@ -70,7 +70,8 @@ function setCurr($data){
 
 // convert prices regarding selected currency \\
 function priceCurr($data){
-	if( $currency = selectDBNew("currency",[selectedCurr()],"`short` LIKE CONCAT('%', ?, '%')","") ){
+	$selectedCurr = selectedCurr();
+	if( $currency = selectDBNew("currency",[$selectedCurr],"`short` LIKE CONCAT('%', ?, '%')","") ){
 		return $data * $currency[0]["yourValue"];
 	}else{
 		return $data;
