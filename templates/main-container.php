@@ -5,10 +5,10 @@ if ( $theme == 1 ){
 	$section = "container";
 }
 if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
-	if ( $categoryIdCheck = selectDBNew("categories",[$_GET["id"]],"`id` = ?","") ){
+	if ( $categoryIdCheck = selectDBNew("categories",[$_GET["id"]],"`id` = ? AND `status` = '0' AND `hidden` = '1'","") ){
 		$getCategoryId = "t.categoryId = '{$categoryIdCheck[0]["id"]}'";
 	}else{
-		$getCategoryId = "t.status = '0'";
+		header("LOCATION: index.php");
 	}
 }else{
     $getCategoryId = "t.status = '0'";
