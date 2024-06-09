@@ -5,7 +5,11 @@ if ( $theme == 1 ){
 	$section = "container";
 }
 if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
-    $getCategoryId = "t.categoryId = '{$_GET["id"]}'";
+	if ( $categoryIdCheck = selectDBNew("categories",[$_GET["id"]],"`id` = ?","") ){
+		$getCategoryId = "t.categoryId = '{$categoryIdCheck[0]["id"]}'";
+	}else{
+		$getCategoryId = "t.status = '0'";
+	}
 }else{
     $getCategoryId = "t.status = '0'";
 }
