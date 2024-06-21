@@ -145,9 +145,9 @@ if ( $emailOpt == 1 ){
 <?php
 
 for ( $i = 0; $i < sizeof($data); $i++ ){
-	//$subproducts = selectDB("attributes_products","`id` = '{$data[$i]["subId"]}'");
-	//$product = selectDB("products","`id` = '{$subproducts[0]["productId"]}'");
-	$item = $data[$i]["quantity"]."x";//.$product[0]["enTitle"]." ".$subproducts[0]["enTitle"];
+	$subproducts = selectDB("attributes_products","`id` = '{$data[$i]["subId"]}'");
+	$product = selectDB("products","`id` = '{$subproducts[0]["productId"]}'");
+	$item = $data[$i]["quantity"]."x".$product[0]["enTitle"]." ".$subproducts[0]["enTitle"];
 	$price = $data[$i]["productPrice"];
 
 		?>
