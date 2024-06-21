@@ -4,69 +4,39 @@ td{
 }
 </style>
 <?php
-$id = $_GET["id"];
-
-$sql = "SELECT *
-		FROM `posorders`
-		WHERE `orderId` = '{$id}'
-		GROUP BY `productId`
-		";
-$result = $dbconnect->query($sql);
-while ( $row = $result->fetch_assoc() ){
-	$product = selectDB("attributes_products","`id` = '{$row["productId"]}'");
-	$productTitle = selectDB("products","`id` = '{$product[0]["id"]}'");
-	$color[] = "";
-	$size[] = $product[0]["enTitle"];
-	$length[] = $row["length"];
-	$productNote[] = $row["productNote"];
-	$collection[] = $row["collection"];
-	$cartImage[] = $row["cartImage"];
-	$quantities[] = $row["quantity"];
-	$products[] = $product[0]["productId"];
-	$orderPrice[] = $row["productPrice"];
-	$orderDiscount[] = $row["productDiscount"];
-	$enTitle[] = $productTitle[0]["enTitle"];
-	$sku[] = $product[0]["sku"];
-}
-
-$sql = "SELECT *
-		FROM `posorders`
-		WHERE `orderId` LIKE '$id'
-		";
-$result = $dbconnect->query($sql);
-$row = $result->fetch_assoc();
-$voucher = $row["voucher"];
-$storeLocation = $row["location"];
-$notes = $row["notes"];
-$discount = $row["discount"];
-$country = $row["country"];
-$area = $row["area"];
-$block = $row["block"];
-$street = $row["street"];
-$house = $row["house"];
-$avenue = $row["avenue"];
-$notes = $row["notes"];
-$building = $row["building"];
-$floor = $row["floor"];
-$apartment = $row["apartment"];
-$areaA = $row["areaA"];
-$blockA = $row["blockA"];
-$streetA = $row["streetA"];
-$avenueA = $row["avenueA"];
-$notesA = $row["notesA"];
-$discount = $row["discount"];
-$totalPrice = $row["totalPrice"];
-$totalPriceMain = $row["totalPrice"];
-$place = $row["place"];
-$charges = $row["d_s_charges"];
-$creditTax = $row["creditTax"];
-$postalCode = $row["postalCode"];
-$cardFrom = $row["cardFrom"];
-$cardTo = $row["cardTo"];
-$cardMsg = $row["cardMsg"];
-$method = $row["pMethod"];
-$civilId = $row["civilId"];
-$reason = $row["reason"];
+$data = selectDBNew("posorders",[$_GET["id"]],"`orderId` = ?","");
+$voucher = $data[0]["voucher"];
+$storeLocation = $data[0]["location"];
+$notes = $data[0]["notes"];
+$discount = $data[0]["discount"];
+$country = $data[0]["country"];
+$area = $data[0]["area"];
+$block = $data[0]["block"];
+$street = $data[0]["street"];
+$house = $data[0]["house"];
+$avenue = $data[0]["avenue"];
+$notes = $data[0]["notes"];
+$building = $data[0]["building"];
+$floor = $data[0]["floor"];
+$apartment = $data[0]["apartment"];
+$areaA = $data[0]["areaA"];
+$blockA = $data[0]["blockA"];
+$streetA = $data[0]["streetA"];
+$avenueA = $data[0]["avenueA"];
+$notesA = $data[0]["notesA"];
+$discount = $data[0]["discount"];
+$totalPrice = $data[0]["totalPrice"];
+$totalPriceMain = $data[0]["totalPrice"];
+$place = $data[0]["place"];
+$charges = $data[0]["d_s_charges"];
+$creditTax = $data[0]["creditTax"];
+$postalCode = $data[0]["postalCode"];
+$cardFrom = $data[0]["cardFrom"];
+$cardTo = $data[0]["cardTo"];
+$cardMsg = $data[0]["cardMsg"];
+$method = $data[0]["pMethod"];
+$civilId = $data[0]["civilId"];
+$reason = $data[0]["reason"];
 ?>
 <div class="row">
 <div class="col-md-12">
@@ -90,14 +60,14 @@ $reason = $row["reason"];
 </span>
 </td>
 <td style="text-align: right;" class="txt-dark">
-Order #<?php echo $row["orderId"]; ?>
+Order #<?php echo $data[0]["orderId"]; ?>
 </td>
 </tr>
 </table>
 <table style="width:100%">
 <tr>
 <?php
-if ( isset($row["location"]) ) {
+if ( isset($data[0]["location"]) ) {
 ?>
 <td class="txt-dark">
 <span class="txt-dark head-font inline-block capitalize-font mb-5">Address:</span>
@@ -133,8 +103,8 @@ else
 </td>
 <td style="text-align: right;">
 <address>
-<span class="txt-dark head-font capitalize-font mb-5">Date: <?php $row["date"] = explode(" ",$row["date"]); echo $row["date"][0] ?></span><br>
-<span class="address-head mb-5">Phone: <?php echo $row["mobile"] ?></span>
+<span class="txt-dark head-font capitalize-font mb-5">Date: <?php $data[0]["date"] = explode(" ",$data[0]["date"]); echo $data[0]["date"][0] ?></span><br>
+<span class="address-head mb-5">Phone: <?php echo $data[0]["mobile"] ?></span>
 <?php
 if( !empty($civilId)){
 	echo "<br><span class='address-head mb-5'>Civil id:{$civilId}</span>";
@@ -152,7 +122,7 @@ if ( $emailOpt == 1 ){
     text-align: right;
 	"
 	class="txt-dark">
-<span class="address-head mb-5">Email: <?php echo $row["email"] ?></span>
+<span class="address-head mb-5">Email: <?php echo $data[0]["email"] ?></span>
 </td>
 </tr>
 <?php
@@ -173,9 +143,7 @@ if ( $emailOpt == 1 ){
 </thead>
 <tbody>
 <?php
-$totalPrice =0;
-$i = 0;
-$data = selectDB("posorders","`orderId` = '{$_GET["id"]}'");
+
 for ( $i = 0; $i < sizeof($data); $i++ ){
 	$subproducts = selectDB("attributes_products","`id` = '{$data[$i]["subId"]}'");
 	$product = selectDB("products","`id` = '{$subproducts[0]["productId"]}'");
