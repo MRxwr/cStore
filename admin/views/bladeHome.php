@@ -236,7 +236,7 @@ for ( $y =0; $y < 3; $y++){
         <td><?php echo timeZoneConverter($posOrders[$i]["date"]); ?></td>
         <td><?php echo $posOrders[$i]["orderId"] ?></td>
         <td><?php echo numTo3Float($posOrders[$i]["totalPrice"]) . " KWD" ?></td>
-        <td><a href="product-posOrders?info=view&id=<?php echo $posOrders[$i]["orderId"] ?>">Details</a></td>
+        <td><a href="?v=PosOrder&id=<?php echo $posOrders[$i]["orderId"] ?>">Details</a></td>
         </tr>
         <?php }
         } 
