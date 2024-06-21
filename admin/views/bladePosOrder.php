@@ -67,13 +67,6 @@ $cardMsg = $row["cardMsg"];
 $method = $row["pMethod"];
 $civilId = $row["civilId"];
 $reason = $row["reason"];
-if ( $method == 1 ){
-	$method = "K-NET";
-}elseif( $method == 2 ){
-	$method = "Visa/Master";
-}else{
-	$method = "Cash";
-}
 ?>
 <div class="row">
 <div class="col-md-12">
@@ -182,113 +175,57 @@ if ( $emailOpt == 1 ){
 <?php
 $totalPrice =0;
 $i = 0;
-while ( $i < sizeof($products) ){
-		$checkPrice = $orderPrice[$i];
-		$pricePerItem = $checkPrice*$quantities[$i];
-		$totalPrice = $totalPrice + $pricePerItem;
-		$productPrice = $checkPrice;
+$data = selectDB("posorders","`orderId` = '{$_GET["id"]}'");
+for ( $i = 0; $i < sizeof($data); $i++ ){
+	$subproducts = selectDB("attributes_products","`id` = '{$data[$i]["subId"]}'");
+	$product = selectDB("products","`id` = '{$subproducts[0]["productId"]}'");
+	$item = $data[$i]["quantity"]."x".$product[0]["enTitle"]." ".$subproducts[0]["enTitle"];
+	$price = $data[$i]["productPrice"];
 
 		?>
 		<tr>
-		<td class="txt-dark" style="white-space: break-spaces;">
-		<?php 
-			echo $quantities[$i] ."x". $enTitle[$i];
-			if( !empty($size[$i]) ){
-				echo " [{$size[$i]}] ";
-			}
-			if( !empty($sku[$i]) ){
-				echo " [{$sku[$i]}] ";
-			}
-			if( !empty($productNote[$i]) ){
-				echo " [{$productNote[$i]}] ";
-			}
-			if( !empty($cartImage[$i]) ){
-				echo "[<a href='../cartImages/{$cartImage[$i]}' target='_blank'><img src='../cartImages/{$cartImage[$i]}' style='height:50px; height:50px'></a>]";
-			}
-			if ( !empty($collection[$i]) ){
-				$items = explode(",",$collection[$i]);
-				for( $y = 0; $y < sizeof($items) ; $y++ ){
-					if ( !empty($items[$y]) ){
-						$productsInfo = selectDB('products', "`id` = '{$items[$y]}'");
-						echo "[";
-						echo direction
-						($productsInfo[0]["enTitle"],$productsInfo[0]["arTitle"]);
-						echo "]";
-					}
-				}
-			}
-		?>
-		</td>
-		<td class="txt-dark"><?php echo $productPrice ?> KD</td>
+		<td class="txt-dark" style="white-space: break-spaces;"><?php echo $item ?></td>
+		<td class="txt-dark"><?php echo $price ?> KD</td>
 		</tr>
 		<?php
 	$i++;
 }
 ?>
 	<?php
-	if ( isset($discount) AND $discount != '0' )
-	{
+	if( !empty($data[0]["discount"]) ){
+		$voucherDetails = selectDB("vouchers","`id` = '{$data[0]["voucher"]}'");
+		$discountSign = ( $voucherDetails[0]["discountType"] == 1 ) ? "%" : selectedCurr();
+		$discountAmount = ( $voucherDetails[0]["discountType"] == 1 ) ? $data[0]["discount"] : numTo3Float($data[0]["discount"]);
 		?>
 	<tr class="txt-dark">
-	<td>
-	Discount
-	</td>
-	<td>
-	<?php echo $discount ?>%
-	</td>
+	<td>Discount: </td>
+	<td><?php echo $discountAmount . $discountSign ?></td>
 	</tr>
 	<?php
 	}
 	?>
-	<!--<tr class="txt-dark">
-	<td>Subtotal</td>
-	<td><?php if ( isset($discount) ) { echo ($totalPrice - ( $totalPrice * $discount / 100)); } else {echo $totalPrice; } ?>KD</td>
-	</tr>-->
-	
-	<?php
-	if ( $creditTax != 0 )
-	{
-		?>
-	<tr class="txt-dark">
-	<td>
-	Visa/Master Tax
-	</td>
-	<td>
-	<?php echo $creditTax ?>KD
-	</td>
-	</tr>
-	<?php
-	}
-	?>
-	
-	<?php
-	$sql = "SELECT * FROM `vouchers` WHERE `id` LIKE '$voucher'";
-	$result = $dbconnect->query($sql);
-	$row = $result->fetch_assoc();
-if ( isset($row["voucher"]) AND !empty($row["voucher"]) ){
-	?>
-<tr class="txt-dark">
-<td>Voucher</td>
-<td><?php echo $row["voucher"]; ?></td>
-</tr>
-<?php
-}
-?>
-<tr class="txt-dark">
-<td>Delivery</td>
-<td><?php echo $charges; ?>KD</td>
-</tr>
 
 <tr class="txt-dark">
 <td>Payment method:</td>
-<td><?php echo $method ?></td>
+	<td>
+	<?php 
+	if ( $data[0]["pMethod"] == "1" ){
+		$type = "KNET";
+	}elseif( $data[0]["pMethod"] == "2" ){
+		$type = "VISA/MASTER";
+	}else{
+		$type = "CASH";
+	}
+	echo $type
+	?>
+	</td>
 </tr>
 	<?php
 ?>
 
 <tr class="txt-dark">
 <td>Total:</td>
-<td><?php echo $totalPriceMain ?>KD</td>
+<td><?php echo numTo3Float($data[0]["totalPrice"]) . selectedCurr() ?></td>
 </tr>
 	<?php
 ?>
