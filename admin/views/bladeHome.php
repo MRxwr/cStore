@@ -195,9 +195,9 @@ for ( $y =0; $y < 3; $y++){
         ?>
         <tr>
         <td><?php echo timeZoneConverter($ordersOnline[$i]["date"]); ?></td>
-        <td><?php echo $ordersOnline[$i]["orderId"] ?></td>
+        <td><?php echo $ordersOnline[$i]["id"] ?></td>
         <td><?php echo numTo3Float($ordersOnline[$i]["price"]) . "KD" ?></td>
-        <td><a href="product-orders?info=view&orderId=<?php echo $ordersOnline[$i]["orderId"] ?>">Details</a></td>
+        <td><a href="?v=Order&orderId=<?php echo $ordersOnline[$i]["id"] ?>">Details</a></td>
         </tr>
         <?php }
         }

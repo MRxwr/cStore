@@ -14,7 +14,7 @@ $sql = "SELECT *
 $result = $dbconnect->query($sql);
 while ( $row = $result->fetch_assoc() ){
 	$product = selectDB("attributes_products","`id` = '{$row["productId"]}'");
-	$productTitle = selectDB("products","`id` = '{$product[0]["productId"]}'");
+	$productTitle = selectDB("products","`id` = '{$product[0]["id"]}'");
 	$color[] = "";
 	$size[] = $product[0]["enTitle"];
 	$length[] = $row["length"];
