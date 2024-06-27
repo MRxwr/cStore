@@ -8,5 +8,5 @@ if( $version = selectDB("settings","`id` = '1'") ){
         $dbconnect->query("UPDATE `settings` SET `version` = '{$version}', `settings` SET  `websiteColor` = '#512375', `headerButton` = '#fbbe9f', `expressDelivery` = '".json_encode(array("expressDelivery"=>0,"expressDeliveryCharge"=>2.5,"arabic"=>"خلال 2 ساعة","English"=>"within 2 hours"))."' WHERE `id` = '1'");
         $dbconnect->query("UPDATE settings SET websiteColor = '#512375', headerButton = '#fbbe9f' WHERE id = '1'");
     }
-}
+} 
 ?>
