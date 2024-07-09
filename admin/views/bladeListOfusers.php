@@ -151,6 +151,7 @@ if( isset($_POST["fullName"]) ){
 <script>
 	$(document).on("click",".edit", function(){
 		var id = $(this).attr("id");
+		$("input[name=password]").removeAttr("required");
 		var email = $("#email"+id).html();
 		var name = $("#name"+id).html();
 		var mobile = $("#mobile"+id).html();
