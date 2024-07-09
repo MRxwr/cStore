@@ -50,6 +50,50 @@ if( isset($_POST["fullName"]) ){
 	}
 }
 ?>
+<div class="row">		
+<div class="col-sm-12">
+<div class="panel panel-default card-view">
+<div class="panel-heading">
+<div class="pull-left">
+	<h6 class="panel-title txt-dark"><?php echo direction("User Details","تفاصيل المستخدم") ?></h6>
+</div>
+	<div class="clearfix"></div>
+</div>
+<div class="panel-wrapper collapse in">
+<div class="panel-body">
+	<form class="" method="POST" action="" enctype="multipart/form-data">
+		<div class="row m-0">
+			<div class="col-md-6">
+			<label><?php echo direction("Name","الإسم") ?></label>
+			<input type="text" name="fullName" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6">
+			<label><?php echo direction("Email","البريد الإلكتروني") ?></label>
+			<input type="text" name="email" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6">
+			<label><?php echo direction("Password","كلمة المرور") ?></label>
+			<input type="text" name="password" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6">
+			<label><?php echo direction("Mobile","الهاتف") ?></label>
+			<input type="number" min="0" maxlength="8" name="phone" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6" style="margin-top:10px">
+			<input type="submit" class="btn btn-primary" value="<?php echo direction("Submit","أرسل") ?>">
+			<input type="hidden" name="update" value="0">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+</div>
+</div>
+
 <div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
@@ -110,11 +154,9 @@ if( isset($_POST["fullName"]) ){
 		var email = $("#email"+id).html();
 		var name = $("#name"+id).html();
 		var mobile = $("#mobile"+id).html();
-		var dateJoined = $("#date"+id).html();
 		$("input[name=email]").val(email);
 		$("input[name=phone]").val(mobile);
 		$("input[name=update]").val(id);
 		$("input[name=fullName]").val(name);
-		$("input[name=date]").val(dateJoined);
 	})
 </script>
