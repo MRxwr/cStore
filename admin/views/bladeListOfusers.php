@@ -76,7 +76,7 @@ if( isset($_POST["fullName"]) ){
 		
 		<tbody>
 		<?php 
-		if( $users = selectDB("users","`status` = '0' AND `hidden` = '0'") && !empty($users) ){
+		if( $users = selectDB("users","`status` = '0' AND `hidden` = '0'") ){
 			for( $i = 0; $i < sizeof($users); $i++ ){	
 				?>
 				<tr>
