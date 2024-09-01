@@ -10,7 +10,7 @@ if ( $_POST["paymentMethod"] == 10 ){
 
 // build request body for payapi \\
 $postMethodLines = array(
-	"endpoint" 				=> "PaymentRequestExicuteShipping", // "ForStore" was 
+	"endpoint" 				=> "PaymentRequestExcuteNew2024", // "ForStore" was  
 	"apikey" 				=> $PaymentAPIKey,
 	"PaymentMethodId" 		=> $paymentMethod,
 	"CustomerName"			=> $info["name"],
@@ -35,7 +35,7 @@ for( $i=0; $i < 10; $i++ ){
 				'Content-Type:application/json'
 			];
 	curl_setopt_array($curl, array(
-	  CURLOPT_URL => 'https://createapi.link/api/v2/index.php',
+	  CURLOPT_URL => 'https://createapi.link/api/v3/index.php',
 	  CURLOPT_RETURNTRANSFER => true,
 	  CURLOPT_MAXREDIRS => 10,
 	  CURLOPT_POST => 1,
