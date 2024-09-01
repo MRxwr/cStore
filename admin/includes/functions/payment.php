@@ -284,7 +284,7 @@ function getInternationalShipping($items,$address){
 function sendOrderToAllowMENA($orderId){
 	GLOBAL $settingsShippingMethod;
 	if ( $settingsShippingMethod == 3 ){
-		$order = selectDBNew("orders2",[$orderId],"`orderId` = ?","");
+		$order = selectDBNew("orders2",[$orderId],"`gatewayId` = ?","");
 		$order[0]["paymentMethod"] = ($order[0]["paymentMethod"] == 3) ? 0 : $order[0]["paymentMethod"];
 		$address = json_decode($order[0]["address"],true);
 		$info = json_decode($order[0]["info"],true);
