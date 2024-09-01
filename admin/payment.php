@@ -12,7 +12,11 @@ if ( $package == 1 ){
 	$packageName = "Annually";
 	$noOfDays = "365";
 }
-		
+
+if ( strtolower($email) == "superadmin@createstore.link" ){
+	$package = 0;
+}
+
 if ( $package != 0 ){
 	if (date('Y-m-d') >=  $startDate){
 		if ( isset($row["paymentLink"]) && !empty($row["paymentLink"]) ){
