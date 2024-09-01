@@ -13,9 +13,9 @@ if ( isset($_GET["c"]) ){
 	}else{
 		header("LOCATION: index.php?error=3");die();
 	}
-}elseif( isset($_GET["OrderID"]) && !empty($_GET["OrderID"]) ){
-	$Key = $_GET["OrderID"];
-	if( $order = selectDBNew("orders2",[$_GET["OrderID"]],"`gatewayId` = ?","") ){
+}elseif( isset($_GET["requested_order_id"]) && !empty($_GET["requested_order_id"]) ){
+	$Key = $_GET["requested_order_id"];
+	if( $order = selectDBNew("orders2",[$_GET["requested_order_id"]],"`gatewayId` = ?","") ){
 		$orderId = $order[0]["id"];
 	}else{
 		header("LOCATION: checkout.php?error=3");die();
