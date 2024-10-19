@@ -18,7 +18,7 @@ if( isset($_POST["enTitle"]) ){
         'enDetails' => "{$_POST["enDetails"]}",
         'arDetails' => "{$_POST["arDetails"]}",
         'price' => "{$_POST["price"]}",
-        'logo[]'=> new CURLFILE("{$_FILES["logo"]["tmp_name"]}")
+        'logo[]'=> new CURLFILE("{$_FILES["logo"]["tmp_name"][0]}")
     ),
     ));
     $response = curl_exec($curl);
