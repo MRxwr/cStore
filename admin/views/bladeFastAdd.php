@@ -16,33 +16,8 @@ if( isset($_POST["enTitle"]) ){
 <div class="panel-body">
 	<form class="" method="POST" action="" enctype="multipart/form-data">
 		<div class="row m-0">
-			<div class="col-md-4">
-			<label><?php echo direction("English Title","العنوان بالإنجليزي") ?></label>
-			<input type="text" name="enTitle" class="form-control" required>
-			</div>
-			
-			<div class="col-md-4">
-			<label><?php echo direction("Arabic Title","العنوان بالعربي") ?></label>
-			<input type="text" name="arTitle" class="form-control" required>
-			</div>
-
-            <div class="col-md-4">
-			<label><?php echo direction("English Details","التفاصيل بالإنجليزي") ?></label>
-			<input type="text" name="enDetails" class="form-control" required>
-			</div>
-
-            <div class="col-md-4">
-			<label><?php echo direction("Arabic Details","التفاصيل بالعربي") ?></label>
-			<input type="text" name="arDetails" class="form-control" required>
-			</div>
-			
-			<div class="col-md-4">
-			<label><?php echo direction("Price","القيمة") ?></label>
-			<input type="float" name="price" class="form-control" required>
-			</div>
-			
-			<div class="col-md-4">
-			<label><?php echo direction("Required","إلزامية") ?></label>
+            <div class="col-md-12">
+			<label><?php echo direction("Category","القسم") ?></label>
 				<select name="categoryId" class="form-control" required>
 					<?php
                     if( $categories = selectDB("categories","`status` = '0' AND `hidden` = '1'") ){
@@ -54,9 +29,34 @@ if( isset($_POST["enTitle"]) ){
                     ?>
 				</select>
 			</div>
+
+			<div class="col-md-6">
+			<label><?php echo direction("English Title","العنوان بالإنجليزي") ?></label>
+			<input type="text" name="enTitle" class="form-control" required>
+			</div>
 			
-			<div class="col-md-4">
-			<label><?php echo direction("Type","النوع") ?></label>
+			<div class="col-md-6">
+			<label><?php echo direction("Arabic Title","العنوان بالعربي") ?></label>
+			<input type="text" name="arTitle" class="form-control" required>
+			</div>
+
+            <div class="col-md-6">
+			<label><?php echo direction("English Details","التفاصيل بالإنجليزي") ?></label>
+			<input type="text" name="enDetails" class="form-control" required>
+			</div>
+
+            <div class="col-md-6">
+			<label><?php echo direction("Arabic Details","التفاصيل بالعربي") ?></label>
+			<input type="text" name="arDetails" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6">
+			<label><?php echo direction("Price","القيمة") ?></label>
+			<input type="float" name="price" class="form-control" required>
+			</div>
+			
+			<div class="col-md-6">
+			<label><?php echo direction("Size Type","نوع المقاس") ?></label>
 				<select name="sizeType" class="form-control" required>
 					<option value="1"><?php echo json_encode(["S","M","L","XL","XXL","XXXL","XXXXL","XXXXXL"]) ?></option>
 					<option value="2"><?php echo json_encode(["XS","S","M","L","XL","XXL"]) ?></option>
