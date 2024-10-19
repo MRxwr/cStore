@@ -49,6 +49,7 @@ if( isset($_GET["action"]) ){
             "enDetails" => $data["enDetails"],
             "arDetails" => $data["arDetails"],
             "categoryId" => $data["categoryId"],
+            "extras" => "null",
         );
         if(insertDB("products",$product)){
             $productId = $dbconnect->insert_id;
