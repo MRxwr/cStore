@@ -1,6 +1,29 @@
 <?php 
 if( isset($_POST["enTitle"]) ){
-	
+	$curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://trendylegend.createstore.link/requests/dashboard/index.php?a=Product&action=add',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => array(
+        'categoryId' => '{$_POST["categoryId"]}',
+        'sizeType' => '{$_POST["sizeType"]}',
+        'enTitle' => "{$_POST["enTitle"]}",
+        'arTitle' => "{$_POST["arTitle"]}",
+        'enDetails' => "{$_POST["enDetails"]}",
+        'arDetails' => "{$_POST["arDetails"]}",
+        'price' => '{$_POST["price"]}',
+        'logo[]'=> new CURLFILE("{$_FILES["logo"]["tmp_name"]}")
+    ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    echo $response;
 }
 ?>
 <div class="row">
