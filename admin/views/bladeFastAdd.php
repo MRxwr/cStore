@@ -11,13 +11,13 @@ if( isset($_POST["enTitle"]) ){
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => array(
-        'categoryId' => '{$_POST["categoryId"]}',
-        'sizeType' => '{$_POST["sizeType"]}',
+        'categoryId' => "{$_POST["categoryId"]}",
+        'sizeType' => "{$_POST["sizeType"]}",
         'enTitle' => "{$_POST["enTitle"]}",
         'arTitle' => "{$_POST["arTitle"]}",
         'enDetails' => "{$_POST["enDetails"]}",
         'arDetails' => "{$_POST["arDetails"]}",
-        'price' => '{$_POST["price"]}',
+        'price' => "{$_POST["price"]}",
         'logo[]'=> new CURLFILE("{$_FILES["logo"]["tmp_name"]}")
     ),
     ));
