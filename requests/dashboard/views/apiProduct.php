@@ -73,9 +73,9 @@ if( isset($_GET["action"]) ){
         }elseif( $_POST["sizeType"] == 3 ){
             $sizes = ["Free Size"];
         }elseif( $_POST["sizeType"] == 4 ){
-            $sizes = ["1 Year","2 Year","3 Year","4 Year","5 Year","6 Year","7 Year","8 Year","9 Year"];
+            $sizes = ["1 Year","2 Years","3 Years","4 Years","5 Years","6 Years","7 Years","8 Years","9 Years"];
         }
-        
+
         for( $i = 0; $i < sizeof($sizes); $i++ ){
             $variant = array(
                 "productId" => $productId,
