@@ -66,7 +66,7 @@ if ( $row["collection"] == 1 ){
 
 }
 
-	$action .='<a href="?v=ProductAction&id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="<?php echo $edit ?>"><i class="zmdi zmdi-edit"></i></a>';
+	$action .='<a href="?v=ProductAction&id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.$edit.'"><i class="zmdi zmdi-edit"></i></a>';
 
 	if ( $row["hidden"] == 0 ){
 		$action .='<a href="includes/products/delete.php?id='.$row["id"].'" class="font-18 txt-grey mr-10 pull-left" data-toggle="tooltip" data-placement="top" title="'.$hideText.'"><i class="fa fa-eye-slash"></i></a>';
