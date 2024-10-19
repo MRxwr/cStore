@@ -39,7 +39,7 @@ if( isset($_POST["enTitle"]) ){
 <div class="panel-body">
 	<form class="" method="POST" action="" enctype="multipart/form-data">
 		<div class="row m-0">
-            <div class="col-md-12">
+            <div class="col-md-6">
 			<label><?php echo direction("Category","القسم") ?></label>
 				<select name="categoryId" class="form-control" required>
 					<?php
@@ -51,6 +51,11 @@ if( isset($_POST["enTitle"]) ){
                     }
                     ?>
 				</select>
+			</div>
+
+            <div class="col-md-6">
+			<label><?php echo direction("Image","صورة") ?></label>
+			<input type="file" name="logo[]" class="form-control" multiple required>
 			</div>
 
 			<div class="col-md-6">
