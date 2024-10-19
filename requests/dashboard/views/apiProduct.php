@@ -56,7 +56,7 @@ if( isset($_GET["action"]) ){
             echo outputError(array("msg" => "Failed to add product"));
         }
 
-        $sizes = ( $_GET["sizeType"] == 1 ) ? ["S","M","L","XL","XXL","XXXL","XXXXL","XXXXXL"] : ["XS","S","M","L","XL","XXL"];
+        $sizes = ( $_POST["sizeType"] == 1 ) ? ["S","M","L","XL","XXL","XXXL","XXXXL","XXXXXL"] : ["XS","S","M","L","XL","XXL"];
         for( $i = 0; $i < sizeof($sizes); $i++ ){
             $variant = array(
                 "productId" => $productId,
