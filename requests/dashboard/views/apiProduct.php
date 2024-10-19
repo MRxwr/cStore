@@ -66,7 +66,16 @@ if( isset($_GET["action"]) ){
             echo outputError(array("msg" => "Failed to add product category"));
         }
 
-        $sizes = ( $_POST["sizeType"] == 1 ) ? ["S","M","L","XL","XXL","XXXL","XXXXL","XXXXXL"] : ["XS","S","M","L","XL","XXL"];
+        if( $_POST["sizeType"] == 1 ){
+            $sizes = ["S","M","L","XL","XXL","XXXL","XXXXL","XXXXXL"];
+        }elseif( $_POST["sizeType"] == 2 ){
+            $sizes = ["XS","S","M","L","XL","XXL"];
+        }elseif( $_POST["sizeType"] == 3 ){
+            $sizes = ["Free Size"];
+        }elseif( $_POST["sizeType"] == 4 ){
+            $sizes = ["1 Year","2 Year","3 Year","4 Year","5 Year","6 Year","7 Year","8 Year","9 Year"];
+        }
+        
         for( $i = 0; $i < sizeof($sizes); $i++ ){
             $variant = array(
                 "productId" => $productId,
