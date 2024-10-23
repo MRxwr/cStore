@@ -74,6 +74,8 @@ if( isset($_GET["action"]) ){
             $sizes = ["Free Size"];
         }elseif( $_POST["sizeType"] == 4 ){
             $sizes = ["1 Year","2 Years","3 Years","4 Years","5 Years","6 Years","7 Years","8 Years","9 Years"];
+        }elseif( $_POST["sizeType"] == 5 ){
+            $sizes = ["3 Months","6 Months","9 Months","12 Months","15 Months","18 Months","21 Months","24 Months"];
         }
 
         for( $i = 0; $i < sizeof($sizes); $i++ ){
