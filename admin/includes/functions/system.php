@@ -198,7 +198,7 @@ function whatsappNoti($order){
 			$data["invoiceid"] = $order;
 			$data["invoice_name"] = "invoice-{$whatsappNoti1["name"]}-{$order}";
 			$data["invoice_url"] = getPDF($order);
-			$data["caption"] = urlencode("Hello {$settingsTitle}, You have a new order #{$order}. \n\n This is an automated message to notify you when you get new orders, Courtesy of createkuwait. \n\nBest Regards, \ncreatekuwait.com");
+			$data["caption"] = urlencode("Hello {$settingsTitle}, You have a new order #{$order}. \n\nThis is an automated message to notify you when you get new orders, Courtesy of createkuwait. \n\nBest Regards, \ncreatekuwait.com");
 		}
 	}else{
 		$data = array();
