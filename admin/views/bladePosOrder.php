@@ -149,14 +149,10 @@ for ( $i = 0; $i < sizeof($data); $i++ ){
 	$product = selectDB("products","`id` = '{$subproducts[0]["productId"]}'");
 	$item = $data[$i]["quantity"]."x".$product[0]["enTitle"]." ".$subproducts[0]["enTitle"];
 	$price = $data[$i]["productPrice"];
-
-		?>
-		<tr>
-		<td class="txt-dark" style="white-space: break-spaces;"><?php echo $item ?></td>
-		<td class="txt-dark"><?php echo $price ?> KD</td>
-		</tr>
-		<?php
-	$i++;
+	echo "
+		<tr><td class='txt-dark' style='white-space: break-spaces;'>{$item}</td>
+		<td class='txt-dark'>".numTo3Float($price).selectedCurr()."</td></tr>
+	";
 }
 ?>
 	<?php
@@ -177,14 +173,8 @@ for ( $i = 0; $i < sizeof($data); $i++ ){
 <td>Payment method:</td>
 	<td>
 	<?php 
-	if ( $data[0]["pMethod"] == "1" ){
-		$type = "KNET";
-	}elseif( $data[0]["pMethod"] == "2" ){
-		$type = "VISA/MASTER";
-	}else{
-		$type = "CASH";
-	}
-	echo $type
+	$listOfPaymentMethods = ["1" => "KNET", "2" => "VISA/MASTER", "3" => "CASH"];
+	echo $paymentMethod = ( isset($data[0]["pMethod"]) && !empty($data[0]["pMethod"]) ) ? $listOfPaymentMethods[$data[0]["pMethod"]] : "CASH";
 	?>
 	</td>
 </tr>
