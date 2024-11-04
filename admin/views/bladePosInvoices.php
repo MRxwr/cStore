@@ -61,7 +61,7 @@ $(function(){
 		var url = '<?php echo $settingsWebsite ?>';
 		$("<iframe>")
         .hide()
-        .attr("src", url+"/admin/posPrint.php?info=view&id="+printId)
+        .attr("src", url+"/pos/templates/print.php?id="+printId)
         .appendTo("body");
 	});
 })
