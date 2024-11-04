@@ -69,7 +69,7 @@
 		<?php 
         $title = direction("enTitle","arTitle");
         $joinTabel = array(
-            "select" => ["t.{$title} as title","t1.{$title} as pTitle"],
+            "select" => ["t.{$title} as title","t1.{$title} as pTitle","t.id"],
             "join" => ["products"],
             "on" => ["t1.id = t.productId"],
         );
