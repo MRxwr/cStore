@@ -46,11 +46,15 @@
 </div>
 				
 				<!-- Bordered Table -->
+<?php 
+if ( isset($_POST) && !empty($_POST) ){
+    $shop = selectDB("shops","`id` = '{$_POST["shopId"]}'");
+    ?>
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
 <div class="panel-heading">
 <div class="pull-left">
-<h6 class="panel-title txt-dark"><?php echo direction("List of Products","قائمة المنتجات") ?></h6>
+<h6 class="panel-title txt-dark"><?php echo direction("List of Products","قائمة المنتجات") . "{$shop[0]["enTitle"]} [{$_POST['startDate']} - {$_POST['endDate']}]" ?></h6>
 </div>
 <div class="clearfix"></div>
 </div>
@@ -99,3 +103,6 @@
 </div>
 </div>
 </div>
+<?php
+}
+?>
