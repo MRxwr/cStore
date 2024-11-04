@@ -54,7 +54,7 @@ if ( isset($_POST) && !empty($_POST) ){
 <div class="panel panel-default card-view">
 <div class="panel-heading">
 <div class="pull-left">
-<h6 class="panel-title txt-dark"><?php echo direction("List of Products","قائمة المنتجات") . "{$shop[0]["enTitle"]} [{$_POST['startDate']} - {$_POST['endDate']}]" ?></h6>
+<h6 class="panel-title txt-dark"><?php echo direction("List of Products","قائمة المنتجات") . " {$shop[0]["enTitle"]} [{$_POST['startDate']} - {$_POST['endDate']}]" ?></h6>
 </div>
 <div class="clearfix"></div>
 </div>
