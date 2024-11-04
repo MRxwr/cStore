@@ -67,6 +67,8 @@ if ( isset($_POST) && !empty($_POST) ){
 		<tr>
 		<th><?php echo direction("Title","العنوان") ?></th>
 		<th><?php echo direction("Quantity","الكمية") ?></th>
+		<th><?php echo direction("Shop","المتجر") ?></th>
+		<th><?php echo direction("Period","الفترة") ?></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -88,6 +90,8 @@ if ( isset($_POST) && !empty($_POST) ){
                 <tr>
                 <td><?php echo $products[$i]["pTitle"] . " " . $products[$i]["title"] ?></td>
                 <td><?php echo $quantity ?></td>
+                <td><?php echo direction($shop[0]["enTitle"],$shop[0]["arTitle"]) ?></td>
+                <td><?php echo $_POST["startDate"] . " - " . $_POST["endDate"] ?></td>
                 </tr>
             <?php
 		    }
