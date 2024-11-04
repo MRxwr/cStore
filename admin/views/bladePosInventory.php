@@ -27,12 +27,12 @@
 
 			<div class="col-md-4">
 			    <label><?php echo direction("Start Data","تاريخ البدايه") ?></label>
-			    <input type="text" name="startDate" class="form-control" required>
+			    <input type="date" name="startDate" class="form-control" required>
 			</div>
 			
 			<div class="col-md-4">
 			    <label><?php echo direction("End Date","تاريخ النهايه") ?></label>
-			    <input type="text" name="endDate" class="form-control" required>
+			    <input type="date" name="endDate" class="form-control" required>
 			</div>
 			
 			<div class="col-md-6" style="margin-top:10px">
