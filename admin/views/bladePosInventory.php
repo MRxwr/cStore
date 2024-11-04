@@ -73,7 +73,7 @@
             "join" => ["posorders","products"],
             "on" => ["t1.productId = t.id","t2.id = t.productId"],
         );
-		if( isset($_POST) && !empty($_POST) &&$products = selectDB("attributes_products","t.status = '0' AND t1.date BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' ORDER BY `id` ASC") ){
+		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' AND t1.date BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' ORDER BY `id` ASC") ){
 		    for( $i = 0; $i < sizeof($products); $i++ ){
             ?>
                 <tr>
