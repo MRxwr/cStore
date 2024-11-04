@@ -99,13 +99,13 @@ $sql = "SELECT *
 		FROM `vouchers`
 		WHERE
 		`hidden` = '0'
-		GROUP BY `voucher`
+		GROUP BY `code`
 		";
 $result = $dbconnect->query($sql);
 while ( $row = $result->fetch_assoc() )
 {
 ?>
-<option value="<?php echo $row["id"] ?>"><?php echo $row["voucher"] ?></option>
+<option value="<?php echo $row["id"] ?>"><?php echo $row["code"] ?></option>
 <?php
 }
 ?>
