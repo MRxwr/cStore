@@ -67,6 +67,7 @@ if ( isset($_POST) && !empty($_POST) ){
 		<tr>
 		<th><?php echo direction("Title","العنوان") ?></th>
 		<th><?php echo direction("Quantity","الكمية") ?></th>
+		<th><?php echo direction("Earnings","الارباح") ?></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -79,15 +80,18 @@ if ( isset($_POST) && !empty($_POST) ){
         );
 		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' ORDER BY t.id ASC") ){
 		    for( $i = 0; $i < sizeof($products); $i++ ){
-                if ( $orders = selectDB2("SUM(quantity) as quantity","posorders","`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'") ){
+                if ( $orders = selectDB2("SUM(quantity) as quantity, SUM(productPrice) as productPrice","posorders","`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'") ){
                     $quantity = (empty($orders[0]["quantity"])) ? 0 : $orders[0]["quantity"];
+                    $productPrice = (empty($orders[0]["productPrice"])) ? 0 : $orders[0]["productPrice"];
                 }else{
                     $quantity = 0;
+                    $productPrice = 0;
                 }
             ?>
                 <tr>
                 <td><?php echo $products[$i]["pTitle"] . " " . $products[$i]["title"] ?></td>
                 <td><?php echo $quantity ?></td>
+                <td><?php echo $productPrice ?></td>
                 </tr>
             <?php
 		    }
