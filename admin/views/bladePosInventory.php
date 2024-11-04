@@ -67,7 +67,6 @@ if ( isset($_POST) && !empty($_POST) ){
 		<tr>
 		<th><?php echo direction("Title","العنوان") ?></th>
 		<th><?php echo direction("Quantity","الكمية") ?></th>
-		<th><?php echo direction("Earnings","الارباح") ?></th>
 		</tr>
 		</thead>
 		<tbody>
