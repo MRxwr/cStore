@@ -252,52 +252,6 @@ if ( isset($_POST["endDate"]) ){
 </div>
 </div>
 
-
-<div class="row">
-<div class="col-sm-12">
-<div class="panel panel-default card-view">
-<div class="panel-wrapper collapse in">
-<div class="panel-body">
-<div class="table-wrap">
-<div class="table-responsive">
-<button class="btn btn-primary printMeNow">Print</button>
-<div class="printable">
-<table class="table table-hover display pb-30" >
-<thead>
-<tr>
-<th><?php echo "Earned" ?></th>
-<th><?php echo "Delivery" ?></th>
-<th><?php echo "Cost" ?></th>
-<th><?php echo "Profit" ?></th>
-<th><?php echo "Quantity" ?></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><?php if ( isset($totals) ) {echo numTo3Float((float)array_sum($totals)); } ?>KD</td>
-<td><?php if ( isset($deliveryCharges) ){ echo numTo3Float(array_sum($deliveryCharges));}else{ echo "0.000" ;}; ?>KD</td>
-<td><?php if ( isset($cost) ) {echo numTo3Float(array_sum($cost));} ?>KD</td>
-<td><?php if ( isset($cost) ) {echo numTo3Float((float)round(array_sum($totals) - array_sum($cost) - array_sum($shippingCharges) - array_sum($deliveryCharges)));} ?>KD</td>
-<td><?php
-if ( isset($_POST["productId"]) AND !empty($_POST["productId"]) ){
-	echo $totalFromProduct;
-}else{
-	echo 0;
-}
-?></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>	
-</div>
-</div>
-
-
 <div class="row">
 <div class="col-sm-12">
 <div class="panel panel-default card-view">
