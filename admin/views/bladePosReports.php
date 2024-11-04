@@ -51,7 +51,7 @@ input {
 </div>	
 </div>
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-12">
 <div class="form-group">
 <label class="control-label mb-10">Select Product</label>
 <select class="selectpicker productId" name="productId" data-style="form-control btn-default btn-outline">
@@ -59,27 +59,20 @@ input {
 <?php
 require("includes/config.php");
 $dhlBills = 0;
-$sql = "SELECT * 
-		FROM 
-		`products`
-		WHERE `hidden` != 2";
-$result = $dbconnect->query($sql);
-while ( $row = $result->fetch_assoc() )
-{
+$titleType = direction("enTitle","arTitle");
+$dataJoin = array(
+	"select" => ["t.productId as id","t.{$titleType} as title", "t1.{$titleType} as pTitle"],
+	"join" => ["products"],
+	"on" => ["t.productId = t1.id"],
+);
+if( $listOfProducts = selectJoinDB("attributes_products",$dataJoin,"`status` = '0'") ){
+	for ( $i=0; $i < sizeof($listOfProducts); $i++ ){
 ?>
-<option value="<?php echo $row["id"] ?>"><?php echo $row["enTitle"] ?></option>
+<option value="<?php echo $listOfProducts[$i]["id"] ?>"><?php echo "{$listOfProducts[$i]["pTitle"]} - {$listOfProducts[$i]["title"]}" ?></option>
 <?php
+	}
 }
 ?>
-</select>
-</div>	
-</div>
-
-<div class="col-md-6">
-<div class="form-group sizes">
-<label class="control-label mb-10"><?php echo $selectSubProduct ?></label>
-<select class="selectpicker" name="" data-style="form-control btn-default btn-outline">
-<option></option>
 </select>
 </div>	
 </div>
@@ -176,9 +169,6 @@ if ( isset($_POST["endDate"]) ){
 			}
 			if ( isset($_POST["productId"]) AND !empty($_POST["productId"]) ){
 				$sql .= " AND `productId` = '{$_POST["productId"]}'";
-			}
-			if ( isset($_POST["size"]) AND !empty($_POST["size"]) ){
-				$sql .= " AND `subId` = '{$_POST["size"]}'";
 			}
 			if ( isset($_POST["pMethod"]) AND !empty($_POST["pMethod"]) ){
 				$sql .= " AND `pMethod` = '{$_POST["pMethod"]}'";
