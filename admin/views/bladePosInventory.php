@@ -14,7 +14,7 @@
 
             <div class="col-md-4">
                 <label><?php echo direction("Shop","المتجر") ?></label>
-                <select name="section" class="form-control">
+                <select name="shopId" class="form-control">
                     <?php
                     if( $shops = selectDB("shops","`status` = '0'") ){
                         for( $i = 0; $i < sizeof($shops); $i++){
@@ -75,14 +75,14 @@
         );
 		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' ORDER BY t.id ASC") ){
 		    for( $i = 0; $i < sizeof($products); $i++ ){
-                if ($orders = selectDB2("SUM(quantity) as quantity","posorders","`status` = '0' AND `productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1'") ){
+                if ($orders = selectDB2("SUM(quantity) as quantity","posorders","`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'") ){
                     $quantity = $orders[0]["quantity"];
                 }else{
                     $quantity = 0;
                 }
             ?>
                 <tr>
-                <td><?php echo $products[$i]["pTitle"] . " - " . $products[$i]["title"] ?></td>
+                <td><?php echo $products[$i]["pTitle"] . " " . $products[$i]["title"] ?></td>
                 <td><?php echo $quantity ?></td>
                 </tr>
             <?php
