@@ -75,9 +75,8 @@
         );
 		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' ORDER BY t.id ASC") ){
 		    for( $i = 0; $i < sizeof($products); $i++ ){
-                echo "`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'";
-                if ($orders = selectDB2("SUM(quantity) as quantity","posorders","`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'") ){
-                    $quantity = $orders[0]["quantity"] . " .. 0";
+                if ( $orders = selectDB2("SUM(quantity) as quantity","posorders","`productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' AND `status` = '1' AND `shopId` = '{$_POST["shopId"]}'") ){
+                    $quantity = $orders[0]["quantity"];
                 }else{
                     $quantity = 0;
                 }
