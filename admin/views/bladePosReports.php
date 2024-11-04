@@ -267,20 +267,17 @@ if ( isset($_POST["endDate"]) ){
 <tr>
 <th><?php echo "Earned" ?></th>
 <th><?php echo "Delivery" ?></th>
-<th><?php echo "Shipping" ?></th>
 <th><?php echo "Cost" ?></th>
 <th><?php echo "Profit" ?></th>
 <th><?php echo "Quantity" ?></th>
-<th><?php echo "International Bills" ?></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><?php if ( isset($totals) ) {echo (float)round(array_sum($totals),2); } ?>KD</td>
-<td><?php if ( isset($deliveryCharges) ){ echo array_sum($deliveryCharges);}else{ echo 0 ;}; ?>KD</td>
-<td><?php if ( isset($shippingCharges) ){ echo array_sum($shippingCharges);}else{ echo 0 ;}; ?>KD</td>
-<td><?php if ( isset($cost) ) {echo array_sum($cost);} ?>KD</td>
-<td><?php if ( isset($cost) ) {echo (float)round(array_sum($totals) - array_sum($cost) - array_sum($shippingCharges) - array_sum($deliveryCharges),2);} ?>KD</td>
+<td><?php if ( isset($totals) ) {echo numTo3Float((float)array_sum($totals)); } ?>KD</td>
+<td><?php if ( isset($deliveryCharges) ){ echo numTo3Float(array_sum($deliveryCharges));}else{ echo "0.000" ;}; ?>KD</td>
+<td><?php if ( isset($cost) ) {echo numTo3Float(array_sum($cost));} ?>KD</td>
+<td><?php if ( isset($cost) ) {echo numTo3Float((float)round(array_sum($totals) - array_sum($cost) - array_sum($shippingCharges) - array_sum($deliveryCharges)));} ?>KD</td>
 <td><?php
 if ( isset($_POST["productId"]) AND !empty($_POST["productId"]) ){
 	echo $totalFromProduct;
@@ -288,7 +285,6 @@ if ( isset($_POST["productId"]) AND !empty($_POST["productId"]) ){
 	echo 0;
 }
 ?></td>
-<td><?php echo $dhlBills; ?></td>
 </tr>
 </tbody>
 </table>
@@ -350,28 +346,21 @@ if ( isset($orderIds) ){
 				GROUP BY `orderId`
 				";
 		$result = $dbconnect->query($sql);
+		$paymentMethods = ["1" => "K-NET", "2" => "Visa/Master", "3" => "Cash"];
 		while ( $row = $result->fetch_assoc() ){
 			?>
 			<tr>
 			<td><?php echo $row["date"] ?></td>
-			<td class="txt-dark"><a href="product-posOrders.php?info=view&id=<?php echo $row["orderId"] ?>" target="_blank"><?php echo $row["orderId"] ?></a></td>
+			<td class="txt-dark"><a href="?v=PosOrder&info=view&id=<?php echo $row["orderId"] ?>" target="_blank"><?php echo $row["orderId"] ?></a></td>
 			<td><?php echo $row["fullName"] ?></td>
 			<td class="txt-dark"><?php echo $row["mobile"] ?></td>
 			<td><?php echo $row["voucher"] ?></td>
 			<td><?php echo $row["discount"] ?></td>
 			<td><?php echo $row["d_s_charges"] ?></td>
-			<td><?php
-			if( $row["pMethod"] == 1 ){
-				echo "K-NET";
-			}elseif( $row["pMethod"] == 2 ){
-				echo "Visa/Master";
-			}else{
-				echo "Cash";
-			}
-			?></td>
-			<td><?php echo (float)round($row["totalProfit"],2) ?></td>
-			<td><?php echo $row["totalCost"] ?></td>
-			<td><?php echo $row["totalPrice"] ?></td>
+			<td><?php echo ( isset($row["pMethod"]) && !empty($row["pMethod"]) ) ? $paymentMethods[$row["pMethod"]] : "CASH";?></td>
+			<td><?php echo numTo3Float((float)$row["totalProfit"]) ?></td>
+			<td><?php echo numTo3Float($row["totalCost"]) ?></td>
+			<td><?php echo numTo3Float($row["totalPrice"]) ?></td>
 			</tr>
 			<?php
 		}
