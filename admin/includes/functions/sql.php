@@ -20,12 +20,12 @@ function deleteDB($table, $where){
             return 1;
         } else {
             $error = array("msg" => "delete table error");
-            return outputError($error);
+            return 0;
         }
         $stmt->close();
     } else {
         $error = array("msg" => "prepare statement error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -51,11 +51,11 @@ function deleteDBNew($table, $params, $where){
         } else {
             $stmt->close();
             $error = array("msg" => "delete table error");
-            return outputError($error);
+            return 0;
         }
     } else {
         $error = array("msg" => "prepare statement error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -122,7 +122,7 @@ function selectDB($table, $where){
         }
     } else {
         $error = array("msg" => "select table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -148,7 +148,7 @@ function selectDB2($select, $table, $where){
         }
     } else {
         $error = array("msg" => "select table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -188,7 +188,7 @@ function selectJoinDB($table, $joinData, $where){
         }
     }else{
         $error = array("msg"=>"select table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -224,7 +224,7 @@ function insertDB($table, $data){
         return 1;
     }else{
         $error = array("msg"=>"insert table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -264,7 +264,7 @@ function updateDB($table, $data, $where) {
         return 1;
     } else {
         $error = array("msg" => "update table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -304,7 +304,7 @@ function insertLogDB($table,$data){
         return 1;
     }else{
         $error = array("msg"=>"insert table error");
-        return outputError($error);
+        return 0;
     }
 }
 
@@ -328,7 +328,7 @@ function queryDB($sql){
         }
     } else {
         $error = array("msg" => "select table error");
-        return outputError($error);
+        return 0;
     }
 }
 ?>
