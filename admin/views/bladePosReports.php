@@ -61,7 +61,7 @@ require("includes/config.php");
 $dhlBills = 0;
 $titleType = direction("enTitle","arTitle");
 $dataJoin = array(
-	"select" => ["t.productId as id","t.{$titleType} as title", "t1.{$titleType} as pTitle"],
+	"select" => ["t.id","t.{$titleType} as title", "t1.{$titleType} as pTitle"],
 	"join" => ["products"],
 	"on" => ["t.productId = t1.id"],
 );
