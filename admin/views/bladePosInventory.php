@@ -69,16 +69,21 @@
 		<?php 
         $title = direction("enTitle","arTitle");
         $joinTabel = array(
-            "select" => ["SUM(t1.quantity) as quantity","t.{$title} as title","t2.{$title} as pTitle"],
-            "join" => ["posorders","products"],
-            "on" => ["t1.productId = t.id","t2.id = t.productId"],
+            "select" => ["t.{$title} as title","t1.{$title} as pTitle"],
+            "join" => ["products"],
+            "on" => ["t1.id = t.productId"],
         );
-		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' AND t1.date BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}' ORDER BY t.id ASC") ){
+		if( isset($_POST) && !empty($_POST) && $products = selectJoinDB("attributes_products",$joinTabel,"t.status = '0' ORDER BY t.id ASC") ){
 		    for( $i = 0; $i < sizeof($products); $i++ ){
+                if ($orders = selectDB2("SUM(quantity) as quantity","posorders","`status` = '0' AND `productId` = '{$products[$i]["id"]}' AND `date` BETWEEN '{$_POST["startDate"]}' AND '{$_POST["endDate"]}'") ){
+                    $quantity = $orders[0]["quantity"];
+                }else{
+                    $quantity = 0;
+                }
             ?>
                 <tr>
                 <td><?php echo $products[$i]["pTitle"] . " - " . $products[$i]["title"] ?></td>
-                <td><?php echo $products[$i]["quantity"] ?></td>
+                <td><?php echo $quantity ?></td>
                 </tr>
             <?php
 		    }
