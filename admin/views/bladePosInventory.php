@@ -69,7 +69,7 @@
 		<?php 
         $title = direction("enTitle","arTitle");
         $joinTabel = array(
-            "select" => ["SUM(t1.quantity) as quantity","t.{$title} as title","t1.{$title} as pTitle"],
+            "select" => ["SUM(t1.quantity) as quantity","t.{$title} as title","t2.{$title} as pTitle"],
             "join" => ["posorders","products"],
             "on" => ["t1.productId = t.id","t2.id = t.productId"],
         );
