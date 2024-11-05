@@ -307,7 +307,6 @@ $row = $result->fetch_assoc();
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.11.2/dist/toastify.min.js"></script>
 <script type="text/javascript">
 
 const cartIds = [];
