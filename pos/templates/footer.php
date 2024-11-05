@@ -344,26 +344,6 @@ $(function(){
 		$('.cartItemNo').html(products);
 		$('.cartId').val(cartIds);
 		$('.cartQuan').val(cartQorder);
-        //show message as toast
-        if ( check == 0 ){
-            Toastify({
-                text: "Item Added",
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", 
-            }).showToast();
-        }else{
-            Toastify({
-                text: "Item Updated",
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", 
-            }).showToast();
-        }
 	});
 	
 	$('body').on('click','.RemoveButton',function(e){

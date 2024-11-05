@@ -60,7 +60,6 @@ if ( $maintenace[0]["status"] == 1 ){
     <script src="../js/bootstrap-select.min.js"></script>
 	<script src="../js/jquery.fancybox.min.js"></script>
 	<script src="https://kit.fontawesome.com/123faab6fe.js" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/toastify-js@1.11.2/dist/toastify.min.js"></script>
 
 </head>
 <style>
