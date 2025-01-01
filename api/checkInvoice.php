@@ -59,6 +59,42 @@ if ( isset($_GET["c"]) ){
 			header("LOCATION: checkout.php?error=3");die();
 		}
 	}
+}elseif( isset($_GET["tap_id"]) && !empty($_GET["tap_id"]) ){
+	$postMethodLines = array(
+		"endpoint"	=> "PaymentStatusCheck",
+		"apikey"	=> "{$PaymentAPIKey}",
+		"orderId"	=> "{$_GET["tap_id"]}",
+	);
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	  CURLOPT_URL => 'https://createapi.link/api/v3/index.php',
+	  CURLOPT_RETURNTRANSFER => true,
+	  CURLOPT_ENCODING => '',
+	  CURLOPT_MAXREDIRS => 10,
+	  CURLOPT_TIMEOUT => 0,
+	  CURLOPT_FOLLOWLOCATION => true,
+	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	  CURLOPT_CUSTOMREQUEST => 'POST',
+	  CURLOPT_POSTFIELDS => json_encode($postMethodLines),
+	  CURLOPT_HTTPHEADER => array(
+		'Cookie: PHPSESSID=037d057494de32a24a7effeab3ec2597'
+	  ),
+	));
+	$response = curl_exec($curl);
+	$err = curl_error($curl);
+	curl_close($curl);
+	if($err){
+		echo "cURL Error #:" . $err;
+	}else{
+		$resultMY = json_decode($response, true);
+		var_dump($resultMY);
+		$orderId = $resultMY["data"]["Data"]["InvoiceId"];
+		if( $order = selectDBNew("orders2",[$orderId],"`gatewayId` = ?","") ){
+			$orderId = $order[0]["id"];
+		}else{
+			header("LOCATION: checkout.php?error=3");die();
+		}
+	}
 }else{
 	header("LOCATION: checkout.php?error=3");die();
 }
