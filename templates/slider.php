@@ -36,7 +36,7 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
                 </div>
             </div>
             <div class="col-12">
-                <ul class="social-icons pl-0 mb-0 pr-0" style="margin-top: 10rem!important;">
+                <ul class="social-icons pl-0 mb-0 pr-0" style="margin-top: 0rem!important;">
 					<?php
 					if( $socialMedia = selectDB("s_media","`id` = '1'") ){
 						$smIndex = ["whatsapp","snapchat","TikTok","instagram","location","email"];
