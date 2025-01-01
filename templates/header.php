@@ -150,7 +150,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
     </div>
 </div>
 
-<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: <?php echo $websiteColor ?>; padding: 0px 0px 0px 0px !important">
+<div class="mobile-header fixme d-md-none d-sm-block d-block" style="background-color: <?php echo $websiteColor ?>; padding: 0px!important; margin-top:50px !important;">
     <nav role='navigation' style="direction: rtl !important; float:right !important; width: 100%;">
         
         
