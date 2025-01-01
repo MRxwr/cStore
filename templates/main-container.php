@@ -86,8 +86,8 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 					<label class="product-title txt-dark" style="height:25px;overflow-y:auto">
 					<?php 
 						$title = direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]);
-						if( strlen($title) > 50 ){
-							$title = substr($title, 0, 50);
+						if( strlen($title) > 100 ){
+							$title = substr($title, 0, 100);
 							$title .= '...';
 						}else{
 							$title = $title;
