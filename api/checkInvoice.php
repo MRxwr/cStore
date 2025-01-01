@@ -87,10 +87,13 @@ if ( isset($_GET["c"]) ){
 		echo "cURL Error #:" . $err;
 	}else{
 		$resultMY = json_decode($response, true);
-		var_dump($resultMY);
 		$orderId = $resultMY["data"]["Data"]["InvoiceId"];
-		if( $order = selectDBNew("orders2",[$orderId],"`gatewayId` = ?","") ){
-			$orderId = $order[0]["id"];
+		if( isset($resultMY["data"]["status"]) && !empty($resultMY["data"]["status"]) && $resultMY["data"]["status"] == "CAPTURED" ){
+			if( $order = selectDBNew("orders2",[$orderId],"`gatewayId` = ?","") ){
+				$orderId = $order[0]["id"];
+			}else{
+				header("LOCATION: checkout.php?error=3");die();
+			}
 		}else{
 			header("LOCATION: checkout.php?error=3");die();
 		}
