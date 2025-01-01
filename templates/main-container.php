@@ -83,8 +83,17 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 					?>
 					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>"><img src='<?php echo encryptImage("logos/m{$image[0]["imageurl"]}") ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
 					<div class="product-text">
-					<label class="product-title txt-dark" style="height:50px;overflow-y:auto">
-					<?php echo direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]); ?>
+					<label class="product-title txt-dark" style="height:25px;overflow-y:auto">
+					<?php 
+						$title = direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]);
+						if( strlen($title) > 50 ){
+							$title = substr($title, 0, 50);
+							$title .= '...';
+						}else{
+							$title = $title;
+						}
+						echo $title;
+					?>
 					</label>
 					<label class="txt-dark" style="!important;font-size: 11PX;"><?php echo direction($category[0]["enTitle"],$category[0]["arTitle"]) ?></label>
 					<div class="product-meta">
