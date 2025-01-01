@@ -59,11 +59,3 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
         </div>
     </div>
 </div>
-
-<div class="row m-0 p-0 w-100">
-    <div class="col-4"><img src="<?php echo encryptImage("logos/{$settingslogo}") ?>" style="width:100px; height:100px"></div>
-    <div class="col-8" style="align-content: center;">
-        <h2><?php echo $settingsTitle ?></h2>
-        <p><h6><?php echo $settingsOgDescription ?></h6></p>
-    </div>
-</div>
