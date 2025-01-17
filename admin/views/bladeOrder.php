@@ -160,8 +160,9 @@ for ($i =0; $i < sizeof($items); $i++){
 		if ( !empty($extras["variant"][$y]) ){
 			$extraInfo = selectDB('extras', "`id` = '{$extras["id"][$y]}'");
 			$extraInfo[0]["price"] = ($extraInfo[0]["priceBy"] == 0 ? $extraInfo[0]["price"] : $extras["variant"][$y]);
+			$priceDisplay = ( $extraInfo[0]["price"] == 0 ) ? "" : numTo3Float($extraInfo[0]["price"]) . "KD";
 			$extras["variant"][$y] = ($extraInfo[0]["priceBy"] == 0 ? $extras["variant"][$y] : "");
-			$output .= "[" . direction($extraInfo[0]["enTitle"],$extraInfo[0]["arTitle"]) . ": {$extras["variant"][$y]} " . numTo3Float($extraInfo[0]["price"]) . "KD]";
+			$output .= "[" . direction($extraInfo[0]["enTitle"],$extraInfo[0]["arTitle"]) . ": {$extras["variant"][$y]} " . "{$priceDisplay}]";
 			$extraPrice[] = $extraInfo[0]["price"]*$items[$i]["quantity"];
 			$extraPrice1[] = $extraInfo[0]["price"]*$items[$i]["quantity"];
 		}else{
