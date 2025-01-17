@@ -3,7 +3,7 @@
 		$defaultCurr = $settings[0]["currency"];
 	}
 	$enableInvoiceImage = 0;
-	if( $settings = selectDB("settings","`id` = '3'") ){
+	if( $settings = selectDB("s_media","`id` = '3'") ){
 		$enableInvoiceImage = $settings[0]["enableInvoiceImage"];
 	}
 	if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) && $order = selectDB("orders2","`id` = '{$_GET["orderId"]}'") ){
