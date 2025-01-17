@@ -38,6 +38,9 @@ if ( isset($_POST["noAddress"]) ){
 if ( isset($_POST["noAddressDelivery"]) ){
 	updateDB("s_media",array('noAddressDelivery' => $_POST["noAddressDelivery"]),"`id` = '3'");
 }
+if ( isset($_POST["enableInvoiceImage"]) ){
+	updateDB("s_media",array('enableInvoiceImage' => $_POST["enableInvoiceImage"]),"`id` = '3'");
+}
 
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
@@ -67,6 +70,7 @@ $emailOpt = $options[2]["emailOpt"];
 $giftCard = $options[2]["giftCard"];
 $currency = $options[2]["currency"];
 $userDiscount = $options[3]["userDiscount"];
+$enableInvoiceImage = $options[3]["enableInvoiceImage"];
 
 $maintenance = selectDB("maintenance","`id` = '1'"); 
 $mainSwitch = $maintenance[0]["status"];
@@ -465,6 +469,32 @@ $row = $result->fetch_assoc();
 					<div class="radio">
 						<input type="radio" class="form-control"  name="currency" id="radio17" value="0" <?php if ( $currency == 0 ) { echo 'checked=""'; } ?>>
 						<label for="radio17"> <?php echo $Off ?> </label>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-3">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Enable invoice image","تفعيل صورة فاتورة") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="radio">
+						<input type="radio" class="form-control"  name="enableInvoiceImage" id="radio19" value="1" <?php if ( $enableInvoiceImage == 1 ) { echo 'checked=""'; } ?>>
+						<label for="radio19"> <?php echo $On ?> </label>
+					</div>
+					<div class="radio">
+						<input type="radio" class="form-control"  name="enableInvoiceImage" id="radio19" value="0" <?php if ( $enableInvoiceImage == 0 ) { echo 'checked=""'; } ?>>
+						<label for="radio19"> <?php echo $Off ?> </label>
 					</div>
 					<input type="submit" class="form-control btn btn-default"  value="submit">
 					</form>

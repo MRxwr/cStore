@@ -2,6 +2,9 @@
 	if( $settings = selectDB("settings","`id` = '1'") ){
 		$defaultCurr = $settings[0]["currency"];
 	}
+	if( $settings = selectDB("settings","`id` = '3'") ){
+		$enableInvoiceImage = $settings[0]["enableInvoiceImage"];
+	}
 	if( isset($_GET["orderId"]) && !empty($_GET["orderId"]) && $order = selectDB("orders2","`id` = '{$_GET["orderId"]}'") ){
 		$items = json_decode($order[0]["items"],true);
 		$voucher = json_decode($order[0]["voucher"],true);
@@ -130,6 +133,7 @@ for ($i =0; $i < sizeof($items); $i++){
 	$output = "";
 	$product = selectDB("products","`id` = '{$items[$i]["productId"]}'");
 	$attribute = selectDB("attributes_products","`id` = '{$items[$i]["subId"]}'");
+	$images = selectDB("images","`productId` = '{$items[$i]["productId"]}' ORDER BY `id` ASC LIMIT 1");
 	if( $items[$i]["priceAfterVoucher"] != 0 ){
 		$sale = $items[$i]["priceAfterVoucher"];
 	}elseif( $items[$i]["discountPrice"] != $items[$i]["price"]){
@@ -173,6 +177,9 @@ for ($i =0; $i < sizeof($items); $i++){
 	}
 	if ( !empty($items[$i]["note"]) ){
 		$output .= "[{$items[$i]["note"]}]</span>";
+	}
+	if( $enableInvoiceImage == 1 ){
+		$output .= "<img src='../logos/{$images[0]["imageurl"]}' style='width:300px;height:300px;'>";
 	}
 	$output .= "</td><td><span class='Price txt-dark'>" . numTo3Float($sale). $defaultCurr ." </span></div></td></tr>";
 	echo $output;
