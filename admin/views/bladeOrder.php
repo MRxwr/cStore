@@ -142,8 +142,7 @@ for ($i =0; $i < sizeof($items); $i++){
 	}else{
 		$sale = $items[$i]["price"];
 	}
-	$output .= "<tr><td class='txt-dark' style='white-space: break-spaces;'>
-		{$items[$i]["quantity"]}x ";
+	$output .= "<tr><td class='txt-dark' style='white-space: break-spaces;'>{$items[$i]["quantity"]}x ";
 	$output .= direction($product[0]["enTitle"],$product[0]["arTitle"]);
 	if( isset($attribute[0]["enTitle"]) && isset($attribute[0]["arTitle"]) && !empty(direction($attribute[0]["enTitle"],$attribute[0]["arTitle"])) ){
 		$output .= " - " . direction($attribute[0]["enTitle"],$attribute[0]["arTitle"]);
