@@ -180,7 +180,7 @@ for ($i =0; $i < sizeof($items); $i++){
 		$output .= "[{$items[$i]["note"]}]</span>";
 	}
 	if( $enableInvoiceImage == 1 ){
-		$output .= "<img src='../logos/{$images[0]["imageurl"]}' style='width:300px;height:300px;'>";
+		$output .= "<br><img src='../logos/{$images[0]["imageurl"]}' style='width:300px;height:300px;'>";
 	}
 	$output .= "</td><td><span class='Price txt-dark'>" . numTo3Float($sale). $defaultCurr ." </span></div></td></tr>";
 	echo $output;
