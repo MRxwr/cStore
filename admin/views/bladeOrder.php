@@ -284,6 +284,7 @@ if(!empty($giftCard["to"])){
 <?php
 */
 ?>
+
 <div class="button-list pull-right">
 <!--<button type="submit" class="btn btn-success mr-10">
 Proceed to payment 
@@ -292,6 +293,7 @@ Proceed to payment
 <i class="fa fa-print"></i><span> Print</span>
 </button>-->
 </div>
+
 <div class="clearfix"></div>
 </div>
 </div>
