@@ -2,6 +2,7 @@
 	if( $settings = selectDB("settings","`id` = '1'") ){
 		$defaultCurr = $settings[0]["currency"];
 	}
+	$enableInvoiceImage = 0;
 	if( $settings = selectDB("settings","`id` = '3'") ){
 		$enableInvoiceImage = $settings[0]["enableInvoiceImage"];
 	}
