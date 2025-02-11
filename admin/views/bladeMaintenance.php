@@ -42,6 +42,13 @@ if ( isset($_POST["enableInvoiceImage"]) ){
 	updateDB("s_media",array('enableInvoiceImage' => $_POST["enableInvoiceImage"]),"`id` = '3'");
 }
 
+if ( isset($_POST["enAbout"]) ){
+	updateDB("s_media",array('enAbout' => $_POST["enAbout"]),"`id` = '3'");
+}
+if ( isset($_POST["arAbout"]) ){
+	updateDB("s_media",array('arAbout' => $_POST["arAbout"]),"`id` = '3'");
+}
+
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
 		'internationalDelivery' => $_POST["internationalDelivery"],
@@ -69,6 +76,8 @@ $switchKent = $options[2]["knet"];
 $emailOpt = $options[2]["emailOpt"];
 $giftCard = $options[2]["giftCard"];
 $currency = $options[2]["currency"];
+$enAbout = $options[2]["enAbout"];
+$arAbout = $options[2]["arAbout"];
 $userDiscount = $options[3]["userDiscount"];
 $enableInvoiceImage = $options[3]["enableInvoiceImage"];
 
@@ -495,6 +504,48 @@ $row = $result->fetch_assoc();
 					<div class="radio">
 						<input type="radio" class="form-control"  name="enableInvoiceImage" id="radio19" value="0" <?php if ( $enableInvoiceImage == 0 ) { echo 'checked=""'; } ?>>
 						<label for="radio19"> <?php echo $Off ?> </label>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("About US","معلومات عنا") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-6"><textarea id="enAbout" name="enAbout" class="tinymce"><?php echo $enAbout ?></textarea></div>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("About US Arabic","معلومات عنا العربية") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-6"><textarea id="arAbout" name="arAbout" class="tinymce"><?php echo $arAbout ?></textarea></div>
 					</div>
 					<input type="submit" class="form-control btn btn-default"  value="submit">
 					</form>
