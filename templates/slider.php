@@ -60,7 +60,6 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
                                     </a>
                                 </li>";
                     }
-                    ?>
 					?>
                 </ul>
             </div>
