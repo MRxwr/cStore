@@ -524,7 +524,7 @@ $row = $result->fetch_assoc();
 				<div class="panel-body">
 					<form method="POST" action="">
 					<div class="row">
-						<div class="col-md-6"><textarea id="enAbout" name="enAbout" class="tinymce"><?php echo $enAbout ?></textarea></div>
+						<div class="col-md-12"><textarea id="enAbout" name="enAbout" class="tinymce"><?php echo $enAbout ?></textarea></div>
 					</div>
 					<input type="submit" class="form-control btn btn-default"  value="submit">
 					</form>
