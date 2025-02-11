@@ -53,6 +53,14 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
 							}
 						}
 					}
+                    if( isset($about) AND (!empty($about[0]["enAbout"]) || !empty($about[0]["arAbout"])) ){
+                        echo "<li style='padding: 10px;'>
+                                    <a style='font-size: 20px;height: 36px;width: 36px;' href='about.php'>
+                                        <span class='fa fa-info' style='height: 15px; background: {$websiteColor}'></span>
+                                    </a>
+                                </li>";
+                    }
+                    ?>
 					?>
                 </ul>
             </div>
