@@ -4,11 +4,11 @@
 <div class="col-md-6">
     <?php 
         if( empty($about[0]["enAbout"]) ){
-            echo "{$about[0]["arTitle"]}";
+            echo "{$about[0]["arAbout"]}";
         }elseif( empty($about[0]["arAbout"]) ){
-            echo "{$about[0]["enTitle"]}";
+            echo "{$about[0]["enAbout"]}";
         }else{
-            echo direction($about[0]["enTitle"], $about[0]["arTitle"]);
+            echo direction($about[0]["enAbout"], $about[0]["arAbout"]);
         }
     ?>
 </div>
