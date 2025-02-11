@@ -555,3 +555,19 @@ $row = $result->fetch_assoc();
 	</div>
 
 </div>
+
+<Script>
+	tinymce.init({
+  selector: '#enAbout, #arAbout',
+  height: 300,
+  menubar: true,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount'
+  ],
+  toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+});
+	const enAboutEditor = tinymce.get('enAbout');
+	const arAboutEditor = tinymce.get('arAbout');
+</Script>
