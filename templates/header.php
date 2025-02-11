@@ -15,6 +15,7 @@ if ( $maintenace[0]["status"] == 1 ){
     header ("LOCATION: busy");
 }
 
+if( $about = selectDB("s_media","`id` = '3'") ){}
 if( isset($_GET["curr"]) && !empty($_GET["curr"]) ){
 	setCurr($_GET["curr"]);
 	?>
