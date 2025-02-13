@@ -53,6 +53,9 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
 							}
 						}
 					}
+                    if( isset($about) AND (!empty($about[0]["enAbout"]) || !empty($about[0]["arAbout"])) ){
+                        echo "<li><a href='about.php'><span class='fa fa-info'></span></a></li>";
+                    }
 					?>
                 </ul>
             </div>

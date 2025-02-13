@@ -15,6 +15,7 @@ if ( $maintenace[0]["status"] == 1 ){
     header ("LOCATION: busy");
 }
 
+if( $about = selectDB("s_media","`id` = '3'") ){}
 if( isset($_GET["curr"]) && !empty($_GET["curr"]) ){
 	setCurr($_GET["curr"]);
 	?>
@@ -256,6 +257,13 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 										</li>";
 									}
 								}
+							}
+							if( isset($about) AND (!empty($about[0]["enAbout"]) || !empty($about[0]["arAbout"])) ){
+								echo "<li style='padding: 10px;'>
+											<a style='font-size: 20px;height: 36px;width: 36px;' href='about.php'>
+												<span class='fa fa-info' style='height: 15px; background: {$websiteColor}'></span>
+											</a>
+										</li>";
 							}
 							?>
 							</ul>
