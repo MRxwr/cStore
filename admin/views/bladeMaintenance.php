@@ -49,6 +49,13 @@ if ( isset($_POST["arAbout"]) ){
 	updateDB("s_media",array('arAbout' => $_POST["arAbout"]),"`id` = '3'");
 }
 
+if ( isset($_POST["enPrivacy"]) ){
+	updateDB("s_media",array('enPrivacy' => $_POST["enPrivacy"]),"`id` = '3'");
+}
+if ( isset($_POST["arPrivacy"]) ){
+	updateDB("s_media",array('arPrivacy' => $_POST["arPrivacy"]),"`id` = '3'");
+}
+
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
 		'internationalDelivery' => $_POST["internationalDelivery"],
@@ -78,6 +85,8 @@ $giftCard = $options[2]["giftCard"];
 $currency = $options[2]["currency"];
 $enAbout = $options[2]["enAbout"];
 $arAbout = $options[2]["arAbout"];
+$enPrivacy = $options[2]["enPrivacy"];
+$arPrivacy = $options[2]["arPrivacy"];
 $userDiscount = $options[3]["userDiscount"];
 $enableInvoiceImage = $options[3]["enableInvoiceImage"];
 
@@ -546,6 +555,48 @@ $row = $result->fetch_assoc();
 					<form method="POST" action="">
 					<div class="row">
 						<div class="col-md-12"><textarea id="arAbout" name="arAbout" class="tinymce"><?php echo $arAbout ?></textarea></div>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Privacy Policy English","سياسة الخصوصية الانجليزية") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-12"><textarea id="enPrivacy" name="enPrivacy" class="tinymce"><?php echo $enPrivacy ?></textarea></div>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Privacy Policy Arabic","سياسة الخصوصية العربية") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-12"><textarea id="arPrivacy" name="arPrivacy" class="tinymce"><?php echo $arPrivacy ?></textarea></div>
 					</div>
 					<input type="submit" class="form-control btn btn-default"  value="submit">
 					</form>

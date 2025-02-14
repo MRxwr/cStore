@@ -53,8 +53,11 @@ if( isset($_GET["id"]) && !empty($_GET["id"]) ){
 							}
 						}
 					}
-                    if( isset($about) AND (!empty($about[0]["enAbout"]) || !empty($about[0]["arAbout"])) ){
+                    if( isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enAbout"]) || !empty($aboutPrivacy[0]["arAbout"])) ){
                         echo "<li><a href='about.php'><span class='fa fa-info'></span></a></li>";
+                    }
+                    if( isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enPrivacy"]) || !empty($aboutPrivacy[0]["arPrivacy"])) ){
+                        echo "<li><a href='privacy.php'><span class='fa fa-shield'></span></a></li>";
                     }
 					?>
                 </ul>
