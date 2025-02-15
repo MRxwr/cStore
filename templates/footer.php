@@ -3,6 +3,25 @@
          <div id="footer">
             <div class="container">
                <div class="row">
+                <div class="col-12 text-center">
+                    <?php
+                    if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enAbout"]) || !empty($aboutPrivacy[0]["arAbout"])) ){
+                        echo "<a data-toggle='modal' data-target='#about_popup' aria-label='about'>".direction("About us","من نحن")."</a>";
+                        if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enPrivacy"]) || !empty($aboutPrivacy[0]["arPrivacy"])) || (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"])) ){
+                            echo " | ";
+                        }
+                    }
+                    if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enPrivacy"]) || !empty($aboutPrivacy[0]["arPrivacy"])) ){
+                        echo "<a data-toggle='modal' data-target='#privacy_popup' aria-label='privacy'>".direction("Privacy Policy","سياسة الخصوصية")."</a>";
+                        if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"])) ){
+                            echo " | ";
+                        }
+                    }
+                    if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"])) ){
+                        echo "<a data-toggle='modal' data-target='#return_popup' aria-label='return'>".direction("Return Policy","سياسة الإرجاع")."</a>";
+                    }
+                    ?>
+                </div>
                   <div class="col-12 text-center mb-5" dir="ltr">
                      Powered with <img src="<?php echo encryptImage("img/heart-footer.svg") ?>" class="heart-footer" alt='Made with love By CreateKuwait.com'> by  Createkuwait.com <br>
                      <img src="<?php echo encryptImage("img/payment-icons.webp") ?>" class="img-fluid payment-icons" alt='payment gateways createkuwait.com'>
@@ -10,6 +29,66 @@
                </div>
             </div>
          </div>
+
+<!-- about popup -->
+<div class="modal form-popup myModal--effect-zoomIn" id="about_popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+            <?php 
+                if( empty($aboutPrivacy[0]["enAbout"]) ){
+                    echo "{$aboutPrivacy[0]["arAbout"]}";
+                }elseif( empty($aboutPrivacy[0]["arAbout"]) ){
+                    echo "{$aboutPrivacy[0]["enAbout"]}";
+                }else{
+                    echo direction($aboutPrivacy[0]["enAbout"], $aboutPrivacy[0]["arAbout"]);
+                }
+            ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- privacy popup -->
+<div class="modal form-popup myModal--effect-zoomIn" id="privacy_popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+            <?php 
+                if( empty($aboutPrivacy[0]["enPrivacy"]) ){
+                    echo "{$aboutPrivacy[0]["arPrivacy"]}";
+                }elseif( empty($aboutPrivacy[0]["arPrivacy"]) ){
+                    echo "{$aboutPrivacy[0]["enPrivacy"]}";
+                }else{
+                    echo direction($aboutPrivacy[0]["enPrivacy"], $aboutPrivacy[0]["arPrivacy"]);
+                }
+            ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- return popup -->
+<div class="modal form-popup myModal--effect-zoomIn" id="return_popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body">
+            <?php 
+                if( empty($aboutPrivacy[0]["enReturn"]) ){
+                    echo "{$aboutPrivacy[0]["arReturn"]}";
+                }elseif( empty($aboutPrivacy[0]["arReturn"]) ){
+                    echo "{$aboutPrivacy[0]["enReturn"]}";
+                }else{
+                    echo direction($aboutPrivacy[0]["enReturn"], $aboutPrivacy[0]["arReturn"]);
+                }
+            ?>
+            </div>
+        </div>
+    </div> 
+</div>
 
 <div class="modal search-modal" id="serch_popup">
   <div class="modal-dialog">

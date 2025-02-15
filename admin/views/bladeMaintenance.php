@@ -56,6 +56,13 @@ if ( isset($_POST["arPrivacy"]) ){
 	updateDB("s_media",array('arPrivacy' => $_POST["arPrivacy"]),"`id` = '3'");
 }
 
+if ( isset($_POST["enReturn"]) ){
+	updateDB("s_media",array('enReturn' => $_POST["enReturn"]),"`id` = '3'");
+}
+if ( isset($_POST["arReturn"]) ){
+	updateDB("s_media",array('arReturn' => $_POST["arReturn"]),"`id` = '3'");
+}
+
 if ( isset($_POST["internationalDelivery"]) ){
 	updateDB("s_media",array(
 		'internationalDelivery' => $_POST["internationalDelivery"],
@@ -87,6 +94,8 @@ $enAbout = $options[2]["enAbout"];
 $arAbout = $options[2]["arAbout"];
 $enPrivacy = $options[2]["enPrivacy"];
 $arPrivacy = $options[2]["arPrivacy"];
+$enReturn = $options[2]["enReturn"];
+$arReturn = $options[2]["arReturn"];
 $userDiscount = $options[3]["userDiscount"];
 $enableInvoiceImage = $options[3]["enableInvoiceImage"];
 
@@ -597,6 +606,48 @@ $row = $result->fetch_assoc();
 					<form method="POST" action="">
 					<div class="row">
 						<div class="col-md-12"><textarea id="arPrivacy" name="arPrivacy" class="tinymce"><?php echo $arPrivacy ?></textarea></div>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Return Policy English","سياسة الإسترجاع الانجليزية") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-12"><textarea id="enReturn" name="enReturn" class="tinymce"><?php echo $enReturn ?></textarea></div>
+					</div>
+					<input type="submit" class="form-control btn btn-default"  value="submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="panel panel-default card-view">
+			<div class="panel-heading">
+				<div class="pull-left">
+					<h6 class="panel-title txt-dark"><?php echo direction("Return Policy Arabic","سياسة الإسترجاع العربية") ?></h6>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="panel-wrapper collapse in">
+				<div class="panel-body">
+					<form method="POST" action="">
+					<div class="row">
+						<div class="col-md-12"><textarea id="arReturn" name="arReturn" class="tinymce"><?php echo $arReturn ?></textarea></div>
 					</div>
 					<input type="submit" class="form-control btn btn-default"  value="submit">
 					</form>
