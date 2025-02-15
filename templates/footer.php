@@ -3,7 +3,7 @@
          <div id="footer">
             <div class="container">
                <div class="row">
-                <div class="col-12 text-center">
+                <div class="col-12 text-center" style="font-size: 12px">
                     <?php
                     if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enAbout"]) || !empty($aboutPrivacy[0]["arAbout"])) ){
                         echo "<a data-toggle='modal' data-target='#about_popup' aria-label='about'>".direction("About us","من نحن")."</a>";
@@ -22,8 +22,9 @@
                     }
                     ?>
                 </div>
-                  <div class="col-12 text-center mb-5" dir="ltr">
-                     Powered with <img src="<?php echo encryptImage("img/heart-footer.svg") ?>" class="heart-footer" alt='Made with love By CreateKuwait.com'> by  Createkuwait.com <br>
+                  <div class="col-12 text-center mb-5" dir="ltr" style="font-size: 12px">
+                     Powered with <img src="<?php echo encryptImage("img/heart-footer.svg") ?>" class="heart-footer" alt='Made with love By CreateKuwait.com' style="width: 15px;
+    height: 15px;"> by  Createkuwait.com <br>
                      <img src="<?php echo encryptImage("img/payment-icons.webp") ?>" class="img-fluid payment-icons" alt='payment gateways createkuwait.com'>
                   </div>
                </div>

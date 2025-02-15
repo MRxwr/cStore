@@ -207,21 +207,6 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 							<?php echo direction("Wishlist","المفضلة") ?>
 							</a>
 						</li>
-						<li>
-							<a href="#" data-toggle="modal" data-target="#about_popup" id="aboutMenu">
-							<?php echo direction("About Us","معلومات عنا") ?>
-							</a>
-						</li>
-						<li>
-							<a href="#" data-toggle="modal" data-target="#privacy_popup" id="privacyMenu">
-							<?php echo direction("Privacy Policy","سياسة الخصوصية") ?>
-							</a>
-						</li>
-						<li>
-							<a href="#" data-toggle="modal" data-target="#return_popup" id="returnMenu">
-							<?php echo direction("Return Policy","سياسة الاسترجاع") ?>
-							</a>
-						</li>
 						<?php if ( isset($userID) AND !empty($userID) ){ ?>
 						<li>
 							<a href="#" data-toggle="modal" data-target="#editProfile_popup">
