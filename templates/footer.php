@@ -18,7 +18,7 @@
                         }
                     }
                     if( isset($aboutPrivacy) && (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"])) ){
-                        echo "<a data-toggle='modal' data-target='#return_popup' aria-label='return'>".direction("Return Policy","سياسة الإرجاع")."</a>";
+                        echo "<a data-toggle='modal' data-target='#return_popup' aria-label='return'>".direction("Return Policy","سياسة الإسترجاع")."</a>";
                     }
                     ?>
                 </div>
@@ -84,7 +84,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="modal-body">
             <div class="modal-box-padding mb-3" style="text-align: <?php echo direction("left","right"); ?>">
-                <h4 class="title"><?php echo direction("Return Policy","سياسة الإرجاع") ?></h4>
+                <h4 class="title"><?php echo direction("Return Policy","سياسة الإسترجاع") ?></h4>
             <?php 
                 if( empty($aboutPrivacy[0]["enReturn"]) ){
                     echo "{$aboutPrivacy[0]["arReturn"]}";
