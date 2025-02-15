@@ -37,6 +37,8 @@
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="modal-body">
+            <div class="modal-box-padding mb-3">
+                <h4 class="title"><?php echo direction("About Us","معلومات عنا") ?></h4>
             <?php 
                 if( empty($aboutPrivacy[0]["enAbout"]) ){
                     echo "{$aboutPrivacy[0]["arAbout"]}";
@@ -46,6 +48,7 @@
                     echo direction($aboutPrivacy[0]["enAbout"], $aboutPrivacy[0]["arAbout"]);
                 }
             ?>
+            </div>
             </div>
         </div>
     </div>
@@ -57,6 +60,8 @@
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="modal-body">
+            <div class="modal-box-padding mb-3">
+                <h4 class="title"><?php echo direction("Privacy Policy","سياسة الخصوصية") ?></h4>
             <?php 
                 if( empty($aboutPrivacy[0]["enPrivacy"]) ){
                     echo "{$aboutPrivacy[0]["arPrivacy"]}";
@@ -66,6 +71,7 @@
                     echo direction($aboutPrivacy[0]["enPrivacy"], $aboutPrivacy[0]["arPrivacy"]);
                 }
             ?>
+            </div>
             </div>
         </div>
     </div>
@@ -77,6 +83,8 @@
         <div class="modal-content">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="modal-body">
+            <div class="modal-box-padding mb-3">
+                <h4 class="title"><?php echo direction("Return Policy","سياسة الإرجاع") ?></h4>
             <?php 
                 if( empty($aboutPrivacy[0]["enReturn"]) ){
                     echo "{$aboutPrivacy[0]["arReturn"]}";
@@ -86,6 +94,7 @@
                     echo direction($aboutPrivacy[0]["enReturn"], $aboutPrivacy[0]["arReturn"]);
                 }
             ?>
+            </div>
             </div>
         </div>
     </div> 
