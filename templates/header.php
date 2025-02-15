@@ -278,20 +278,6 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 									}
 								}
 							}
-							if( isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enAbout"]) || !empty($aboutPrivacy[0]["arAbout"])) ){
-								echo "<li style='padding: 10px;'>
-											<a style='font-size: 20px;height: 36px;width: 36px;' href='about.php'>
-												<span class='fa fa-info' style='height: 15px; background: {$websiteColor}'></span>
-											</a>
-										</li>";
-							}
-							if( isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enPrivacy"]) || !empty($aboutPrivacy[0]["arPrivacy"])) ){
-								echo "<li style='padding: 10px;'>
-											<a style='font-size: 20px;height: 36px;width: 36px;' href='privacy.php'>
-												<span class='fa fa-shield' style='height: 15px; background: {$websiteColor}'></span>
-											</a>
-										</li>";
-							}
 							?>
 							</ul>
 						  </li>
