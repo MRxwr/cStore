@@ -27,7 +27,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <div class="panel-body row">
 <div class="table-wrap">
 <div class="table-responsive">
-<table class="table display responsive product-overview display dataTable mb-30" id="">
+<table class="table display responsive product-overview display dataTable mb-30" id="myTable">
 <thead>
 <tr>
 <th><?php echo $DateTime ?></th>
