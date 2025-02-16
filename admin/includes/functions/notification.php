@@ -199,7 +199,6 @@ function sendMailsAdmin($orderId){
 			),
 		));
 		$response = curl_exec($curl);
-		var_Dump($response);die();
 		curl_close($curl);
 }
 
