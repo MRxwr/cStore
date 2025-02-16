@@ -4,6 +4,8 @@ if( isset($_GET["status"]) && !empty($_GET["status"]) && isset($_GET["orderId"])
 	updateDB("orders2",array("status" => "{$_GET["status"]}"),"`id` = '{$_GET["orderId"]}'");
 	$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
 	header("LOCATION: ?v={$_GET["v"]}");
+}else{
+    $_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
 }
 $array = [1,2,3,4,5,6];
 if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
