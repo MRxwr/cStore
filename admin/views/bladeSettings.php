@@ -705,7 +705,7 @@ updateDB("currency", array("realValue" => (string)$value, "yourValue" => (string
 			<div class="panel panel-default card-view">
 				<div class="panel-heading">
 					<div class="pull-left">
-						<h6 class="panel-title txt-dark"><?php echo direction("Language","اللغة") ?></h6>
+						<h6 class="panel-title txt-dark"><?php echo direction("Details","التفاصيل") ?></h6>
 					</div>
 					<div class="clearfix"></div>
 				</div>
