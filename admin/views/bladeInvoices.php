@@ -55,7 +55,7 @@ if( $orders = selectDB("orders2","`status` != 0 {$type} GROUP BY `orderId` ORDER
         $info = json_decode($orders[$i]["info"],true);
 		$phone = $info["phone"];
         $price = numTo3Float($orders[$i]["price"]+getExtrasOrder($orders[$i]["id"]));
-		$method = direction($paymentMethod[$orders[$i]["paymentMethod"]]["enTitle"],$paymentMethod[$orders[$i]["paymentMethod"]]["arTitle"]);
+		$method = ( is_numeric($orders[$i]["paymentMethod"]) ) ? direction($paymentMethod[$orders[$i]["paymentMethod"]]["enTitle"],$paymentMethod[$orders[$i]["paymentMethod"]]["arTitle"]) : "";
         $status="<div class='bg-{$statusBgColor[$orders[$i]["status"]]}' style='font-weight:700; color:black; padding:20px 15px;'>{$statusText[$orders[$i]["status"]]}</div>";
         ?>
         <tr>
