@@ -55,7 +55,9 @@ if (isset($_POST["title"])) {
 	`pixil` = '" . urlencode($_POST["pixil"]) . "',
 	`whatsappNoti` = '" . json_encode($_POST["whatsappNoti"]) . "',
 	`shippingMethod` = '".$_POST["shippingMethod"]."',
-	`website` = '" . $_POST["website"] . "',";
+	`website` = '" . $_POST["website"] . "',
+	`whatsappToken` = '" . $_POST["whatsappToken"] . "',
+	";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
 		$filenewname = uploadImageBanner($_FILES['bgImage']['tmp_name']);
 		$sql .= "`bgImage` = '" . $filenewname . "',";
@@ -103,6 +105,7 @@ $settingsArabicFont = $row["arFont"];
 $settingsArabicFontFamily = $row["arFontFamily"];
 $settingsEnglishFontFamily = $row["enFontFamily"];
 $shippingMethod = $row["shippingMethod"];
+$whatsappToken = $row["whatsappToken"];
 $google = urldecode($row["google"]);
 $pixil = urldecode($row["pixil"]);
 $whatsappNoti = json_decode($row["whatsappNoti"],true);
@@ -697,7 +700,7 @@ updateDB("currency", array("realValue" => (string)$value, "yourValue" => (string
 			</div>
 		</div>
 
-		<!-- whatsapp status -->
+		<!-- whatsapp Details -->
 		<div class="col-md-12">
 			<div class="panel panel-default card-view">
 				<div class="panel-heading">
@@ -708,21 +711,27 @@ updateDB("currency", array("realValue" => (string)$value, "yourValue" => (string
 				</div>
 				<div class="panel-wrapper collapse in">
 					<div class="panel-body">
-						<div class="col-md-4">
+						<div class="col-md-3">
 						<div class="text">
 						<input class="form-control" name="whatsappNoti[name]" value="<?php echo $wSelected = isset($whatsappNoti["name"]) ? "{$whatsappNoti["name"]}" : "" ?>" placeholder="<?php echo direction("Website Name","إسم الموقع") ?>">
 						</div>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-3">
 						<div class="text">
 						<input class="form-control" name="whatsappNoti[domain_token]" value="<?php echo $wSelected = isset($whatsappNoti["domain_token"]) ? "{$whatsappNoti["domain_token"]}" : "" ?>" placeholder="<?php echo direction("Automate Domain Token","رمز الموقع من أوتوميت") ?>">
 						</div>
 						</div>
 
-						<div class="col-md-4">
+						<div class="col-md-3">
 						<div class="text">
 						<input class="form-control" name="whatsappNoti[to]" value="<?php echo $wSelected = isset($whatsappNoti["to"]) ? "{$whatsappNoti["to"]}" : "" ?>" placeholder="<?php echo direction("Orders Phone","هاتف الطلبات") ?>">
+						</div>
+						</div>
+
+						<div class="col-md-3">
+						<div class="text">
+						<input class="form-control" name="whatsappToken" value="<?php echo $whatsappToken = isset($whatsappToken) ? "{$whatsappToken}" : "" ?>" placeholder="<?php echo direction("Ultra Msg Token","رمز Ultra Msg") ?>">
 						</div>
 						</div>
 					</div>

@@ -195,7 +195,7 @@ function whatsappNoti($order){
 			$data["domain_token"] = $whatsappNoti1["domain_token"];
 			$data["to"] = $whatsappNoti1["to"];
 			$data["customer_name"] = $whatsappNoti1["name"];
-			$data["invoiceid"] = $order;
+			$data["invoiceid"] = $order; 
 			$data["invoice_name"] = "invoice-{$whatsappNoti1["name"]}-{$order}";
 			$data["invoice_url"] = getPDF($order);
 			$data["caption"] = urlencode("Hello {$settingsTitle}, You have a new order #{$order}. \n\nThis is an automated message to notify you when you get new orders, Courtesy of createkuwait. \n\nBest Regards, \ncreatekuwait.com");
@@ -221,6 +221,44 @@ function whatsappNoti($order){
 	$response = curl_exec($curl);
 	curl_close($curl);
 	return $response;
+}
+
+function whatsappUltraMsg($order){
+	GLOBAL $settingsTitle, $settingsWhatsappToken;
+	if( $whatsappNoti = selectDB("settings","`id` = '1'") ){
+		$whatsappNoti1 = json_decode($whatsappNoti[0]["whatsappNoti"],true);
+		$token = $whatsappNoti[0]["whatsappToken"];
+		if( $whatsappNoti1["status"] != 1 ){
+			$data = array();
+		}else{
+			$data["type"] = "template";
+			$data["comapany_name"] = "createkuwait";
+			$data["lang"] = $whatsappNoti1["lang"];
+			$data["domain_token"] = $whatsappNoti1["domain_token"];
+			$data["to"] = $whatsappNoti1["to"];
+			$data["customer_name"] = $whatsappNoti1["name"];
+			$data["invoiceid"] = $order;
+			$data["invoice_name"] = "invoice-{$whatsappNoti1["name"]}-{$order}";
+			$data["invoice_url"] = getPDF($order);
+			$data["caption"] = urlencode("Hello {$settingsTitle}, You have a new order #{$order}. \n\nThis is an automated message to notify you when you get new orders, Courtesy of createkuwait. \n\nBest Regards, \ncreatekuwait.com");
+			$curl = curl_init();
+			curl_setopt_array($curl, array(
+				CURLOPT_URL => "https://api.ultramsg.com/instance98521/messages/document?token={$token}&to=+{$data["to"]}&document={$data["invoice_url"]}&filename={$data["invoice_name"]}&caption={$data["caption"]}",
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_ENCODING => '',
+				CURLOPT_MAXREDIRS => 10,
+				CURLOPT_TIMEOUT => 0,
+				CURLOPT_FOLLOWLOCATION => true,
+				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+				CURLOPT_CUSTOMREQUEST => 'POST',
+			));
+			$response = curl_exec($curl);
+			curl_close($curl);
+			return $response;
+		}
+	}else{
+		$data = array();
+	}
 }
 
 function encryptImage($path){
