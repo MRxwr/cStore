@@ -42,8 +42,10 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <tbody>
 <?php
 if( $orders = selectDB("orders2","`status` != 0 {$type} GROUP BY `orderId` ORDER BY `date` DESC") ){
-    if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'") ){
-        $paymentMethodTitle[] = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
+    if( $paymentMethod = selectDB("p_methods","`id` != '0'") ){
+        for( $i = 0; $i < sizeof($paymentMethod); $i++ ){
+            $paymentMethodTitle[] = direction($paymentMethod[$i]["enTitle"],$paymentMethod[$i]["arTitle"]);
+        }
     }
     $statusId = [0,1,2,3,4,5,6];
     $statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
