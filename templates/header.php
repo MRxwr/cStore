@@ -240,7 +240,7 @@ $fontImport = direction("@import url('https://fonts.googleapis.com/css2?family=S
 						  <?php
 						  echo (isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enAbout"]) || !empty($aboutPrivacy[0]["arAbout"]))) ? "<li><a data-toggle='modal' data-target='#about_popup' aria-label='about'>".direction("About Us","معلومات عنا")."</a></li>" : "";
 						  echo (isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enPrivacy"]) || !empty($aboutPrivacy[0]["arPrivacy"]))) ? "<li><a data-toggle='modal' data-target='#privacy_popup' aria-label='privacy'>".direction("Privacy Policy","سياسة الخصوصية")."</a></li>" : "";
-						  echo (isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"]))) ? "<li><a data-toggle='modal' data-target='#return_popup' aria-label='return'>".direction("Return Policy","سياسة الاسترجاع")."</a></li>" : "";
+						  echo (isset($aboutPrivacy) AND (!empty($aboutPrivacy[0]["enReturn"]) || !empty($aboutPrivacy[0]["arReturn"]))) ? "<li><a data-toggle='modal' data-target='#return_popup' aria-label='return'>".direction("Terms & Conditions","الشروط والأحكام")."</a></li>" : "";
 						  ?>
 						  <li>
 							<a href="#" ><?php echo direction("Contact us","تواصل معنا") ?></a>
