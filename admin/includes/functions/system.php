@@ -224,7 +224,7 @@ function whatsappNoti($order){
 }
 
 function whatsappUltraMsg($order){
-	GLOBAL $settingsTitle, $settingsWhatsappToken;
+	GLOBAL $settingsTitle;
 	if( $whatsappNoti = selectDB("settings","`id` = '1'") ){
 		$whatsappNoti1 = json_decode($whatsappNoti[0]["whatsappNoti"],true);
 		$token = $whatsappNoti[0]["whatsappToken"];

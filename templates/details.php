@@ -94,7 +94,7 @@ if ( $order[0]["status"] == '0' ){
 		sendMails($order[0]["id"],$email);
 	}
 	sendNotification($data);
-	whatsappNoti($order[0]["id"]);
+	whatsappUltraMsg($order[0]["id"]);
 	sendOrderToAllowMENA($order[0]["id"]);
 }
 
