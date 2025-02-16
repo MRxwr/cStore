@@ -33,7 +33,6 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <th><?php echo $DateTime ?></th>
 <th><?php echo $OrderID ?></th>
 <th><?php echo $Mobile ?></th>
-<th><?php echo $Voucher ?></th>
 <th><?php echo $Price ?></th>
 <th><?php echo $methodOfPayment ?></th>
 <th><?php echo $Status ?></th>
@@ -41,6 +40,51 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 </tr>
 </thead>
 <tbody>
+<?php
+if( $orders = selectDB("orders2","`status` != 0 {$type} GROUP BY `orderId` ORDER BY `date` DESC") ){
+    if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'") ){
+        $paymentMethodTitle[] = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
+    }
+    $statusId = [0,1,2,3,4,5,6];
+    $statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
+    $statusBgColor = ["default","primary","info","warning","success","danger","default"];
+    for( $i = 0; $i < sizeof($orders); $i++ ){
+        $counter = $i + 1;
+        $info = json_decode($orders[$i]["info"],true);
+		$phone = $info["phone"];
+        $price = numTo3Float($orders[$i]["price"]+getExtrasOrder($orders[$i]["id"]));
+		$method = direction($paymentMethod[$orders[$i]["paymentMethod"]]["enTitle"],$paymentMethod[$orders[$i]["paymentMethod"]]["arTitle"]);
+        $status="<div class='bg-{$statusBgColor[$orders[$i]["status"]]}' style='font-weight:700; color:black; padding:20px 15px;'>{$statusText[$orders[$i]["status"]]}</div>";
+        ?>
+        <tr>
+        <td><?php echo substr($orders[$i]["date"],0,10); ?></td>
+        <td><?php echo $orders[$i]["id"] ?></td>
+        <td><?php echo $phone ?></td>
+        <td><?php echo $price . " KD" ?></td>
+        <td><?php echo $method ?></td>
+        <td><?php echo $status ?></td>
+        <td>
+        <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-cog"></i>
+        </button>   
+        <ul class="dropdown-menu">
+        <li><a href="javascript:void(0)" class="printNow" id="<?php echo $orders[$i]["id"] ?>"><i class="fa fa-print"></i> <?php echo direction("Print","طباعة") ?></a></li>
+        <li><a href="?v=Order&orderId=<?php echo $orders[$i]["id"] ?>"><i class="fa fa-eye"></i> <?php echo direction("View","عرض") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=1" ?>"><i class="fa fa-money"></i> <?php echo direction("Paid","مدفوعه") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=2" ?>"><i class="fa fa-clock-o"></i> <?php echo direction("Preparing","جاري التجهيز") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=3" ?>"><i class="fa fa-car"></i> <?php echo direction("On Delivery","جاري التوصيل") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=4" ?>"><i class="fa fa-car"></i> <?php echo direction("Delivered","تم التوصيل") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=5" ?>"><i class="fa fa-times"></i> <?php echo direction("Cancel","ملغية") ?></a></li>
+        <li><a href="<?php echo "?v={$_GET["v"]}&orderId={$orders[$i]["id"]}&status=6" ?>"><i class="fa fa-retweet"></i> <?php echo direction("Return","مسترجع") ?></a></li>
+        </ul>
+        </div>
+        </td>
+        </tr>
+        <?php
+    }
+}
+?>
 	
 </tbody>
 </table>
