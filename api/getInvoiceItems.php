@@ -19,7 +19,7 @@ $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
  $searchValue = $_POST['search']['value']; // Search value
 
 ## Search 
-$searchQuery = " ";
+$searchQuery = " "; 
 
 if($searchValue != ''){
   $searchQuery = " AND (`date` LIKE '%".$searchValue."%' OR `id` LIKE '%".$searchValue."%' OR JSON_UNQUOTE(JSON_EXTRACT(`info`, '$.phone')) LIKE '%".$searchValue."%')";
