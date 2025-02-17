@@ -144,6 +144,8 @@ $(function(){
 	});
 })
 </script>
+<?php
+/*
 <link href='https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 
 <!-- Datatable JS -->
@@ -172,3 +174,5 @@ $(document).ready(function(){
    });
 });
 </script>
+*/
+?>
