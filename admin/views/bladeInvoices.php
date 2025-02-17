@@ -106,7 +106,7 @@ $(document).ready(function(){
       'ajax': {
           'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>',
           'dataSrc': function(json) {
-              console.log('Response:', json); // Log the response
+              //console.log('Response:', json); // Log the response
               if (!json.aaData) {
                   console.error('Invalid JSON response:', json);
                   return [];
