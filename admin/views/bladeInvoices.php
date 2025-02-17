@@ -104,7 +104,19 @@ $(document).ready(function(){
       "pageLength": 10,
       'serverMethod': 'post',
       'ajax': {
-          'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>'
+          'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>',
+          'dataSrc': function(json) {
+              console.log('Response:', json); // Log the response
+              if (!json.data) {
+                  console.error('Invalid JSON response:', json);
+                  return [];
+              }
+              return json.data;
+          },
+          'error': function(xhr, error, thrown) {
+              console.error('Error fetching data:', error, thrown);
+              console.error('Response:', xhr.responseText);
+          }
       },
       'order': [[0, 'desc']],
       'columns': [
