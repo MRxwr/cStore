@@ -43,7 +43,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 </thead>
 <tbody>
 <?php
-if( $orders = selectDB("orders2","`status` != 0 {$type} GROUP BY `orderId` ORDER BY `date` DESC") ){
+if( $orders = selectDB("orders2","`id` != 0 {$type} GROUP BY `orderId` ORDER BY `date` DESC") ){
     if( $paymentMethod = selectDB("p_methods","`id` != '0'") ){
         for( $i = 0; $i < sizeof($paymentMethod); $i++ ){
             $paymentMethodTitle[] = direction($paymentMethod[$i]["enTitle"],$paymentMethod[$i]["arTitle"]);
