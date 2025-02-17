@@ -106,7 +106,7 @@ $(document).ready(function(){
    $('#AjaxTable').DataTable({
       'processing': true,
       'serverSide': true,
-      "pageLength": 25,
+      "pageLength": 10,
       'serverMethod': 'post',
       'ajax': {
           'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>'

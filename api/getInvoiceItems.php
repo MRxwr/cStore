@@ -1,7 +1,7 @@
 <?php
 require("../admin/includes/config.php");
 require("../admin/includes/functions.php");
-require("../admin/includes/translate.php");
+//require("../admin/includes/translate.php");
 
 $array = [1,2,3,4,5,6];
 if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
@@ -10,13 +10,13 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 	$type = "";
 }
 ## Read value
- $draw = $_POST['draw'];
- $row = $_POST['start'];
+$draw = $_POST['draw'];
+$row = $_POST['start'];
 $rowperpage = $_POST['length']; // Rows display per page
 $columnIndex = $_POST['order'][0]['column']; // Column index
 $columnName = $_POST['columns'][$columnIndex]['data']; // Column name
 $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
- $searchValue = $_POST['search']['value']; // Search value
+$searchValue = $_POST['search']['value']; // Search value
 
 ## Search 
 $searchQuery = " "; 
@@ -25,41 +25,34 @@ if($searchValue != ''){
   $searchQuery = " AND (`date` LIKE '%".$searchValue."%' OR `id` LIKE '%".$searchValue."%' OR JSON_UNQUOTE(JSON_EXTRACT(`info`, '$.phone')) LIKE '%".$searchValue."%')";
 }
 ## Total number of records without filtering
-$psorders = queryDB("SELECT * FROM orders2 WHERE `id` != '0'  GROUP BY `gatewayId`");
-$totalRecords = sizeof($psorders);
+$psorders = queryDB("SELECT count(*) as totalCount FROM orders2 WHERE `id` != '0'");
+$totalRecords = $psorders[0]["totalCount"];
 
 ## Total number of record with filtering
-$sorders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery} {$type} GROUP BY `gatewayId`");
-$totalRecordwithFilter = sizeof($sorders);
+$sorders = queryDB("SELECT count(*) as totalCount FROM orders2 WHERE `id` != '0' {$searchQuery} {$type} ");
+$totalRecordwithFilter = $sorders[0]["totalCount"];
 
-if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {$type}  GROUP BY `gatewayId` order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage) ){
+if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {$type} order by ".$columnName." ".$columnSortOrder." limit ".$row.",".$rowperpage) ){
     
     $data = array(); 
-	for( $i = 0; $i < sizeof($orders); $i++ ){
-		$statusId = [0,1,2,3,4,5,6];
-		$statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
-		$statusBgColor = ["default","primary","info","warning","success","danger","default"];
-		if( $paymentMethod = selectDB("p_methods","`paymentId` = '{$orders[$i]["paymentMethod"]}'") ){
-			$method = direction($paymentMethod[0]["enTitle"],$paymentMethod[0]["arTitle"]);
-		}else{
-			$method = "";
+	$statusId = [0,1,2,3,4,5,6];
+	$statusText = [direction("Pending","انتظار"),direction("Success","ناجح"),direction("Preparing","جاري التجهيز"), direction("On Delivery","جاري التوصيل"), direction("Delivered","تم تسليمها"), direction("Failed","فاشلة"),direction("Returned","مسترجعه")];
+	$statusBgColor = ["default","primary","info","warning","success","danger","default"];
+	if( $paymentMethods = selectDB("p_methods","`id` != '0'") ){
+		foreach ($paymentMethods as $method) {
+			$paymentMethodsMap[$method['id']] = direction($method['enTitle'], $method['arTitle']);
 		}
+	}else{
+		$paymentMethods = array();
+	}
+	for( $i = 0; $i < sizeof($orders); $i++ ){
 		$price = numTo3Float($orders[$i]["price"]+getExtrasOrder($orders[$i]["id"]));
 		$date=timeZoneConverter($orders[$i]["date"]);
 		$orderId=$orders[$i]["id"];
-		
-
-		$info = json_decode($orders[$i]["info"],true);
-
-		$phone=$info["phone"];
+		$phone = json_decode($orders[$i]["info"],true)["phone"];
+		$method = isset($paymentMethodsMap[$order["paymentMethod"]]) ? $paymentMethodsMap[$order["paymentMethod"]] : "";
 		$voucher = json_decode($orders[$i]["voucher"],true);
-
-
-		for ( $y = 0; $y < sizeof($statusId); $y++ ){
-			if( $statusId[$y] == $orders[$i]["status"] ){
-			    $status="<div class='bg-{$statusBgColor[$y]}' style='font-weight:700; color:black; padding:20px 15px;'>{$statusText[$y]}</div>";
-			}
-		}
+		$status="<div class='bg-{$statusBgColor[$orders[$i]["status"]]}' style='font-weight:700; color:black; padding:20px 15px;'>{$statusText[$orders[$i]["status"]]}</div>";
 		$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
 		$action="<div>
 				<a href='?v=Order&orderId={$orders[$i]["id"]}' class='btn btn-default btn-circle' title='".direction("View","عرض")."' data-toggle='tooltip' target='_blank'><i class='fa fa-eye' style='font-size: 27px;margin-top: 5px;'></i></a>
@@ -90,8 +83,6 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
       "iTotalDisplayRecords" => $totalRecordwithFilter,
       "aaData" => $data
     );
-    
     echo json_encode($response);
-	
-	}
+}
 	?>
