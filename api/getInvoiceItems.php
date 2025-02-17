@@ -50,7 +50,7 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
 		$date=timeZoneConverter($orders[$i]["date"]);
 		$orderId=$orders[$i]["id"];
 		$phone = json_decode($orders[$i]["info"],true)["phone"];
-		$method = isset($paymentMethodsMap[$orders["paymentMethod"]]) ? $paymentMethodsMap[$orders["paymentMethod"]] : "";
+		$method = isset($paymentMethodsMap[$orders[$i]["paymentMethod"]]) ? $paymentMethodsMap[$orders[$i]["paymentMethod"]] : "";
 		$voucher = json_decode($orders[$i]["voucher"],true);
 		$status="<div class='bg-{$statusBgColor[$orders[$i]["status"]]}' style='font-weight:700; color:black; padding:20px 15px;'>{$statusText[$orders[$i]["status"]]}</div>";
 		$_GET["v"] = ( isset($_GET["type"]) && !empty($_GET["type"]) ) ? "{$_GET["v"]}&type={$_GET["type"]}": "{$_GET["v"]}";
