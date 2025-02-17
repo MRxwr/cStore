@@ -111,7 +111,6 @@ $(document).ready(function(){
          { data: 'date' },
          { data: 'orderId' },
          { data: 'phone' },
-         { data: 'voucher' },
          { data: 'price' },
          { data: 'method' },
          { data: 'status' },
