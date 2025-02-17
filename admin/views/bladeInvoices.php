@@ -96,6 +96,12 @@ $(function(){
         .appendTo("body");
 	});
 })
+</script>
+<link href='https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+
+<!-- Datatable JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
 $(document).ready(function(){
    $('#AjaxTable').DataTable({
       'processing': true,
