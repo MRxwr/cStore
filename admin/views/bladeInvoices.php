@@ -107,11 +107,11 @@ $(document).ready(function(){
           'url':'../api/getInvoiceItems.php?v=<?=$_GET["v"]?>&type=<?=$tp?>',
           'dataSrc': function(json) {
               console.log('Response:', json); // Log the response
-              if (!json.data) {
+              if (!json.aaData) {
                   console.error('Invalid JSON response:', json);
                   return [];
               }
-              return json.data;
+              return json.aaData; // Map aaData to data
           },
           'error': function(xhr, error, thrown) {
               console.error('Error fetching data:', error, thrown);
