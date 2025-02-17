@@ -31,7 +31,7 @@ if( isset($_GET["type"]) && in_array($_GET["type"],$array) ){
 <div class="table-responsive">
 <input type="text" id="searchInput" placeholder="Search...">
 <div id="loading" style="display:none;">Loading...</div>
-<table class="table display responsive product-overview display dataTable mb-30" id="myTable">
+<table class="table display responsive product-overview display dataTable mb-30" id="myTableNew">
 <thead>
 <tr>
 <th><?php echo $DateTime ?></th>
@@ -114,7 +114,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 var data = response.data;
-                var tableBody = $('#myTable tbody');
+                var tableBody = $('#myTableNew tbody');
                 tableBody.empty();
                 for (var i = 0; i < data.length; i++) {
                     var row = '<tr>' +
