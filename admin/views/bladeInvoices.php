@@ -111,7 +111,13 @@ $(document).ready(function(){
                   console.error('Invalid JSON response:', json);
                   return [];
               }
-              return json.aaData; // Map aaData to data
+              // check if empty 
+                if (json.aaData.length === 0) {
+                    console.error('Empty response');
+                    return [];
+                }else{
+                    return json.aaData; // Map aaData to data
+                }
           },
           'error': function(xhr, error, thrown) {
               console.error('Error fetching data:', error, thrown);
