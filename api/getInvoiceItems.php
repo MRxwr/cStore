@@ -22,7 +22,7 @@ $searchValue = $_POST['search']['value']; // Search value
 $searchQuery = " "; 
 
 if($searchValue != ''){
-  $searchQuery = " AND (`date` LIKE '%".$searchValue."%' OR `id` LIKE '%".$searchValue."%' OR `info` LIKE '%".$searchValue."%')";
+  $searchQuery = " AND (`date` LIKE '%".$searchValue."%' OR `id` LIKE '%".$searchValue."%' OR JSON_UNQUOTE(JSON_EXTRACT(`info`, '$.phone')) LIKE '%".$searchValue."%')";
 }
 ## Total number of records without filtering
 $psorders = queryDB("SELECT count(*) as totalCount FROM orders2 WHERE `id` != '0'");
