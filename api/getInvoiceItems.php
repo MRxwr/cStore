@@ -77,7 +77,15 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
            );	  
 	}
 }else{
-	$data[] = array();
+	$data[] = array(
+		"date"=>"",
+		"orderId"=>"",
+		"phone"=>"",
+		"method"=>"",
+		"price"=>"",
+		"status"=>"",
+		"action"=>""
+	);
 }
 $response = array(
 		"draw" => intval($draw),
