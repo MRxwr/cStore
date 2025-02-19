@@ -76,12 +76,16 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
               "action"=>$action
            );	  
 	}
-	$response = array(
-      "draw" => intval($draw),
-      "iTotalRecords" => $totalRecords,
-      "iTotalDisplayRecords" => $totalRecordwithFilter,
-      "aaData" => $data
-    );
-    echo json_encode($response);
+}else{
+	$data[] = array();
+	
 }
+$response = array(
+		"draw" => intval($draw),
+		"iTotalRecords" => $totalRecords,
+		"iTotalDisplayRecords" => $totalRecordwithFilter,
+		"aaData" => $data
+	);
+echo json_encode($response);
+
 	?>
