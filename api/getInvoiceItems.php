@@ -78,7 +78,6 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
 	}
 }else{
 	$data[] = array();
-	
 }
 $response = array(
 		"draw" => intval($draw),
