@@ -40,7 +40,7 @@ if( $orders = queryDB("SELECT * FROM orders2 WHERE `id` != '0' {$searchQuery}  {
 	$statusBgColor = ["default","primary","info","warning","success","danger","default"];
 	if( $paymentMethods = selectDB("p_methods","`id` != '0'") ){
 		foreach ($paymentMethods as $method) {
-			$paymentMethodsMap[$method['id']] = direction($method['enTitle'], $method['arTitle']);
+			$paymentMethodsMap[$method['paymentId']] = direction($method['enTitle'], $method['arTitle']);
 		}
 	}else{
 		$paymentMethods = array();
