@@ -5,8 +5,8 @@ if ( $theme == 1 ){
 	$section = "container";
 }
 if ( isset($_GET["id"]) && !empty($_GET["id"]) ){
-	if ( $categoryIdCheck = selectDBNew("categories",[$_GET["id"]],"`id` = ? AND `status` = '0' AND `hidden` = '1'","") ){
-		$getCategoryId = "t.categoryId = '{$categoryIdCheck[0]["id"]}'";
+	if ( $cpLinkIdCheck = selectDBNew("categories",[$_GET["id"]],"`id` = ? AND `status` = '0' AND `hidden` = '1'","") ){
+		$getCategoryId = "t.categoryId = '{$cpLinkIdCheck[0]["id"]}'";
 	}else{
 		header("LOCATION: index.php");
 	}
@@ -40,102 +40,92 @@ if ( isset($_GET["order"]) && !empty($_GET["order"]) ){
 </div>
 <?php
 
-$joinArray["select"] = ["t.productId","t.categoryId"];
-$joinArray["join"] = ["attributes_products", "products"];
-$joinArray["on"] = ["t.productId = t1.productId", "t.productId = t2.id"];
+$joinArray["select"] = ["t.productId","t.categoryId","MIN(t1.price) as price","SUM(t1.quantity) as totalQuan","t2.preorder","t2.preorderText","t2.preorderTextAr","t2.discount","t2.discountType","t4.imageurl","t2.enTitle AS ProductNameEn","t2.arTitle AS ProductNameAr","t3.enTitle AS CategoryNameEn","t3.arTitle AS CategoryNameAr"];
+$joinArray["join"] = ["attributes_products", "products", "categories", "images"];
+$joinArray["on"] = ["t.productId = t1.productId", "t.productId = t2.id", "t.categoryId = t3.id", "t2.id = t4.productId"];
 $settings = selectDB("settings","`id` = '1'"); 
 $productShape = ( $settings[0]["productView"] == 0 ) ? "product-box-img" : "product-box-img-rect" ;
 
-if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND t1.hidden = '0' AND t1.status = '0' GROUP BY t.productId ORDER BY {$getOrder}") ){
-	for ( $y = 0; $y < sizeof($cpLink); $y++ ){
-	if( $subProductDetails = selectDB("attributes_products","`status` = '0' AND `hidden` = '0' AND `productId` = '{$cpLink[$y]["productId"]}' GROUP BY `productId` ORDER BY `price` ASC") ){
-		$getQuantity = selectDB2("sum(quantity) as totalQuan","attributes_products","`hidden` = '0' AND `status` = '0' AND `productId` = '{$cpLink[$y]["productId"]}'");
-			for ( $i =0; $i < sizeof($subProductDetails); $i++ ){
-				if($listOfProducts = selectDB("products","`id` = '{$subProductDetails[$i]["productId"]}' AND `hidden` = '0'")){
-				$image = selectDB("images","`productId` = '{$listOfProducts[0]["id"]}' ORDER BY `id` ASC LIMIT 1");
-				$category = selectDB("categories","`id` = '{$cpLink[$y]["categoryId"]}'");
-				
-				?>
-					<div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6 my-product <?php echo $listOfProducts[0]["categoryId"] ?>-product">
-					<table style="width:100%;direction:<?php echo $directionHTML ?>">
-					<tr>
-					<td class="text-right">
-					<div class="product-box" style="height: 100%;">
-					<?php
-					if ( $listOfProducts[0]["discountType"] == 0 ) {
-						$finalDiscount = $listOfProducts[0]["discount"] . "%";
-					}else{
-						$finalDiscount = priceCurr($listOfProducts[0]["discount"]) . selectedCurr();
-					}
-					if ( $listOfProducts[0]["discount"] != 0 ) {
-						echo "<span class='discountPercent'>{$finalDiscount}</span>";
-					}
-					
-					if ( $listOfProducts[0]["preorder"] != 0 ) {
-						echo '<span class="preorder">';
-						if ( !empty($listOfProducts[0]["preorderText"]) && !empty($listOfProducts[0]["preorderTextAr"]) ){
-							echo direction($listOfProducts[0]["preorderText"],$listOfProducts[0]["preorderTextAr"]);
-						}else{
-							echo direction("PRE-ORDER","الطلب المسبق");
-						}
-						echo '</span>';
-					}
-					?>
-					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>"><img src='<?php echo encryptImage("logos/m{$image[0]["imageurl"]}") ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $listOfProducts[0]["enTitle"] ?>"></a>
-					<div class="product-text">
-					<label class="product-title txt-dark" style="height:40px;overflow-y:auto">
-					<?php 
-						$title = direction($listOfProducts[0]["enTitle"],$listOfProducts[0]["arTitle"]);
-						if( strlen($title) > 100 ){
-							$title = substr($title, 0, 100);
-							$title .= '...';
-						}else{
-							$title = $title;
-						}
-						echo $title;
-					?>
-					</label>
-					<label class="txt-dark" style="!important;font-size: 11PX;"><?php echo direction($category[0]["enTitle"],$category[0]["arTitle"]) ?></label>
-					<div class="product-meta">
-					<div class="productPriceWrapper">
-					<?php 
-						if ( $listOfProducts[0]["discount"] != 0 ){
-							echo "<span class='discountedPrice'>".numTo3Float(priceCurr($subProductDetails[$i]["price"])). selectedCurr() ."</span>";
-						}
-					?>
-					<span class="product-price">
-					<?php 
-						if ( $listOfProducts[0]["discountType"] == 0 ) {
-							echo numTo3Float(priceCurr($subProductDetails[$i]["price"]) - ( priceCurr($subProductDetails[$i]["price"]) * $listOfProducts[0]["discount"] / 100));
-						}else{
-							echo numTo3Float(priceCurr($subProductDetails[$i]["price"]) - priceCurr($listOfProducts[0]["discount"]));
-						}
-						echo selectedCurr();
-					?></span>
-					</div>
-					<a href="product.php?id=<?php echo $listOfProducts[0]["id"] ?>">
-					<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn">
-					<span class="fa fa-shopping-basket mr-2 ml-2"></span>
-					<?php
-						if ( $getQuantity[0]["totalQuan"] > 0 ){
-							echo $viewText;
-						}else{
-							echo "<del style='color:red;font-size:10px'>Sold Out</del>";
-						}
-					?>
-					</button>
-					</a>
-					</div>
-					</div>
-					</div>
-					</td>
-					</tr>
-					</table>
-					</div>            
-				<?php
-				}
-			}
+if( $cpLinks = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND t1.hidden = '0' AND t1.status = '0' AND t2.hidden = '0' GROUP BY t.productId ORDER BY {$getOrder}") ){
+	foreach ($cpLinks as $cpLink) {
+	?>
+		<div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6 my-product <?php echo $cpLink["categoryId"] ?>-product">
+		<table style="width:100%;direction:<?php echo $directionHTML ?>">
+		<tr>
+		<td class="text-right">
+		<div class="product-box" style="height: 100%;">
+		<?php
+		if ( $cpLink["discountType"] == 0 ) {
+			$finalDiscount = $cpLink["discount"] . "%";
+		}else{
+			$finalDiscount = priceCurr($cpLink["discount"]) . selectedCurr();
 		}
+		if ( $cpLink["discount"] != 0 ) {
+			echo "<span class='discountPercent'>{$finalDiscount}</span>";
+		}
+		
+		if ( $cpLink["preorder"] != 0 ) {
+			echo '<span class="preorder">';
+			if ( !empty($cpLink["preorderText"]) && !empty($cpLink["preorderTextAr"]) ){
+				echo direction($cpLink["preorderText"],$cpLink["preorderTextAr"]);
+			}else{
+				echo direction("PRE-ORDER","الطلب المسبق");
+			}
+			echo '</span>';
+		}
+		?>
+		<a href="product.php?id=<?php echo $cpLink["productId"] ?>"><img src='<?php echo encryptImage("logos/m{$cpLink["imageurl"]}") ?>' class='img-fluid <?php echo $productShape ?>' style="width:100%" alt="<?php echo $cpLink["ProductNameEn"] ?>"></a>
+		<div class="product-text">
+		<label class="product-title txt-dark" style="height:40px;overflow-y:auto">
+		<?php 
+			$title = direction($cpLink["ProductNameEn"],$cpLink["ProductNameAr"]);
+			if( strlen($title) > 100 ){
+				$title = substr($title, 0, 100);
+				$title .= '...';
+			}else{
+				$title = $title;
+			}
+			echo $title;
+		?>
+		</label>
+		<label class="txt-dark" style="!important;font-size: 11PX;"><?php echo direction($cpLink["CategoryNameEn"],$cpLink["CategoryNameAr"]) ?></label>
+		<div class="product-meta">
+		<div class="productPriceWrapper">
+		<?php 
+			if ( $cpLink["discount"] != 0 ){
+				echo "<span class='discountedPrice'>".numTo3Float(priceCurr($cpLink["price"])). selectedCurr() ."</span>";
+			}
+		?>
+		<span class="product-price">
+		<?php 
+			if ( $cpLink["discountType"] == 0 ) {
+				echo numTo3Float(priceCurr($cpLink["price"]) - ( priceCurr($cpLink["price"]) * $cpLink["discount"] / 100));
+			}else{
+				echo numTo3Float(priceCurr($cpLink["price"]) - priceCurr($cpLink["discount"]));
+			}
+			echo selectedCurr();
+		?></span>
+		</div>
+		<a href="product.php?id=<?php echo $cpLink["productId"] ?>">
+		<button type="button" class="btn cart-btn add-to-cart add-to-cart-btn">
+		<span class="fa fa-shopping-basket mr-2 ml-2"></span>
+		<?php
+			if ( $cpLink["totalQuan"] > 0 ){
+				echo $viewText;
+			}else{
+				echo "<del style='color:red;font-size:10px'>Sold Out</del>";
+			}
+		?>
+		</button>
+		</a>
+		</div>
+		</div>
+		</div>
+		</td>
+		</tr>
+		</table>
+		</div>            
+	<?php
 	}
 }else{
 	echo direction("No Products Available","لا توجد منتجات حاليا");
@@ -146,7 +136,8 @@ if( $cpLink = selectJoinDB("category_products",$joinArray,"{$getCategoryId} AND 
 </div>
 
 <script type="text/javascript">
-$(".product-category").click(function() {
+$(".product-category, .product-category-mobile").click(function() {
+	$('.loading-screen').attr('style','display:block');
 	$.ajax({
 		type:"POST",
 		url: "api/listofItems.php",
@@ -156,43 +147,9 @@ $(".product-category").click(function() {
 		},
 		success:function(result){
 			$("#listOfItems").html(result);
+			$('.loading-screen').attr('style','display:none');
 		}
 	});
-	<?php
-	/*
-	$('.my-product').attr('style', 'display:none');
-	if ( $(this).attr('type') < 1 ){
-		$('.my-product').attr('style', 'display:block');
-	}else{
-		$('.'+$(this).attr('type')+'-product').attr('style', 'display:block');
-	}
-	*/
-	?>
-});
-
-$(".product-category-mobile").click(function() {
-	$.ajax({
-		type:"POST",
-		url: "api/listofItems.php",
-		data: {
-			id:$(this).attr('type'),
-			order:"<?php echo $requestOrder ?>",
-		},
-		success:function(result){
-			$("#listOfItems").html(result);
-		}
-	});
-	<?php 
-	/*
-	$('.my-product').attr('style', 'display:none');
-	if ( $(this).attr('type') < 1 ){
-		$('.my-product').attr('style', 'display:block');
-	}else{
-		$('.'+$(this).attr('type')+'-product').attr('style', 'display:block');
-	}
-	*/
-	?>
-	
 });
 </script>
 
