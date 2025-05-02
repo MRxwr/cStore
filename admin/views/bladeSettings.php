@@ -59,12 +59,12 @@ if (isset($_POST["title"])) {
 	`whatsappToken` = '" . $_POST["whatsappToken"] . "',
 	";
 	if (is_uploaded_file($_FILES['bgImage']['tmp_name'])) {
-		$filenewname = uploadImageBanner($_FILES['bgImage']['tmp_name']);
+		$filenewname = uploadImageBannerFreeImageHost($_FILES['bgImage']['tmp_name']);
 		$sql .= "`bgImage` = '" . $filenewname . "',";
 	}
 	
 	if (is_uploaded_file($_FILES['logo']['tmp_name'])) {
-		$filenewname = uploadImageBanner($_FILES['logo']['tmp_name']);
+		$filenewname = uploadImageBannerFreeImageHost($_FILES['logo']['tmp_name']);
 		$sql .= "`logo` = '" . $filenewname . "',";
 	}
 	

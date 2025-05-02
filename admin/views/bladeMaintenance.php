@@ -76,7 +76,7 @@ if ( isset($_POST["userDiscount"]) ){
 }
 
 if ( isset($_FILES['sizeChartImage']) && is_uploaded_file($_FILES['sizeChartImage']['tmp_name'])) {
-	$filenewname = uploadImageBanner($_FILES['sizeChartImage']['tmp_name']);
+	$filenewname = uploadImageBannerFreeImageHost($_FILES['sizeChartImage']['tmp_name']);
 	updateDB("s_media",array('sizeChartImage' => $filenewname),"`id` = '4'");
 }
 

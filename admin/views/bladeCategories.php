@@ -29,13 +29,13 @@ if( isset($_POST["arTitle"]) ){
 	unset($_POST["update"]);
 	if ( $id == 0 ){
 		if (is_uploaded_file($_FILES['imageurl']['tmp_name'])) {
-			$_POST["imageurl"] = uploadImageBanner($_FILES['imageurl']['tmp_name']);
+			$_POST["imageurl"] = uploadImageBannerFreeImageHost($_FILES['imageurl']['tmp_name']);
 		} else {
 			$_POST["imageurl"] = "";
 		}
 		
 		if (is_uploaded_file($_FILES['header']['tmp_name'])) {
-			$_POST["imageurl"] = uploadImageBanner($_FILES['header']['tmp_name']);
+			$_POST["imageurl"] = uploadImageBannerFreeImageHost($_FILES['header']['tmp_name']);
 		} else {
 			$_POST["header"] = "";
 		}
@@ -52,14 +52,14 @@ if( isset($_POST["arTitle"]) ){
 		}
 	}else{
 		if (is_uploaded_file($_FILES['imageurl']['tmp_name'])) {
-			$_POST["imageurl"] = uploadImageBanner($_FILES['imageurl']['tmp_name']);
+			$_POST["imageurl"] = uploadImageBannerFreeImageHost($_FILES['imageurl']['tmp_name']);
 		} else {
 			$imageurl = selectDB("categories", "`id` = '{$id}'");
 			$_POST["imageurl"] = $imageurl[0]["imageurl"];
 		}
 		
 		if (is_uploaded_file($_FILES['header']['tmp_name'])) {
-			$_POST["header"] = uploadImageBanner($_FILES['header']['tmp_name']);
+			$_POST["header"] = uploadImageBannerFreeImageHost($_FILES['header']['tmp_name']);
 		} else {
 			$header = selectDB("categories", "`id` = '{$id}'");
 			$_POST["header"] = $header[0]["header"];

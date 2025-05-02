@@ -45,7 +45,7 @@ if ( isset($_POST["weight"]) ){
 $i = 0;
 while ( $i < sizeof($_FILES['logo']['tmp_name']) ){
 	if( is_uploaded_file($_FILES['logo']['tmp_name'][$i]) ){
-		$filenewname = uploadImage($_FILES["logo"]["tmp_name"][$i]);
+		$filenewname = uploadImageFreeImageHost($_FILES["logo"]["tmp_name"][$i]);
 		$sql = "INSERT INTO `images`(`id`, `productId`, `imageurl`) VALUES (NULL,'{$id}','{$filenewname}')";
 		$result = $dbconnect->query($sql);
 	}
