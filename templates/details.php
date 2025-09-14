@@ -69,7 +69,10 @@ if( !empty($giftCard["from"]) ){
 }
 
 if ( $order[0]["status"] == '0' ){ 
-	$data = array("status" => "1");
+	$data = array(
+		"status" => "1",
+		"transactionResponse" => json_encode($_GET,JSON_UNESCAPED_UNICODE),
+	);
 	updateDB("orders2",$data,"`id` = '{$orderId}'");
 	if ( $order[0]["paymentMethod"] == 10 ){
 		$noti = 2;
