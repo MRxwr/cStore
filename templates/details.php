@@ -113,8 +113,8 @@ if ( $order[0]["status"] == '0' ){
                     </div>
                     <h5 class="page-title"><?php echo $OrderReceivedText ?></h5>
                         <p class="mb-4"><?php echo $OrderReceivedMsgText ?></p>
-                        <div class="row">
-                            <div class="col-md-3 col-sm-6 col-6">
+                        <div class="row"> 
+                            <div class="col-md-3 col-sm-6 col-6"> 
                                 <p class="bold"><?php echo $orderNumberText ?></p>
                                 <p><?php echo $orderId ?></p>
                             </div>
